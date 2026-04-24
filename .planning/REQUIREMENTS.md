@@ -99,17 +99,59 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-Empty initially. Populated by the roadmapper in Step 8.
+Every v1 requirement maps to exactly one phase. All 43 requirements are covered.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (pending roadmap) | — | Pending |
+| SETUP-01 | Phase 1: Setup & Alignment | Pending |
+| SETUP-02 | Phase 1: Setup & Alignment | Pending |
+| SETUP-03 | Phase 1: Setup & Alignment | Pending |
+| SCAFF-01 | Phase 2: Scaffolding | Pending |
+| SCAFF-02 | Phase 2: Scaffolding | Pending |
+| SCAFF-03 | Phase 2: Scaffolding | Pending |
+| SCAFF-04 | Phase 2: Scaffolding | Pending |
+| SCAFF-05 | Phase 2: Scaffolding | Pending |
+| SCAFF-06 | Phase 2: Scaffolding | Pending |
+| SCAFF-07 | Phase 2: Scaffolding | Pending |
+| BOUND-01 | Phase 3: Shared Boundary | Pending |
+| BOUND-02 | Phase 3: Shared Boundary | Pending |
+| BOUND-03 | Phase 3: Shared Boundary | Pending |
+| BOUND-04 | Phase 3: Shared Boundary | Pending |
+| SHELL-01 | Phase 4: App Shell & Primitives | Pending |
+| SHELL-02 | Phase 4: App Shell & Primitives | Pending |
+| SHELL-03 | Phase 4: App Shell & Primitives | Pending |
+| SHELL-04 | Phase 4: App Shell & Primitives | Pending |
+| SHELL-05 | Phase 4: App Shell & Primitives | Pending |
+| CJD-01 | Phase 5: Client Journey Dashboard | Pending |
+| CJD-02 | Phase 5: Client Journey Dashboard | Pending |
+| CJD-03 | Phase 5: Client Journey Dashboard | Pending |
+| CJD-04 | Phase 5: Client Journey Dashboard | Pending |
+| CJD-05 | Phase 5: Client Journey Dashboard | Pending |
+| CJD-06 | Phase 5: Client Journey Dashboard | Pending |
+| CJD-07 | Phase 5: Client Journey Dashboard | Pending |
+| RMC-01 | Phase 6: RM Cockpit | Pending |
+| RMC-02 | Phase 6: RM Cockpit | Pending |
+| RMC-03 | Phase 6: RM Cockpit | Pending |
+| RMC-04 | Phase 6: RM Cockpit | Pending |
+| RMC-05 | Phase 6: RM Cockpit | Pending |
+| RMC-06 | Phase 6: RM Cockpit | Pending |
+| RMC-07 | Phase 6: RM Cockpit | Pending |
+| STAGE-01 | Phase 7: Stage Screens | Pending |
+| STAGE-02 | Phase 7: Stage Screens | Pending |
+| STAGE-03 | Phase 7: Stage Screens | Pending |
+| STAGE-04 | Phase 7: Stage Screens | Pending |
+| STAGE-05 | Phase 7: Stage Screens | Pending |
+| STAGE-06 | Phase 7: Stage Screens | Pending |
+| HERO-01 | Phase 8: Hero Moments | Pending |
+| HERO-02 | Phase 8: Hero Moments | Pending |
+| HERO-03 | Phase 8: Hero Moments | Pending |
+| HERO-04 | Phase 8: Hero Moments | Pending |
 
 **Coverage:**
 - v1 requirements: 43 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 43 ⚠️ (expected before roadmap)
+- Mapped to phases: 43
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-24*
-*Last updated: 2026-04-24 after initial definition*
+*Last updated: 2026-04-24 after roadmap creation — traceability populated*
