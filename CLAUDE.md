@@ -1,0 +1,79 @@
+# SMBCorigins
+
+Working repository for **SMBC Origin** — an AI-native corporate banking onboarding prototype. This file is read by Claude Code at the start of every session. Keep it current.
+
+## What we're building
+
+A clickable desktop-first prototype showing how corporate client onboarding could work at SMBC with AI as the connective tissue — collapsing today's 90–180 day journey into days. This is a showpiece for stakeholder demos and workshops, not a production system.
+
+## Who's building it
+
+- **Kit** (frontend) — UI, components, screens, client + RM experiences
+- **Evan** (backend) — Supabase schema, API routes, Claude API integration, auth
+
+Both work in this single Next.js repo.
+
+## Stack (to be locked together)
+
+- Next.js 14+ (App Router) · TypeScript · Tailwind
+- Supabase (Postgres, Auth, RLS)
+- Anthropic Claude API for the 4 AI hero moments
+- Deployed to Vercel from `main`
+
+## Working principles
+
+- **Desktop-first** — designed for 1440px
+- **Contract first** — `types/origin.ts` and `lib/api.ts` are the shared boundary
+- **Never edit `types/origin.ts` without telling the other person**
+- **Frontend builds against mocked data initially**; real Supabase swaps in later via an env flag
+- **Small PRs, merge daily** — no long-lived branches
+- **Branch naming**: `kit/<area>` or `evan/<area>`
+
+## Personas
+
+- **Yuki Tanaka** — Treasurer, Kaisei Manufacturing KK (client-side persona)
+- **James Lee** — Relationship Manager, Japanese Corporates desk, SMBC Singapore (RM-side persona)
+
+## Hero scenario
+
+Kaisei Manufacturing KK expanding from Japan into Singapore, Hong Kong, and the UK — applying for cash management, trade finance, and a $50M revolving credit facility.
+
+## The six stages
+
+1. Invite & Intent
+2. Entity & Structure → *UBO Intelligence hero moment*
+3. Documentation → *Doc Extraction hero moment*
+4. Screening
+5. Products & Credit → *Credit Memo Drafter hero moment*
+6. Activation + Perpetual KYC teaser
+
+Plus the **RM Copilot** sidecar (4th hero moment) — cross-cuts every RM screen.
+
+## Design system (locked — do not deviate)
+
+- **Typography**: Fraunces (display, numerals) · Inter Tight (UI body) · Noto Sans JP (Japanese) · IBM Plex Mono (data, timestamps, IDs, eyebrows)
+- **Colors**: Trad Green `#004832` · Fresh Green `#BFD730` · warm paper `#FAFBF7`
+- **Critical rule**: Fresh Green is reserved **exclusively** for AI outputs and AI presence. Do not use it for generic accents or primary buttons.
+
+## Reference docs
+
+Additional context lives in `/docs/`:
+
+- `ORIGIN_PRODUCT_BRIEF.html` — executive brief
+- `ORIGIN_DESIGN.md` — technical master (schema, components, phases)
+- `ORIGIN_JOURNEY_DOC.html` — detailed UX walkthrough
+- `ORIGIN_BUILD_PROMPT.md` — the prompt used to generate the design prototype
+
+At session start, read this file plus the relevant doc for what you're working on.
+
+## Non-goals
+
+- Authentication flows (assume logged in; mock for now)
+- Real KYC / AML / screening provider integrations — all mocked
+- Compliance officer or ops persona views — RM + Client only for v1
+- Mobile responsiveness (desktop-only)
+- Production hardening
+
+## How to run
+
+_TBD — filled in once scaffolded._
