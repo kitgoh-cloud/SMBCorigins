@@ -30,6 +30,17 @@ The locked technical stack agreed by Kit and Evan in Phase 1 (see `DECISIONS.md`
 
 On any conflict between this section and `DECISIONS.md`, `DECISIONS.md` wins (per D-20). Update both atomically when locks change.
 
+## Scaffolding ownership
+
+Who owns initial repo scaffolding (Phase 2) and the directory layout that Phase 3+ depends on. Canonical record lives in `DECISIONS.md` D-09..D-12.
+
+- **Initial scaffold author**: Kit alone runs `create-next-app` and pushes the initial scaffold; Evan reviews. This preserves the day-1 Vercel URL target. (D-09)
+- **Directory layout**: root-level `app/`, `components/`, `lib/`, `types/`, `data/` — no `src/` wrapper. Matches `REQUIREMENTS.md` paths verbatim (BOUND-01..04, SCAFF-06). (D-10)
+- **`types/origin.ts` at repo root** — single source of truth, max visibility, matches BOUND-01 path exactly. (D-11)
+- **Initial-scaffold PR**: branch `kit/scaffold`, single PR, reviewed and merged by Evan. (D-12)
+
+The four shared boundary files (`types/origin.ts`, `lib/api.ts`, `lib/api.mock.ts`, `lib/api.real.ts`) are governed by `CONTRACT.md` and enforced via `.github/CODEOWNERS` — see those files for the cross-review rules.
+
 ## Working principles
 
 - **Desktop-first** — designed for 1440px
