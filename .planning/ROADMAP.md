@@ -22,7 +22,7 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Setup & Alignment** - Kit + Evan lock the cross-GSD contract and document decisions in CLAUDE.md (no code)
-- [ ] **Phase 2: Scaffolding** - Next.js 14 App Router + TypeScript strict + Tailwind + design tokens + fonts + Vercel auto-deploy
+- [x] **Phase 2: Scaffolding** - Next.js 14 App Router + TypeScript strict + Tailwind + design tokens + fonts + Vercel auto-deploy
 - [ ] **Phase 3: Shared Boundary** - `types/origin.ts`, `lib/api.ts` mock/real switch, and full `data/seed.ts` for Kaisei + portfolio
 - [ ] **Phase 4: App Shell & Primitives** - Top strip, logo, dev mode switcher, and five shared primitives used across every screen
 - [ ] **Phase 5: Client Journey Dashboard** - Yuki's heartbeat screen running on mocks at 1440px
