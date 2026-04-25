@@ -239,7 +239,7 @@ const realAPI: OriginAPI = {
         .select('rm_user_id')
         .eq('id', id)
         .single()
-        .then(({ data }) =>
+        .then(({ data }: { data: { rm_user_id: string } | null }) =>
           supabase
             .from('profiles')
             .select('*')
@@ -263,7 +263,7 @@ const realAPI: OriginAPI = {
     )
     const rm = toUser(rmRow as Record<string, unknown>)
     const stages = deriveStages(application)
-    const recentActivities = (activitiesResult.data ?? []).map((row) => ({
+    const recentActivities = (activitiesResult.data ?? []).map((row: Record<string, unknown>) => ({
       id:            row.id as string,
       applicationId: row.application_id as string,
       actorType:     row.actor_type as 'client' | 'rm' | 'ai' | 'system',
@@ -290,7 +290,7 @@ const realAPI: OriginAPI = {
 
     assertData(data, error, 'getPortfolio')
 
-    return (data ?? []).map((row): PortfolioItem => {
+    return (data ?? []).map((row: Record<string, unknown>): PortfolioItem => {
       const application  = toApplication(row as Record<string, unknown>)
       const organization = toOrganization(
         (row as Record<string, unknown>).organizations as Record<string, unknown>
@@ -316,7 +316,7 @@ const realAPI: OriginAPI = {
       .eq('application_id', applicationId)
       .order('created_at')
     assertData(data, error, 'getEntities')
-    return (data ?? []).map((r) => toEntity(r as Record<string, unknown>))
+    return (data ?? []).map((r: Record<string, unknown>) => toEntity(r))
   },
 
   async getUBOs(applicationId) {
@@ -326,7 +326,7 @@ const realAPI: OriginAPI = {
       .eq('application_id', applicationId)
       .order('ownership_pct', { ascending: false })
     assertData(data, error, 'getUBOs')
-    return (data ?? []).map((r) => toUBO(r as Record<string, unknown>))
+    return (data ?? []).map((r: Record<string, unknown>) => toUBO(r))
   },
 
   async getDocuments(applicationId) {
@@ -336,7 +336,7 @@ const realAPI: OriginAPI = {
       .eq('application_id', applicationId)
       .order('uploaded_at', { ascending: false })
     assertData(data, error, 'getDocuments')
-    return (data ?? []).map((r) => toDocument(r as Record<string, unknown>))
+    return (data ?? []).map((r: Record<string, unknown>) => toDocument(r))
   },
 
   async getScreeningHits(applicationId) {
@@ -346,7 +346,7 @@ const realAPI: OriginAPI = {
       .eq('application_id', applicationId)
       .order('created_at')
     assertData(data, error, 'getScreeningHits')
-    return (data ?? []).map((r) => toScreeningHit(r as Record<string, unknown>))
+    return (data ?? []).map((r: Record<string, unknown>) => toScreeningHit(r))
   },
 
   async getProducts(applicationId) {
@@ -356,7 +356,7 @@ const realAPI: OriginAPI = {
       .eq('application_id', applicationId)
       .order('created_at')
     assertData(data, error, 'getProducts')
-    return (data ?? []).map((r) => toProduct(r as Record<string, unknown>))
+    return (data ?? []).map((r: Record<string, unknown>) => toProduct(r))
   },
 
   async getCreditMemo(applicationId) {
