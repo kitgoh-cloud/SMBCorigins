@@ -13,12 +13,22 @@ A clickable desktop-first prototype showing how corporate client onboarding coul
 
 Both work in this single Next.js repo.
 
-## Stack (to be locked together)
+## Stack contract
 
-- Next.js 14+ (App Router) · TypeScript · Tailwind
-- Supabase (Postgres, Auth, RLS)
-- Anthropic Claude API for the 4 AI hero moments
-- Deployed to Vercel from `main`
+The locked technical stack agreed by Kit and Evan in Phase 1 (see `DECISIONS.md` D-01..D-08 for the canonical record — this is a summary).
+
+- **Framework**: Next.js 16.2 LTS, App Router (D-01)
+- **Runtime**: Node 24 LTS — pinned via `.nvmrc` and `engines.node` in `package.json` (D-02)
+- **Styling**: Tailwind v4 with CSS-first `@theme` config (D-03)
+- **Backend**: Supabase hosted dev project — Vercel previews flip `NEXT_PUBLIC_USE_MOCK=false` against a real backend (D-04)
+- **TypeScript**: `strict: true` and `noUncheckedIndexedAccess: true` — `exactOptionalPropertyTypes` deliberately not adopted for prototype velocity (D-05)
+- **Package manager**: npm (D-06)
+- **Linter / formatter**: ESLint flat config + Prettier (D-07)
+- **Branch protection on `main`**: PR required + status checks (CI typecheck + lint + Vercel preview); no required reviewers at branch level — cross-GSD review is enforced via `.github/CODEOWNERS` for the four boundary files only (D-08)
+- **Deployment**: Vercel auto-deploy from `main`; PR previews per branch
+- **Anthropic Claude API** for the four AI hero moments (Evan's GSD owns the integration)
+
+On any conflict between this section and `DECISIONS.md`, `DECISIONS.md` wins (per D-20). Update both atomically when locks change.
 
 ## Working principles
 
