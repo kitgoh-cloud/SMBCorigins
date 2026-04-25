@@ -158,11 +158,11 @@ async function* realStream(applicationId: string) {
   yield { type: 'status', message: 'Generating structure analysis...' }
 
   const structureSummary = (entities ?? [])
-    .map((e) => `- ${e.legal_name} (${e.jurisdiction}${e.is_shell ? ', shell' : ''})`)
+    .map((e: Record<string, unknown>) => `- ${e['legal_name']} (${e['jurisdiction']}${e['is_shell'] ? ', shell' : ''})`)
     .join('\n')
 
   const uboSummary = (ubos ?? [])
-    .map((u) => `- ${u.full_name}: ${u.ownership_pct}% ownership`)
+    .map((u: Record<string, unknown>) => `- ${u['full_name']}: ${u['ownership_pct']}% ownership`)
     .join('\n')
 
   // Stream Claude narrative with prompt caching on the stable system context

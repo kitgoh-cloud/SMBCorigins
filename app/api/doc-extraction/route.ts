@@ -82,7 +82,7 @@ async function* mockStream(documentId: string) {
   yield* delay({ type: 'status', message: 'Identifying document type...' }, 400)
   yield* delay({ type: 'status', message: `Detected: ${docTypeKey.replace('_', ' ').toUpperCase()}. Extracting fields...` }, 300)
 
-  const fields = MOCK_EXTRACTIONS[docTypeKey] ?? MOCK_EXTRACTIONS.coi
+  const fields = MOCK_EXTRACTIONS[docTypeKey] ?? MOCK_EXTRACTIONS['coi'] ?? []
   for (const f of fields) {
     yield* delay({ type: 'field', field: f.field, value: f.value, confidence: f.confidence }, 280)
   }

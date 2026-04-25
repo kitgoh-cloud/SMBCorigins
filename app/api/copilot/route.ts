@@ -114,7 +114,7 @@ async function buildApplicationContext(applicationId: string): Promise<string> {
       .select('organization_id')
       .eq('id', applicationId)
       .single()
-      .then(({ data }) =>
+      .then(({ data }: { data: { organization_id: string } | null }) =>
         db.from('organizations').select('*').eq('id', data?.organization_id).single(),
       ),
     db.from('entities').select('legal_name, jurisdiction, is_shell, confidence_score').eq('application_id', applicationId),
@@ -133,24 +133,24 @@ async function buildApplicationContext(applicationId: string): Promise<string> {
     ``,
     `## Corporate Structure`,
     ...(entities ?? []).map(
-      (e) => `- ${e.legal_name} (${e.jurisdiction})${e.is_shell ? ' [SHELL]' : ''}`,
+      (e: Record<string, unknown>) => `- ${e.legal_name} (${e.jurisdiction})${e.is_shell ? ' [SHELL]' : ''}`,
     ),
     ``,
     `## Beneficial Owners`,
     ...(ubos ?? []).map(
-      (u) =>
-        `- ${u.full_name}: ${u.ownership_pct}%${u.is_pep ? ' [PEP]' : ''} — screening: ${u.screening_status ?? 'pending'}`,
+      (u: Record<string, unknown>) =>
+        `- ${u.full_name}: ${u.ownership_pct}%${u.is_pep ? ' [PEP]' : ''} — screening: ${(u.screening_status as string | null) ?? 'pending'}`,
     ),
     ``,
     `## Screening Summary`,
     ...(screening ?? []).map(
-      (s) =>
-        `- ${s.subject_type} ${s.sanctions_hit ? '[SANCTIONS HIT]' : ''} ${s.adverse_media_hit ? '[ADVERSE MEDIA]' : ''} risk: ${s.risk_score?.toFixed(2) ?? '?'} — ${s.disposition ?? 'pending'}`,
+      (s: Record<string, unknown>) =>
+        `- ${s.subject_type} ${s.sanctions_hit ? '[SANCTIONS HIT]' : ''} ${s.adverse_media_hit ? '[ADVERSE MEDIA]' : ''} risk: ${(s.risk_score as number | null)?.toFixed(2) ?? '?'} — ${(s.disposition as string | null) ?? 'pending'}`,
     ),
     ``,
     `## Recent Activity`,
     ...(activities ?? []).map(
-      (a) => `- [${a.actor_type}] ${a.event_type}: ${JSON.stringify(a.payload)}`,
+      (a: Record<string, unknown>) => `- [${a.actor_type}] ${a.event_type}: ${JSON.stringify(a.payload)}`,
     ),
   ]
 

@@ -207,11 +207,11 @@ async function* realStream(applicationId: string) {
   const contextBlock =
     `Client: ${org?.legal_name ?? 'Unknown'} | Jurisdiction: ${org?.hq_jurisdiction ?? '?'}\n` +
     `Revenue: see financials | Products: ${(app.products_requested as string[]).join(', ')}\n` +
-    `Entities: ${(entities ?? []).map((e) => `${e.legal_name} (${e.jurisdiction})`).join(', ')}\n` +
-    `UBOs: ${(ubos ?? []).map((u) => `${u.full_name} ${u.ownership_pct}%`).join(', ')}\n` +
-    `Screening: ${(screening ?? []).map((s) => `${s.disposition ?? 'pending'} risk=${s.risk_score}`).join(', ')}\n` +
+    `Entities: ${(entities ?? []).map((e: Record<string, unknown>) => `${e.legal_name} (${e.jurisdiction})`).join(', ')}\n` +
+    `UBOs: ${(ubos ?? []).map((u: Record<string, unknown>) => `${u.full_name} ${u.ownership_pct}%`).join(', ')}\n` +
+    `Screening: ${(screening ?? []).map((s: Record<string, unknown>) => `${(s.disposition as string | null) ?? 'pending'} risk=${s.risk_score}`).join(', ')}\n` +
     `Extracted financials: ${JSON.stringify(
-      docs?.find((d) => d.doc_type === 'audited_financials')?.extraction_result ?? {},
+      docs?.find((d: Record<string, unknown>) => d.doc_type === 'audited_financials')?.extraction_result ?? {},
     )}`
 
   const completedSections: Partial<CreditMemoSections> = {}
@@ -254,7 +254,7 @@ async function* realStream(applicationId: string) {
       }
     }
 
-    const confidence = section === 'financials' && !docs?.find((d) => d.doc_type === 'audited_financials')?.extraction_result
+    const confidence = section === 'financials' && !docs?.find((d: Record<string, unknown>) => d.doc_type === 'audited_financials')?.extraction_result
       ? 0.65   // lower confidence if financials aren't extracted yet
       : 0.88
 
