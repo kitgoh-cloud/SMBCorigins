@@ -1,0 +1,72 @@
+/* app/globals.css — design tokens for SMBC Origin */
+/* Source for all token values: docs/ORIGIN_DESIGN.md §8 (D-27) */
+/* Plumbing pattern: @theme generates utilities + CSS vars; @theme inline wires next/font */
+
+@import 'tailwindcss';
+
+@theme {
+  /* ====== Brand greens — primary SMBC palette ====== */
+  --color-trad-green: #004832; /* Primary dark, nav, headers */
+  --color-trad-green-deep: #00301f; /* Hover, depth */
+  --color-trad-green-soft: #1a5f48; /* Hover lighter */
+
+  /* Fresh Green is RESERVED FOR AI OUTPUTS ONLY (D-28; enforcement in Phase 4 / SHELL-05).
+     See CLAUDE.md "Design system" — never use on primary buttons or generic accents. */
+  --color-fresh-green: #bfd730;
+  --color-fresh-green-mute: #d4e566;
+  --color-fresh-green-glow: #bfd73022;
+
+  /* ====== Neutrals ====== */
+  --color-ink: #0a1410;
+  --color-ink-soft: #3c4540;
+  --color-ink-muted: #7a827d;
+  --color-paper: #fafbf7;
+  --color-paper-deep: #f3f5ee;
+  --color-mist: #e8ede4;
+
+  /* ====== Signals ====== */
+  --color-signal-amber: #e8a317;
+  --color-signal-red: #c73e1d;
+  --color-signal-info: #2a6f97;
+
+  /* ====== Dark mode (RM cockpit option — tokens only, not wired in v1) ====== */
+  --color-dark-bg: #0b1f17;
+  --color-dark-surface: #112820;
+  --color-dark-text: #e8ede4;
+
+  /* ====== Spacing — 8px base scale (ORIGIN_DESIGN.md §8.3) ====== */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-24: 96px;
+
+  /* ====== Radius (ORIGIN_DESIGN.md §8.4) ====== */
+  --radius-button: 6px; /* Buttons / inputs */
+  --radius-card: 12px; /* Cards */
+  --radius-modal: 16px; /* Modals */
+  /* Avatars use `rounded-full` (built-in) */
+}
+
+@theme inline {
+  /* Remap next/font CSS variables to Tailwind font namespace.
+     The `inline` keyword inlines the var() reference, avoiding cascade scoping bugs
+     when next/font writes the var on <html> and Tailwind utilities resolve it elsewhere.
+     (RESEARCH §"Landmines" #3 — without `inline`, the indirection chain breaks in
+     Shadow DOM and certain CSS isolations.) */
+  --font-display: var(--font-fraunces); /* Headings, display, stat numerals */
+  --font-body: var(--font-inter-tight); /* UI body */
+  --font-jp: var(--font-noto-sans-jp); /* Japanese characters */
+  --font-mono: var(--font-ibm-plex-mono); /* Data, IDs, timestamps */
+}
+
+/* Base resets — minimal. App shell (Phase 4) will add more. */
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+}

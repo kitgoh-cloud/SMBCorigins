@@ -1,0 +1,15 @@
+.next/
+out/
+build/
+node_modules/
+package-lock.json
+*.min.js
+*.min.css
+
+# planning + reference docs are author-curated; do not auto-format
+.planning/
+docs/
+CLAUDE.md
+CONTRACT.md
+DECISIONS.md
+README.md
