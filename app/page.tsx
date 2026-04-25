@@ -2,6 +2,8 @@
 // Reviewers confirm Phase 2 done by opening this page and scanning swatches + fonts.
 // Phase 4 (app shell) supersedes this content.
 
+import Link from 'next/link'
+
 type Swatch = {
   readonly token: string
   readonly hex: string
@@ -147,12 +149,12 @@ export default function TokenShowcase() {
           Phase 2 placeholder — Phase 4 (app shell) will supersede this root route.
         </p>
         <nav className="mt-4 flex gap-4">
-          <a href="/journey" className="font-mono text-signal-info underline">
+          <Link href="/journey" className="font-mono text-signal-info underline">
             → /journey (client placeholder)
-          </a>
-          <a href="/cockpit" className="font-mono text-signal-info underline">
+          </Link>
+          <Link href="/cockpit" className="font-mono text-signal-info underline">
             → /cockpit (RM placeholder)
-          </a>
+          </Link>
         </nav>
       </footer>
     </main>
