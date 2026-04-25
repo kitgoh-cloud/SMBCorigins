@@ -41,7 +41,12 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
   2. CLAUDE.md contains an explicit "Scaffolding ownership" section naming who runs `create-next-app`, who authors the initial commit, and the initial directory layout
   3. `/docs/ORIGIN_PRODUCT_BRIEF.html`, `/docs/ORIGIN_DESIGN.md`, `/docs/ORIGIN_JOURNEY_DOC.html`, `/docs/ORIGIN_BUILD_PROMPT.md` all exist in the repo and open cleanly
   4. No code has been written in this phase — output is decisions captured in shared documents
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 01-01-PLAN.md — Seed DECISIONS.md at repo root with all 25 locked decisions (D-01..D-25)
+  - [ ] 01-02-PLAN.md — Author CONTRACT.md at repo root governing the cross-GSD shared boundary
+  - [ ] 01-03-PLAN.md — Author .github/CODEOWNERS encoding boundary auto-review rules
+  - [ ] 01-04-PLAN.md — Mutate CLAUDE.md to add Stack contract and Scaffolding ownership sections
+  - [ ] 01-05-PLAN.md — Verify the four /docs/ reference files exist and open cleanly (SETUP-03)
 
 ### Phase 2: Scaffolding
 **Goal**: The repository has a booting Next.js 14 App Router application with TypeScript strict, Tailwind, design tokens, all four fonts, both persona route groups, and a live Vercel URL auto-deploying from `main`.
