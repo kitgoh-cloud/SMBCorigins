@@ -1,0 +1,23 @@
+# CODEOWNERS — cross-GSD boundary enforcement
+#
+# Auto-requests reviewers on PRs touching the four shared boundary files.
+# Backed by CONTRACT.md (human prose) and DECISIONS.md (canonical log,
+# specifically D-13, D-16, D-24).
+#
+# Usernames below are PLACEHOLDERS until Kit confirms the real GitHub handles
+# in the Phase 1 closure PR (kit/phase-1-alignment). On confirmation, replace
+# @kit-placeholder and @evan-placeholder globally.
+#
+# GitHub matches these patterns against changed paths in the order they
+# appear; the LAST matching line wins. Specific paths are listed after
+# generic ones for that reason.
+
+# Co-owned: typed boundary surface — both must review every change
+types/origin.ts          @kit-placeholder @evan-placeholder
+lib/api.ts               @kit-placeholder @evan-placeholder
+
+# Kit-owned: mock implementation — Evan reviews
+lib/api.mock.ts          @kit-placeholder @evan-placeholder
+
+# Evan-owned: real implementation — Kit reviews
+lib/api.real.ts          @evan-placeholder @kit-placeholder
