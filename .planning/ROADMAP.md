@@ -57,7 +57,12 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
   2. Visiting the Vercel production URL returns a live page styled with the locked color palette (Trad Green `#004832`, Fresh Green `#BFD730`, warm paper `#FAFBF7`) and all four fonts visibly rendering (Fraunces, Inter Tight, Noto Sans JP, IBM Plex Mono)
   3. Opening any PR produces a unique preview deployment URL
   4. Navigating to `/(client)` and `/(rm)` route-group URLs returns the persona-specific placeholder pages
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 02-01-PLAN.md — Vercel link + Node 24 + create-next-app scaffold on kit/scaffold
+  - [ ] 02-02-PLAN.md — Tighten config: tsconfig + eslint flat + prettier + .nvmrc + scripts + .gitignore
+  - [ ] 02-03-PLAN.md — Design tokens (@theme) + four next/font fonts + root token showcase page
+  - [ ] 02-04-PLAN.md — Persona route groups: /journey (client) + /cockpit (RM) placeholders
+  - [ ] 02-05-PLAN.md — CI workflow + README/CLAUDE.md How-to-run + PR open + branch protection + post-merge production verify
 **UI hint**: yes
 
 ### Phase 3: Shared Boundary
