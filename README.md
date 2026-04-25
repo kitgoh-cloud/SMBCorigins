@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SMBCorigins
 
-## Getting Started
+AI-native corporate banking onboarding prototype — a clickable desktop-first showpiece for SMBC stakeholder demos and workshops. See [`CLAUDE.md`](./CLAUDE.md) for the working stack contract, scaffolding ownership, and design system.
 
-First, run the development server:
+## How to run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+nvm use 24    # Node 24 LTS per D-02 (uses .nvmrc)
+npm install
+npm run dev   # → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Pre-PR validation:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run typecheck   # tsc --noEmit
+npm run lint        # eslint .
+npm run build       # production build smoke test
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Live URL
 
-## Learn More
+Production: <https://smbcorigins.vercel.app> (Vercel-assigned project URL — see Vercel dashboard for the exact production hostname).
+Each PR produces a unique preview URL via the Vercel GitHub App — see PR comments.
 
-To learn more about Next.js, take a look at the following resources:
+## Repo structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/` — Next.js 16 App Router (root `/` token showcase, `(client)/journey`, `(rm)/cockpit`)
+- `docs/` — `ORIGIN_DESIGN.md`, product brief, journey doc, build prompt
+- `.planning/` — Get-Shit-Done planning artifacts (Kit-only per D-21)
+- `CLAUDE.md`, `DECISIONS.md`, `CONTRACT.md`, `.github/CODEOWNERS` — cross-GSD canonical

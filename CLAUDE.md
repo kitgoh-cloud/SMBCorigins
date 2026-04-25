@@ -97,4 +97,13 @@ At session start, read this file plus the relevant doc for what you're working o
 
 ## How to run
 
-_TBD — filled in once scaffolded._
+```bash
+nvm use 24                # Node 24 LTS per D-02
+npm install
+npm run dev               # → http://localhost:3000
+```
+
+Pre-PR validation: `npm run typecheck && npm run lint && npm run build`.
+
+Live URL: <https://smbcorigins.vercel.app> (Vercel-assigned production hostname — confirm in Vercel dashboard).
+Every PR produces a unique preview URL via the Vercel GitHub App.
