@@ -21,7 +21,7 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Setup & Alignment** - Kit + Evan lock the cross-GSD contract and document decisions in CLAUDE.md (no code)
+- [x] **Phase 1: Setup & Alignment** - Kit + Evan lock the cross-GSD contract and document decisions in CLAUDE.md (no code)
 - [ ] **Phase 2: Scaffolding** - Next.js 14 App Router + TypeScript strict + Tailwind + design tokens + fonts + Vercel auto-deploy
 - [ ] **Phase 3: Shared Boundary** - `types/origin.ts`, `lib/api.ts` mock/real switch, and full `data/seed.ts` for Kaisei + portfolio
 - [ ] **Phase 4: App Shell & Primitives** - Top strip, logo, dev mode switcher, and five shared primitives used across every screen
@@ -42,11 +42,11 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
   3. `/docs/ORIGIN_PRODUCT_BRIEF.html`, `/docs/ORIGIN_DESIGN.md`, `/docs/ORIGIN_JOURNEY_DOC.html`, `/docs/ORIGIN_BUILD_PROMPT.md` all exist in the repo and open cleanly
   4. No code has been written in this phase — output is decisions captured in shared documents
 **Plans**: 5 plans
-  - [ ] 01-01-PLAN.md — Seed DECISIONS.md at repo root with all 25 locked decisions (D-01..D-25)
-  - [ ] 01-02-PLAN.md — Author CONTRACT.md at repo root governing the cross-GSD shared boundary
-  - [ ] 01-03-PLAN.md — Author .github/CODEOWNERS encoding boundary auto-review rules
-  - [ ] 01-04-PLAN.md — Mutate CLAUDE.md to add Stack contract and Scaffolding ownership sections
-  - [ ] 01-05-PLAN.md — Verify the four /docs/ reference files exist and open cleanly (SETUP-03)
+  - [x] 01-01-PLAN.md — Seed DECISIONS.md at repo root with all 25 locked decisions (D-01..D-25)
+  - [x] 01-02-PLAN.md — Author CONTRACT.md at repo root governing the cross-GSD shared boundary
+  - [x] 01-03-PLAN.md — Author .github/CODEOWNERS encoding boundary auto-review rules
+  - [x] 01-04-PLAN.md — Mutate CLAUDE.md to add Stack contract and Scaffolding ownership sections
+  - [x] 01-05-PLAN.md — Verify the four /docs/ reference files exist and open cleanly (SETUP-03)
 
 ### Phase 2: Scaffolding
 **Goal**: The repository has a booting Next.js 14 App Router application with TypeScript strict, Tailwind, design tokens, all four fonts, both persona route groups, and a live Vercel URL auto-deploying from `main`.
