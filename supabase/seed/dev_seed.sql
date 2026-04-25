@@ -2,24 +2,34 @@
 -- Dev seed: SMBC Origin demo data
 -- Kaisei Manufacturing KK (hero scenario) + 6 portfolio clients for RM cockpit
 --
--- Run AFTER migrations and AFTER creating auth users manually in Supabase dashboard
--- (or replace the UUIDs below with real auth.users IDs post-signup).
+-- Prerequisites:
+--   1. Run migrations (supabase db push)
+--   2. Create auth users:  node supabase/seed/create-users.mjs
+--   3. Run this file in Supabase dashboard → SQL Editor
 --
--- Placeholder UUIDs — swap with real auth.users IDs before running:
---   JAMES_ID  = RM profile
---   YUKI_ID   = client_admin profile for Kaisei
+-- IDs are resolved by email — no UUID changes needed.
 -- =============================================================================
-
--- ---------------------------------------------------------------------------
--- Seed auth users (Supabase auth — use dashboard or replace with real IDs)
--- ---------------------------------------------------------------------------
--- These two UUIDs are stable placeholders used throughout this file.
--- Replace with actual auth.users IDs from your Supabase project.
 
 DO $$
 DECLARE
-  james_id  uuid := '00000000-0000-0000-0000-000000000001';
-  yuki_id   uuid := '00000000-0000-0000-0000-000000000002';
+  james_id  uuid := (SELECT id FROM auth.users WHERE email = 'james.lee@smbc.com.sg');
+  yuki_id   uuid := (SELECT id FROM auth.users WHERE email = 'yuki.tanaka@kaisei.co.jp');
+
+BEGIN
+  -- Guard: fail fast if auth users haven't been created yet
+  IF james_id IS NULL THEN
+    RAISE EXCEPTION 'james.lee@smbc.com.sg not found in auth.users — run create-users.mjs first';
+  END IF;
+  IF yuki_id IS NULL THEN
+    RAISE EXCEPTION 'yuki.tanaka@kaisei.co.jp not found in auth.users — run create-users.mjs first';
+  END IF;
+END $$;
+
+-- Re-open main block with resolved IDs
+DO $$
+DECLARE
+  james_id  uuid := (SELECT id FROM auth.users WHERE email = 'james.lee@smbc.com.sg');
+  yuki_id   uuid := (SELECT id FROM auth.users WHERE email = 'yuki.tanaka@kaisei.co.jp');
 
   -- organizations
   kaisei_org_id       uuid := gen_random_uuid();
