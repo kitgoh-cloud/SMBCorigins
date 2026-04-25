@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMBC Origin · Journey Design Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Sans+JP:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --trad-green: #004832;
+    --trad-green-deep: #00301F;
+    --trad-green-soft: #1A5F48;
+    --fresh-green: #BFD730;
+    --fresh-green-mute: #D4E566;
+    --fresh-green-soft: #E5EFBE;
+    --fresh-green-glow: rgba(191, 215, 48, 0.12);
+    --ink: #0A1410;
+    --ink-soft: #3C4540;
+    --ink-muted: #7A827D;
+    --ink-faint: #A8AFA9;
+    --paper: #FAFBF7;
+    --paper-deep: #F3F5EE;
+    --mist: #E8EDE4;
+    --mist-deep: #D9E0D4;
+    --signal-amber: #E8A317;
+    --signal-red: #C73E1D;
+    --signal-info: #2A6F97;
+  }
+
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.55;
+  }
+
+  .serif { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; font-variation-settings: "SOFT" 50, "WONK" 0; letter-spacing: -0.025em; }
+  .jp { font-family: 'Noto Sans JP', sans-serif; font-weight: 500; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .num { font-family: 'Fraunces', Georgia, serif; font-weight: 400; letter-spacing: -0.045em; font-optical-sizing: auto; font-variation-settings: "SOFT" 100, "WONK" 1; }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+  .wrap-wide { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  /* ============ COVER ============ */
+  .cover {
+    background: var(--trad-green);
+    color: #E8EDE4;
+    padding: 56px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-kanji {
+    position: absolute;
+    top: -40px; right: -20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 360px;
+    font-weight: 200;
+    color: rgba(191, 215, 48, 0.06);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+  .cover-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fresh-green);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cover h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 8vw, 64px);
+    line-height: 1.02;
+    margin: 0 0 20px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    max-width: 600px;
+  }
+  .cover-sub {
+    font-size: 17px;
+    color: rgba(232, 237, 228, 0.75);
+    max-width: 560px;
+    line-height: 1.5;
+  }
+  .cover-footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 40px;
+    font-size: 12px;
+    color: rgba(232,237,228,0.6);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+  .cover-footer strong { color: #E8EDE4; font-weight: 500; display: block; margin-bottom: 2px; }
+
+  /* ============ TOC ============ */
+  .toc {
+    background: var(--paper-deep);
+    border-bottom: 1px solid var(--mist);
+    padding: 32px 0;
+  }
+  .toc-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+  .toc-list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  @media (min-width: 600px) {
+    .toc-list { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  }
+  .toc-list li { border-bottom: 1px dashed var(--mist-deep); padding: 8px 0; }
+  .toc-list a {
+    display: flex; justify-content: space-between; align-items: baseline;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    gap: 12px;
+  }
+  .toc-list a:hover { color: var(--trad-green); }
+  .toc-list .num-small { font-family: 'IBM Plex Mono', monospace; color: var(--ink-muted); font-size: 11px; flex-shrink: 0; }
+
+  /* ============ SECTIONS ============ */
+  section { padding: 56px 0 24px; }
+  section + section { border-top: 1px solid var(--mist); }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--trad-green);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 18px; height: 1.5px;
+    background: var(--fresh-green);
+  }
+  h2.section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .section-intro {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 620px;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 40px 0 12px;
+    color: var(--ink);
+  }
+  h4 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin: 24px 0 10px;
+  }
+
+  p { margin: 0 0 14px; }
+  p.lead { font-size: 17px; line-height: 1.55; color: var(--ink); }
+  p strong { font-weight: 600; color: var(--ink); }
+
+  ul, ol { margin: 0 0 16px; padding-left: 20px; }
+  li { margin-bottom: 6px; line-height: 1.55; }
+
+  a { color: var(--trad-green); }
+
+  /* ============ CALLOUTS ============ */
+  .callout {
+    background: white;
+    border: 1px solid var(--mist);
+    border-left: 3px solid var(--fresh-green);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+  .callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .callout.hero {
+    background: linear-gradient(135deg, white 0%, #FDFEF6 100%);
+    border: 1px solid #DCE5C8;
+    border-left-width: 3px;
+  }
+  .callout.hero .callout-label { color: #6B7D1C; }
+
+  /* Pull quote */
+  .quote {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    padding: 20px 24px;
+    border-left: 2px solid var(--trad-green);
+    margin: 24px 0;
+    background: var(--paper-deep);
+    border-radius: 0 8px 8px 0;
+  }
+  .quote-attr {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    letter-spacing: 0;
+  }
+
+  /* ============ PERSONA CARDS ============ */
+  .persona {
+    background: white;
+    border: 1px solid var(--mist);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .persona-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--mist);
+    margin-bottom: 16px;
+  }
+  .persona-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--paper-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--trad-green);
+    flex-shrink: 0;
+    border: 1px solid var(--mist);
+  }
+  .persona-name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .persona-role {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+  }
+  .persona-grid {
+    display: grid;
+    gap: 16px;
+  }
+  @media (min-width: 500px) {
+    .persona-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .persona-box h5 {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 6px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .persona-box p, .persona-box li { font-size: 14px; color: var(--ink-soft); margin: 0 0 4px; }
+
+  /* ============ JOURNEY MAP ============ */
+  .journey-map {
+    background: var(--trad-green);
+    border-radius: 16px;
+    padding: 24px 20px 32px;
+    color: white;
+    overflow-x: auto;
+    margin: 20px 0 32px;
+  }
+  .journey-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fresh-green);
+    margin-bottom: 18px;
+  }
+  .journey-track {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(120px, 1fr));
+    gap: 8px;
+    min-width: 720px;
+    position: relative;
+  }
+  .journey-track::before {
+    content: '';
+    position: absolute;
+    left: 4%; right: 4%;
+    top: 24px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(191,215,48,0.2) 0%, var(--fresh-green) 100%);
+  }
+  .journey-stage {
+    position: relative;
+    padding-top: 48px;
+  }
+  .journey-dot {
+    position: absolute;
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--trad-green);
+    border: 2px solid var(--fresh-green);
+    z-index: 1;
+  }
+  .journey-dot.hero {
+    background: var(--fresh-green);
+    box-shadow: 0 0 0 6px rgba(191,215,48,0.15);
+  }
+  .journey-stage-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--fresh-green);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .journey-stage-name {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .journey-stage-day {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(232,237,228,0.6);
+    text-align: center;
+  }
+  .journey-ai {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--fresh-green);
+    text-align: center;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(191,215,48,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ STAGE CARDS ============ */
+  .stage-card {
+    background: white;
+    border: 1px solid var(--mist);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .stage-head {
+    background: var(--trad-green);
+    color: white;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage-head-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--fresh-green);
+    margin-bottom: 8px;
+  }
+  .stage-head h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    line-height: 1.08;
+    margin: 0 0 8px;
+    color: white;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+  .stage-head-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: rgba(191,215,48,0.9);
+    letter-spacing: 0.05em;
+  }
+  .stage-body { padding: 20px; }
+
+  /* Lanes — Client / RM / AI */
+  .lanes {
+    display: grid;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .lane {
+    background: var(--paper-deep);
+    border: 1px solid var(--mist);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .lane-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .lane-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ink-muted);
+  }
+  .lane.client .lane-dot { background: var(--signal-info); }
+  .lane.rm .lane-dot { background: var(--trad-green); }
+  .lane.ai { background: linear-gradient(135deg, #FDFEF9 0%, #F5F9ED 100%); border-color: #DCE5C8; }
+  .lane.ai .lane-dot { background: var(--fresh-green); }
+  .lane ul { margin: 0; padding-left: 16px; }
+  .lane li { font-size: 14px; color: var(--ink); line-height: 1.5; }
+
+  /* ============ WIREFRAME / MOCKUP ============ */
+  .wire {
+    background: var(--paper-deep);
+    border: 1px dashed var(--mist-deep);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .wire-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+  .wire-label::before { content: '▸ '; color: var(--fresh-green); }
+
+  .mock {
+    background: white;
+    border: 1px solid var(--mist);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 16px 0;
+  }
+  .mock-row { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 6px; background: var(--paper); margin-bottom: 6px; }
+  .mock-row + .mock-row { margin-top: 4px; }
+  .mock-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--fresh-green-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .mock-text { flex: 1; font-size: 13px; color: var(--ink); line-height: 1.35; }
+  .mock-meta { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-muted); }
+
+  /* ============ HERO MOMENT ============ */
+  .hero-moment {
+    background: linear-gradient(135deg, #FDFEF9 0%, #F5F9ED 100%);
+    border: 1px solid #DCE5C8;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 24px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-moment::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(191,215,48,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-moment-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #6B7D1C;
+    background: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #DCE5C8;
+    margin-bottom: 12px;
+  }
+  .hero-moment h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 10px;
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+
+  /* ============ UBO TREE SVG WRAPPER ============ */
+  .svg-wrap {
+    background: var(--paper-deep);
+    border: 1px solid var(--mist);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .svg-wrap svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+  /* ============ DESIGN SYSTEM ============ */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .swatch {
+    border-radius: 8px;
+    padding: 14px;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--mist);
+  }
+  .swatch-hex { font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+  .swatch-name { font-size: 11px; font-weight: 500; margin-top: auto; }
+
+  /* ============ TABLE ============ */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0;
+    background: white;
+    border: 1px solid var(--mist);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .table th {
+    background: var(--paper-deep);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+    border-bottom: 1px solid var(--mist);
+  }
+  .table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--mist);
+    color: var(--ink-soft);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .table tr:last-child td { border-bottom: none; }
+
+  /* ============ PHASE BLOCKS ============ */
+  .phase {
+    background: white;
+    border: 1px solid var(--mist);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    line-height: 0.9;
+    color: var(--fresh-green);
+    font-weight: 400;
+  }
+  .phase-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+  .phase-body { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .phase-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 6px;
+  }
+
+  /* ============ NOTES ============ */
+  .note {
+    font-size: 13px;
+    color: var(--ink-muted);
+    border-left: 2px solid var(--mist-deep);
+    padding: 4px 0 4px 14px;
+    margin: 12px 0;
+    font-style: italic;
+  }
+
+  /* ============ BADGES / PILLS ============ */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .pill-green { background: var(--fresh-green-soft); color: #4D5C15; }
+  .pill-amber { background: #FEF3C7; color: #92400E; }
+  .pill-info { background: #DBEAFE; color: #1E3A8A; }
+  .pill-ghost { background: var(--mist); color: var(--ink-soft); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--trad-green-deep);
+    color: rgba(232,237,228,0.7);
+    padding: 40px 0;
+    margin-top: 40px;
+    font-size: 13px;
+    text-align: center;
+  }
+  footer strong { color: white; font-weight: 500; }
+
+  /* print helpers */
+  @media print {
+    .cover-kanji { display: none; }
+    section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-kanji">縁</div>
+  <div class="wrap" style="position: relative; z-index: 1;">
+    <div class="cover-meta">
+      <svg width="18" height="13" viewBox="0 0 40 28" fill="none"><path d="M3 26 L17 4 L22 4 L8 26 Z" fill="#BFD730"/><path d="M19 26 L33 4 L38 4 L24 26 Z" fill="#BFD730"/></svg>
+      SMBC Origin · Journey Design Document · v0.1
+    </div>
+    <h1 class="serif">Where the relationship begins.</h1>
+    <p class="cover-sub">
+      A future-state corporate onboarding journey for Japanese MNCs expanding globally.
+      From invite to activation in under five days — with agentic AI doing the heavy lifting
+      so the RM can spend their time on the relationship.
+    </p>
+
+    <div class="cover-footer">
+      <div>
+        <strong>Scope</strong>
+        Large corporate · multi-jurisdiction
+      </div>
+      <div>
+        <strong>Products</strong>
+        Accounts · Cash · FX · Trade · Credit
+      </div>
+      <div>
+        <strong>Personas</strong>
+        Client · Relationship Manager
+      </div>
+      <div>
+        <strong>Stack</strong>
+        Next.js · Supabase · Claude API
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TABLE OF CONTENTS ============ -->
+<div class="toc">
+  <div class="wrap">
+    <div class="toc-label">Contents</div>
+    <ol class="toc-list">
+      <li><a href="#vision"><span>The vision</span><span class="num-small">01</span></a></li>
+      <li><a href="#people"><span>The people</span><span class="num-small">02</span></a></li>
+      <li><a href="#journey"><span>The journey at a glance</span><span class="num-small">03</span></a></li>
+      <li><a href="#s1"><span>Stage 1 · Invite &amp; Intent</span><span class="num-small">04</span></a></li>
+      <li><a href="#s2"><span>Stage 2 · Entity &amp; Structure</span><span class="num-small">05</span></a></li>
+      <li><a href="#s3"><span>Stage 3 · Documentation</span><span class="num-small">06</span></a></li>
+      <li><a href="#s4"><span>Stage 4 · Screening</span><span class="num-small">07</span></a></li>
+      <li><a href="#s5"><span>Stage 5 · Products &amp; Credit</span><span class="num-small">08</span></a></li>
+      <li><a href="#s6"><span>Stage 6 · Activation</span><span class="num-small">09</span></a></li>
+      <li><a href="#copilot"><span>RM Copilot (cross-cutting)</span><span class="num-small">10</span></a></li>
+      <li><a href="#design"><span>Design system at a glance</span><span class="num-small">11</span></a></li>
+      <li><a href="#approach"><span>Build approach &amp; phases</span><span class="num-small">12</span></a></li>
+      <li><a href="#questions"><span>Open questions</span><span class="num-small">13</span></a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ 01 · VISION ============ -->
+<section id="vision">
+  <div class="wrap">
+    <div class="section-label">01 · The Vision</div>
+    <h2 class="section-title">Five days, not five months.</h2>
+    <p class="section-intro">
+      Corporate banking onboarding is historically the most painful phase of a relationship.
+      A Japanese MNC opening accounts across Singapore, Hong Kong, and the UK waits 3–6 months,
+      submits the same documents five times to five different teams, and chases their RM weekly.
+      We can do this in days.
+    </p>
+
+    <h3>The premise</h3>
+    <p>
+      SMBC has already signalled where it's heading. In January 2026 SMBC Americas
+      <strong>rolled out Fenergo</strong> for client lifecycle management — a multi-year commitment to
+      simplifying onboarding infrastructure. In April 2026 it launched <strong>SMBC Connect</strong>,
+      the new transaction banking portal, stating that "cash management systems should be as
+      intuitive and frictionless as the apps on our smartphones."
+    </p>
+    <p>
+      <strong>SMBC Origin</strong> is the missing front door — the onboarding experience that feeds
+      directly into SMBC Connect. It's a future-state prototype showing what becomes possible
+      when agentic AI, radical UX clarity, and embedded intelligence are applied end-to-end to
+      the corporate onboarding journey.
+    </p>
+
+    <div class="quote">
+      "Today, a Japanese MNC opening accounts across SG, HK, and the UK waits three months.
+      With SMBC Origin, the RM sends one invite. AI unwraps the structure, extracts data from
+      every document, screens every entity, configures products across every jurisdiction, and
+      drafts the credit memo. The client is live in days — and their RM spent their time on
+      the relationship, not paperwork."
+      <div class="quote-attr">— The 30-second pitch</div>
+    </div>
+
+    <h3>Design principles</h3>
+    <ul>
+      <li><strong>AI is quiet, not loud.</strong> Fresh Green is rationed — when you see it, intelligence happened. The cockpit is calm; the AI is a well-dressed colleague, not a chatbot.</li>
+      <li><strong>Parallel, not sequential.</strong> The RM and client operate in parallel lanes. AI bridges them. Nothing blocks waiting for a human to push a button unless judgment is genuinely required.</li>
+      <li><strong>Explain the magic.</strong> Every AI decision is auditable. Confidence scores, source registries, extraction logs. The RM is in command, not overruled.</li>
+      <li><strong>Heritage through restraint.</strong> Japanese design honours — IBM wouldn't call them this, but whitespace, precision, and considered typography. Kanji as watermark, not decoration.</li>
+      <li><strong>Demo every moment.</strong> This is a showpiece. If an AI moment isn't visually memorable, it fails the mission.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 02 · PEOPLE ============ -->
+<section id="people">
+  <div class="wrap">
+    <div class="section-label">02 · The People</div>
+    <h2 class="section-title">Two personas, one journey.</h2>
+    <p class="section-intro">
+      A corporate onboarding journey always has two protagonists. The app is designed as two
+      portals on one spine — <strong>the client's self-service experience</strong> and
+      <strong>the RM's command cockpit</strong> — with AI orchestrating between them.
+    </p>
+
+    <div class="persona">
+      <div class="persona-head">
+        <div class="persona-avatar">YT</div>
+        <div>
+          <h4 class="persona-name">Yuki Tanaka</h4>
+          <div class="persona-role">Group Treasurer · Kaisei Manufacturing KK · Tokyo</div>
+        </div>
+      </div>
+      <div class="persona-grid">
+        <div class="persona-box">
+          <h5>Context</h5>
+          <p>48. Oversees treasury for a ¥380B automotive parts manufacturer with 4,200 staff. Currently banking domestically with MUFG. Expanding into SG, HK, and UK before Q2 close.</p>
+        </div>
+        <div class="persona-box">
+          <h5>Pain points today</h5>
+          <ul style="margin:0; padding-left: 16px;">
+            <li>Uploads same M&amp;A doc five times to five teams</li>
+            <li>No clarity on which stage the application is in</li>
+            <li>Every jurisdiction has different requirements — surprises</li>
+            <li>Chases RM weekly for status</li>
+          </ul>
+        </div>
+        <div class="persona-box">
+          <h5>What success looks like</h5>
+          <p>Single portal. Clear progress. Answers live in the portal, not email threads. No surprises.</p>
+        </div>
+        <div class="persona-box">
+          <h5>Tech comfort</h5>
+          <p>High. Uses Bloomberg Terminal. Expects consumer-grade polish for enterprise tools.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona">
+      <div class="persona-head">
+        <div class="persona-avatar">JL</div>
+        <div>
+          <h4 class="persona-name">James Lee</h4>
+          <div class="persona-role">Senior RM · Japanese Corporates Desk · SMBC Singapore</div>
+        </div>
+      </div>
+      <div class="persona-grid">
+        <div class="persona-box">
+          <h5>Context</h5>
+          <p>Portfolio of 25 MNC clients across the Japanese corporates desk. Bilingual JP/EN. Based Jurong. Mid-career, target-driven, commercially sharp.</p>
+        </div>
+        <div class="persona-box">
+          <h5>Pain points today</h5>
+          <ul style="margin:0; padding-left: 16px;">
+            <li>40% of week on doc chasing + system hopping</li>
+            <li>No visibility into what's blocking each client</li>
+            <li>Credit memo = 3 days of manual spreading</li>
+            <li>Learns about problems when clients email angry</li>
+          </ul>
+        </div>
+        <div class="persona-box">
+          <h5>What success looks like</h5>
+          <p>Pipeline at a glance. AI handles the copying. His time goes on relationship and judgment.</p>
+        </div>
+        <div class="persona-box">
+          <h5>Tech comfort</h5>
+          <p>High. Lives in CRM + spreadsheets. Fluent bilingual power user.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · JOURNEY MAP ============ -->
+<section id="journey">
+  <div class="wrap-wide">
+    <div class="section-label">03 · Journey at a Glance</div>
+    <h2 class="section-title">Six stages. Five days. Four AI moments.</h2>
+    <p class="section-intro">
+      The full end-to-end journey, from RM sending the invite to the client going live on SMBC Connect.
+      AI moments are marked with a green dot. Swipe the map if it's cut off.
+    </p>
+
+    <div class="journey-map">
+      <div class="journey-title">End-to-end Journey · Kaisei Manufacturing</div>
+      <div class="journey-track">
+        <div class="journey-stage">
+          <div class="journey-dot"></div>
+          <div class="journey-stage-num">STAGE 01</div>
+          <div class="journey-stage-name">Invite<br>&amp; Intent</div>
+          <div class="journey-stage-day">Day 0 · 5 min</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-dot hero"></div>
+          <div class="journey-stage-num">STAGE 02</div>
+          <div class="journey-stage-name">Entity<br>&amp; Structure</div>
+          <div class="journey-stage-day">Day 1 · 4 hrs</div>
+          <div class="journey-ai">◆ UBO AGENT</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-dot hero"></div>
+          <div class="journey-stage-num">STAGE 03</div>
+          <div class="journey-stage-name">Documents</div>
+          <div class="journey-stage-day">Day 2 · 6 hrs</div>
+          <div class="journey-ai">◆ DOC EXTRACT</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-dot"></div>
+          <div class="journey-stage-num">STAGE 04</div>
+          <div class="journey-stage-name">Screening</div>
+          <div class="journey-stage-day">Day 3 · 2 hrs</div>
+          <div class="journey-ai">◆ SCREEN AGENT</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-dot hero"></div>
+          <div class="journey-stage-num">STAGE 05</div>
+          <div class="journey-stage-name">Products<br>&amp; Credit</div>
+          <div class="journey-stage-day">Day 4 · 1 day</div>
+          <div class="journey-ai">◆ CREDIT MEMO</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-dot"></div>
+          <div class="journey-stage-num">STAGE 06</div>
+          <div class="journey-stage-name">Activation</div>
+          <div class="journey-stage-day">Day 5 · 1 hr</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Benchmark vs. current state</h3>
+    <table class="table">
+      <tr>
+        <th>Dimension</th>
+        <th>Today (industry)</th>
+        <th>SMBC Origin (future)</th>
+      </tr>
+      <tr>
+        <td>Time to live</td>
+        <td>90–180 days</td>
+        <td><strong>~5 days</strong></td>
+      </tr>
+      <tr>
+        <td>Client document submissions</td>
+        <td>5–8 repeats across teams</td>
+        <td><strong>Once, per doc</strong></td>
+      </tr>
+      <tr>
+        <td>UBO resolution time</td>
+        <td>Days of manual email</td>
+        <td><strong>Minutes</strong></td>
+      </tr>
+      <tr>
+        <td>Credit memo drafting</td>
+        <td>3 days RM time</td>
+        <td><strong>Minutes, RM reviews</strong></td>
+      </tr>
+      <tr>
+        <td>Client status visibility</td>
+        <td>Email ping-pong</td>
+        <td><strong>Real-time portal</strong></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ STAGE 1 ============ -->
+<section id="s1">
+  <div class="wrap">
+    <div class="section-label">04 · Stage 1</div>
+    <h2 class="section-title">Invite &amp; Intent</h2>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <div class="stage-head-num">STAGE 01 · DAY 0</div>
+        <h3>The cold start.</h3>
+        <div class="stage-head-time">Expected duration: 5 minutes · No AI hero moment · Sets the tone</div>
+      </div>
+      <div class="stage-body">
+        <p class="lead">
+          James has signed a new mandate with Yuki. He opens SMBC Origin, creates a new application,
+          picks jurisdictions (JP, SG, HK, UK) and products (A/C/FX/T/Credit), and sends a magic-link invite.
+          Yuki receives it, lands on a branded welcome screen, and confirms the scope.
+        </p>
+
+        <h4>What happens</h4>
+        <div class="lanes">
+          <div class="lane rm">
+            <div class="lane-head"><span class="lane-dot"></span>RM · James</div>
+            <ul>
+              <li>Opens <span class="mono">/rm/applications/new</span></li>
+              <li>Enters client legal name — AI pre-fills from Japanese corporate registry (hōjin bangō)</li>
+              <li>Selects target jurisdictions and products</li>
+              <li>Adds estimated size (revenue, expected flows, credit ask)</li>
+              <li>Clicks <em>Send invite</em> — magic link emailed</li>
+            </ul>
+          </div>
+          <div class="lane client">
+            <div class="lane-head"><span class="lane-dot"></span>Client · Yuki</div>
+            <ul>
+              <li>Receives email from James: "Welcome to SMBC Origin"</li>
+              <li>Clicks link, lands on <span class="mono">/client/welcome</span></li>
+              <li>Confirms scope (or flags adjustments)</li>
+              <li>Sees the 6-stage journey map with "we're here" marker on Stage 2</li>
+            </ul>
+          </div>
+          <div class="lane ai">
+            <div class="lane-head"><span class="lane-dot"></span>AI · in background</div>
+            <ul>
+              <li>Fetches public registry data for the Japanese parent entity</li>
+              <li>Seeds initial entity + officers from public data</li>
+              <li>Prepares Stage 2 so it's not starting from zero</li>
+            </ul>
+          </div>
+        </div>
+
+        <h4>Key screens</h4>
+        <div class="mock">
+          <div class="wire-label">rm view · /rm/applications/new</div>
+          <div class="mock-row">
+            <div class="mock-dot">➊</div>
+            <div class="mock-text"><strong>Legal name</strong> — Kaisei Manufacturing KK<br><span class="mock-meta">pre-filled from corporate registry · hōjin: 2010401012345</span></div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-dot">➋</div>
+            <div class="mock-text"><strong>Jurisdictions</strong> — Japan · Singapore · Hong Kong · UK</div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-dot">➌</div>
+            <div class="mock-text"><strong>Products</strong> — Accounts · Cash · FX · Trade · Credit (USD 50M revolving)</div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-dot">➍</div>
+            <div class="mock-text"><strong>Client contact</strong> — Yuki Tanaka · Group Treasurer · yuki.tanaka@kaisei.co.jp</div>
+          </div>
+          <div class="mock-row" style="background: var(--fresh-green-soft);">
+            <div class="mock-dot" style="background: var(--fresh-green);">✦</div>
+            <div class="mock-text"><strong>Send invite →</strong></div>
+          </div>
+        </div>
+
+        <div class="mock">
+          <div class="wire-label">client view · /client/welcome</div>
+          <div class="mock-row" style="background: var(--trad-green); color: white; padding: 14px;">
+            <div class="mock-text" style="color: white;">
+              <span style="font-family: 'Fraunces', serif; font-size: 20px;">Welcome, Yuki.</span><br>
+              <span style="color: rgba(255,255,255,0.7); font-size: 12px;">James from SMBC has invited you to begin onboarding Kaisei Manufacturing and its international entities.</span>
+            </div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-text"><strong>Scope confirmed</strong> — 4 jurisdictions · 5 products · est. 5 days</div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-text"><strong>Next:</strong> Stage 2 · Entity &amp; Structure. We'll walk you through.</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-label">Success criteria</div>
+          <ul style="margin:0;">
+            <li>Yuki lands on the portal in under 60 seconds of clicking the email</li>
+            <li>Scope is confirmed with no back-and-forth</li>
+            <li>Yuki can see the entire journey — no "black box" feeling</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAGE 2 ============ -->
+<section id="s2">
+  <div class="wrap">
+    <div class="section-label">05 · Stage 2</div>
+    <h2 class="section-title">Entity &amp; Structure</h2>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <div class="stage-head-num">STAGE 02 · DAY 1</div>
+        <h3>AI unwraps the corporate tree.</h3>
+        <div class="stage-head-time">Expected duration: 4 hours · Hero moment · UBO Intelligence Agent</div>
+      </div>
+      <div class="stage-body">
+        <p class="lead">
+          Historically this stage eats 3–4 weeks. Clients list subsidiaries manually, compliance
+          teams dig through registries one jurisdiction at a time, and UBOs are often identified
+          by self-attestation. We replace all of that with an agent that recursively queries
+          registries across jurisdictions and unwraps shell layers until natural persons are identified.
+        </p>
+
+        <h4>What happens</h4>
+        <div class="lanes">
+          <div class="lane client">
+            <div class="lane-head"><span class="lane-dot"></span>Client · Yuki</div>
+            <ul>
+              <li>Opens <span class="mono">/client/entity</span></li>
+              <li>Reviews AI-proposed entity tree (pre-built from public registries)</li>
+              <li>Confirms or corrects subsidiary list</li>
+              <li>Identifies UBOs (with AI suggestions)</li>
+              <li>Submits for structure approval</li>
+            </ul>
+          </div>
+          <div class="lane rm">
+            <div class="lane-head"><span class="lane-dot"></span>RM · James</div>
+            <ul>
+              <li>Monitors AI progress from cockpit</li>
+              <li>Reviews final structure</li>
+              <li>Approves structure (signs off AI's work)</li>
+              <li>Escalates any shell / complex holdings to compliance if needed</li>
+            </ul>
+          </div>
+          <div class="lane ai">
+            <div class="lane-head"><span class="lane-dot"></span>AI · UBO Intelligence Agent</div>
+            <ul>
+              <li>Queries ACRA (SG), Companies House (UK), Companies Registry (HK), hōjin bangō (JP)</li>
+              <li>Builds entity tree recursively — layer by layer</li>
+              <li>Unwraps shell companies (BVI, Cayman, etc.) until natural persons identified</li>
+              <li>Flags confidence per node (94% = confirmed via registry; 68% = inferred)</li>
+              <li>Produces narrative: "I found 4 subsidiaries, 1 BVI shell, 7 ultimate natural persons"</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="hero-moment">
+          <div class="hero-moment-tag">◆ Hero Moment · UBO Intelligence Agent</div>
+          <h4>The tree that builds itself.</h4>
+          <p style="color: var(--ink-soft); font-size: 14px;">
+            The signature demo moment. When James clicks "Run structure analysis" the UI animates
+            the tree building itself, layer by layer, with live narration. Each node pulses in as
+            it resolves. Shell companies appear as dashed nodes. The natural persons appear last,
+            at the top of the tree, with confidence scores.
+          </p>
+
+          <h5 style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin: 16px 0 6px;">Storyboard</h5>
+          <ol style="font-size: 14px; color: var(--ink-soft);">
+            <li>"Querying Japan corporate registry for Kaisei Manufacturing KK..." → Parent node appears at centre</li>
+            <li>"Found 4 subsidiary entities. Querying ACRA, CR-HK, Companies House..." → 4 child nodes fan out with subtle stagger</li>
+            <li>"Detected holding company in BVI. Unwrapping..." → shell company appears as dashed outline</li>
+            <li>"Resolved ownership via BVI Financial Services filings." → shell replaced by its backers (Tanaka Family Trust)</li>
+            <li>"Resolved 7 natural persons at top of structure. Confidence 94%." → UBOs appear at top in gold</li>
+          </ol>
+
+          <h5 style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin: 16px 0 6px;">Tech sketch</h5>
+          <p style="font-size: 13px; color: var(--ink-soft);">
+            React Flow for the tree. Framer Motion for node reveals (stagger 120ms). Narration as
+            streaming text beside tree. Mocked registry data returned with realistic delays (800ms per query).
+            On production this would orchestrate real registry APIs + Claude to reason across layers.
+          </p>
+        </div>
+
+        <h4>The Kaisei structure (seed data)</h4>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" style="font-family: 'IBM Plex Mono', monospace;">
+            <!-- UBOs at top -->
+            <g>
+              <rect x="60" y="20" width="140" height="44" rx="6" fill="#BFD730" stroke="#7A8C24" stroke-width="1"/>
+              <text x="130" y="40" text-anchor="middle" font-size="11" fill="#00301F" font-weight="600">Hiroshi Kaisei</text>
+              <text x="130" y="55" text-anchor="middle" font-size="9" fill="#3C4540">42% · UBO</text>
+
+              <rect x="220" y="20" width="140" height="44" rx="6" fill="#BFD730" stroke="#7A8C24" stroke-width="1"/>
+              <text x="290" y="40" text-anchor="middle" font-size="11" fill="#00301F" font-weight="600">Yuki Kaisei</text>
+              <text x="290" y="55" text-anchor="middle" font-size="9" fill="#3C4540">18% · UBO</text>
+
+              <rect x="380" y="20" width="140" height="44" rx="6" fill="#BFD730" stroke="#7A8C24" stroke-width="1"/>
+              <text x="450" y="40" text-anchor="middle" font-size="11" fill="#00301F" font-weight="600">Kenji Morita</text>
+              <text x="450" y="55" text-anchor="middle" font-size="9" fill="#3C4540">12% · via BVI</text>
+
+              <rect x="540" y="20" width="140" height="44" rx="6" fill="#BFD730" stroke="#7A8C24" stroke-width="1"/>
+              <text x="610" y="40" text-anchor="middle" font-size="11" fill="#00301F" font-weight="600">Tanaka Trust</text>
+              <text x="610" y="55" text-anchor="middle" font-size="9" fill="#3C4540">4 persons</text>
+            </g>
+
+            <!-- Shell (dashed) -->
+            <g>
+              <rect x="380" y="110" width="140" height="40" rx="6" fill="white" stroke="#7A827D" stroke-width="1.5" stroke-dasharray="4,3"/>
+              <text x="450" y="128" text-anchor="middle" font-size="11" fill="#7A827D" font-weight="500">Morita Holdings</text>
+              <text x="450" y="142" text-anchor="middle" font-size="9" fill="#A8AFA9">BVI shell</text>
+            </g>
+
+            <!-- Parent -->
+            <g>
+              <rect x="260" y="180" width="180" height="54" rx="6" fill="#004832" stroke="none"/>
+              <text x="350" y="202" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="Fraunces, serif">Kaisei Manufacturing KK</text>
+              <text x="350" y="218" text-anchor="middle" font-size="10" fill="#BFD730">Japan · parent · 100%</text>
+              <text x="350" y="230" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)">hōjin 2010401012345</text>
+            </g>
+
+            <!-- Subsidiaries -->
+            <g>
+              <rect x="20" y="290" width="140" height="50" rx="6" fill="white" stroke="#D9E0D4" stroke-width="1"/>
+              <text x="90" y="310" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">Kaisei Asia Pacific</text>
+              <text x="90" y="324" text-anchor="middle" font-size="9" fill="#7A827D">Singapore · 100%</text>
+              <text x="90" y="335" text-anchor="middle" font-size="8" fill="#A8AFA9">UEN 202100123X</text>
+
+              <rect x="180" y="290" width="140" height="50" rx="6" fill="white" stroke="#D9E0D4" stroke-width="1"/>
+              <text x="250" y="310" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">Kaisei Trading HK</text>
+              <text x="250" y="324" text-anchor="middle" font-size="9" fill="#7A827D">Hong Kong · 100%</text>
+              <text x="250" y="335" text-anchor="middle" font-size="8" fill="#A8AFA9">BR 2987651</text>
+
+              <rect x="340" y="290" width="140" height="50" rx="6" fill="white" stroke="#D9E0D4" stroke-width="1"/>
+              <text x="410" y="310" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">Kaisei Europe</text>
+              <text x="410" y="324" text-anchor="middle" font-size="9" fill="#7A827D">UK · 100%</text>
+              <text x="410" y="335" text-anchor="middle" font-size="8" fill="#A8AFA9">CH 12345678</text>
+
+              <rect x="500" y="290" width="180" height="50" rx="6" fill="white" stroke="#D9E0D4" stroke-width="1"/>
+              <text x="590" y="310" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">Kaisei Technology KK</text>
+              <text x="590" y="324" text-anchor="middle" font-size="9" fill="#7A827D">Japan · 80%</text>
+              <text x="590" y="335" text-anchor="middle" font-size="8" fill="#A8AFA9">20% Morita Holdings</text>
+            </g>
+
+            <!-- Lines -->
+            <g stroke="#D9E0D4" stroke-width="1" fill="none">
+              <!-- UBOs to shell/parent -->
+              <path d="M 130 64 L 130 180 L 260 180" opacity="0.5"/>
+              <path d="M 290 64 L 290 180 L 300 180" opacity="0.5"/>
+              <path d="M 450 64 L 450 110" stroke="#7A8C24" opacity="0.7"/>
+              <path d="M 610 64 L 610 130 L 520 130" opacity="0.5"/>
+              <!-- Shell to Kaisei Tech -->
+              <path d="M 450 150 L 450 180 L 440 180" opacity="0.5"/>
+              <!-- Parent to subsidiaries -->
+              <path d="M 350 234 L 350 260 L 90 260 L 90 290"/>
+              <path d="M 350 260 L 250 260 L 250 290"/>
+              <path d="M 350 260 L 410 260 L 410 290"/>
+              <path d="M 350 260 L 590 260 L 590 290"/>
+            </g>
+
+            <!-- Legend -->
+            <g font-size="9" fill="#7A827D">
+              <rect x="20" y="390" width="10" height="10" rx="2" fill="#BFD730"/>
+              <text x="34" y="399">UBO (natural person)</text>
+              <rect x="180" y="390" width="10" height="10" rx="2" fill="#004832"/>
+              <text x="194" y="399">Parent / core entity</text>
+              <rect x="340" y="390" width="10" height="10" rx="2" fill="white" stroke="#7A827D" stroke-dasharray="3,2"/>
+              <text x="354" y="399">Shell (unwrapped)</text>
+              <rect x="490" y="390" width="10" height="10" rx="2" fill="white" stroke="#D9E0D4"/>
+              <text x="504" y="399">Subsidiary</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="callout">
+          <div class="callout-label">Key data captured this stage</div>
+          <ul style="margin:0;">
+            <li>All legal entities with registration numbers, jurisdictions, addresses</li>
+            <li>Ownership percentages + control types</li>
+            <li>UBOs (name, DOB, nationality, ownership %, control type)</li>
+            <li>PEP indicator per UBO (flagged for Stage 4 screening)</li>
+            <li>Confidence score per node (for audit trail)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAGE 3 ============ -->
+<section id="s3">
+  <div class="wrap">
+    <div class="section-label">06 · Stage 3</div>
+    <h2 class="section-title">Documentation</h2>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <div class="stage-head-num">STAGE 03 · DAY 2</div>
+        <h3>Drag in a doc. Watch it unpack itself.</h3>
+        <div class="stage-head-time">Expected duration: 6 hours · Hero moment · Doc Extraction Agent</div>
+      </div>
+      <div class="stage-body">
+        <p class="lead">
+          Instead of the bank asking for 15 documents from a generic checklist, the AI asks only
+          for what's actually missing per jurisdiction + risk tier. When the client drags in a PDF,
+          fields populate in real time, inconsistencies are flagged against the entity tree, and
+          the RM sees extracted data with source citations.
+        </p>
+
+        <h4>What happens</h4>
+        <div class="lanes">
+          <div class="lane client">
+            <div class="lane-head"><span class="lane-dot"></span>Client · Yuki</div>
+            <ul>
+              <li>Opens <span class="mono">/client/documents</span></li>
+              <li>Sees smart checklist: "We need 7 documents. We already have 3 from Japan; you uploaded 1 in Stage 2."</li>
+              <li>Drags Certificate of Incorporation for Singapore entity → extraction begins live</li>
+              <li>Reviews extracted fields (editable), confirms</li>
+              <li>Responds to AI query: "This address differs from ACRA record — please clarify"</li>
+            </ul>
+          </div>
+          <div class="lane rm">
+            <div class="lane-head"><span class="lane-dot"></span>RM · James</div>
+            <ul>
+              <li>Monitors doc queue with real-time completion %</li>
+              <li>Reviews flagged inconsistencies, dispositions</li>
+              <li>Approves doc package for Stage 4</li>
+            </ul>
+          </div>
+          <div class="lane ai">
+            <div class="lane-head"><span class="lane-dot"></span>AI · Doc Extraction Agent</div>
+            <ul>
+              <li>OCR + LLM reads uploaded PDF</li>
+              <li>Populates structured fields (registration number, directors, share capital, etc.)</li>
+              <li>Cross-references extractions against Stage 2 entity tree</li>
+              <li>Flags discrepancies with confidence + suggestion</li>
+              <li>Translates Japanese-language documents when needed</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="hero-moment">
+          <div class="hero-moment-tag">◆ Hero Moment · Document Extraction</div>
+          <h4>PDF → structured data, live.</h4>
+          <p style="color: var(--ink-soft); font-size: 14px;">
+            Client drops a PDF. Right panel shows "Reading document..." with streaming status.
+            Middle shows a live extraction log ("Found registration number... Found 3 directors...
+            Cross-referencing ACRA..."). Left populates the structured fields one by one, each
+            field highlighting briefly as it's filled. A discrepancy badge appears if data doesn't
+            match Stage 2 tree.
+          </p>
+
+          <h5 style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin: 16px 0 6px;">What the client actually sees</h5>
+          <div class="mock" style="background: var(--paper);">
+            <div class="mock-row" style="background: white;">
+              <div class="mock-dot" style="background: var(--fresh-green); color: white;">↑</div>
+              <div class="mock-text"><strong>kaisei-apac-coi.pdf</strong> · 2.4 MB<br><span class="mock-meta">reading · 67%</span></div>
+            </div>
+            <div class="mock-row" style="background: white;">
+              <div class="mock-text"><strong>Registration no.</strong> <span class="mono" style="color: var(--trad-green);">202100123X</span> <span class="pill pill-green">✓ matches ACRA</span></div>
+            </div>
+            <div class="mock-row" style="background: white;">
+              <div class="mock-text"><strong>Directors</strong> Hiroshi Kaisei, Yuki Tanaka, Tan Wei Ming<br><span class="mock-meta">extracted from "Officer Details" section</span></div>
+            </div>
+            <div class="mock-row" style="background: #FEF3C7;">
+              <div class="mock-text"><strong>Registered address</strong> <span class="mono">#22-01, 1 Marina Boulevard</span><br><span style="color: #92400E; font-size: 12px;">⚠ Differs from ACRA (which shows #22-02). Which is correct?</span></div>
+            </div>
+          </div>
+        </div>
+
+        <h4>Smart doc requests (not generic checklists)</h4>
+        <p>
+          Different jurisdictions require different documents. A static checklist dumps the kitchen
+          sink on the client. The smart version asks only for what's actually needed given:
+        </p>
+        <ul>
+          <li>The jurisdiction of each entity (SG, HK, UK, JP each have different mandatory docs)</li>
+          <li>What's already been pulled from public registries</li>
+          <li>The client's risk tier (simple structure + low risk = lighter package)</li>
+          <li>Which products were selected (credit needs audited financials; accounts don't)</li>
+        </ul>
+
+        <div class="callout">
+          <div class="callout-label">Documents collected for Kaisei</div>
+          <table class="table" style="margin:6px 0 0;">
+            <tr><th>Entity</th><th>Doc</th><th>Source</th></tr>
+            <tr><td>Kaisei KK</td><td>Corporate registry extract</td><td>Public (auto)</td></tr>
+            <tr><td>Kaisei KK</td><td>3y audited financials</td><td>Client upload</td></tr>
+            <tr><td>Kaisei APAC</td><td>ACRA BizFile+ extract</td><td>Public (auto)</td></tr>
+            <tr><td>Kaisei APAC</td><td>M&A + COI + resolutions</td><td>Client upload</td></tr>
+            <tr><td>Kaisei HK</td><td>CR NCR + resolutions</td><td>Client upload</td></tr>
+            <tr><td>Kaisei Europe</td><td>Companies House CS01</td><td>Public (auto)</td></tr>
+            <tr><td>UBOs</td><td>Passport / govt ID × 7</td><td>Client upload</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAGE 4 ============ -->
+<section id="s4">
+  <div class="wrap">
+    <div class="section-label">07 · Stage 4</div>
+    <h2 class="section-title">Screening (KYC / AML)</h2>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <div class="stage-head-num">STAGE 04 · DAY 3</div>
+        <h3>Every entity, every person, every list.</h3>
+        <div class="stage-head-time">Expected duration: 2 hours · Agentic screening</div>
+      </div>
+      <div class="stage-body">
+        <p class="lead">
+          Runs all entities and UBOs through sanctions lists, PEP databases, adverse media, and
+          internal watchlists. Agentic layer clears low-risk false positives automatically,
+          writes a narrative justification per hit, and escalates genuine amber/red to the RM with context.
+        </p>
+
+        <h4>What happens</h4>
+        <div class="lanes">
+          <div class="lane client">
+            <div class="lane-head"><span class="lane-dot"></span>Client · Yuki</div>
+            <ul>
+              <li>Sees live status: "We're screening 12 entities and 7 individuals"</li>
+              <li>Gets notified if additional information is required (rare)</li>
+              <li>Otherwise stays hands-off — this is a backend step</li>
+            </ul>
+          </div>
+          <div class="lane rm">
+            <div class="lane-head"><span class="lane-dot"></span>RM · James</div>
+            <ul>
+              <li>Reviews screening dashboard: clears, ambers, reds</li>
+              <li>Dispositions amber hits with context + rationale</li>
+              <li>Escalates reds to compliance with 1-click handoff</li>
+              <li>Signs off on composite risk rating</li>
+            </ul>
+          </div>
+          <div class="lane ai">
+            <div class="lane-head"><span class="lane-dot"></span>AI · Screening Agent</div>
+            <ul>
+              <li>Parallel-runs OFAC, UN, EU, HMT sanctions against all subjects</li>
+              <li>Checks PEP registries (commercial + gov)</li>
+              <li>Scans adverse media (last 5 years, weighted)</li>
+              <li>Auto-clears obvious false positives (same-name, wrong DOB/country)</li>
+              <li>Writes narrative per flagged hit: "Hit on X because Y. My read: Z."</li>
+              <li>Composes composite risk score</li>
+            </ul>
+          </div>
+        </div>
+
+        <h4>Kaisei screening results (seed)</h4>
+        <div class="mock">
+          <div class="mock-row" style="background: #DCFCE7;">
+            <div class="mock-dot" style="background: #14532D; color: white;">✓</div>
+            <div class="mock-text"><strong>12 entities</strong> — no sanctions hits, no adverse media of material concern</div>
+          </div>
+          <div class="mock-row" style="background: #DCFCE7;">
+            <div class="mock-dot" style="background: #14532D; color: white;">✓</div>
+            <div class="mock-text"><strong>6 UBOs</strong> — no hits</div>
+          </div>
+          <div class="mock-row" style="background: #FEF3C7;">
+            <div class="mock-dot" style="background: var(--signal-amber); color: white;">⚠</div>
+            <div class="mock-text"><strong>1 UBO · Kenji Morita</strong> — adverse media 2015 (business dispute, civil, settled). <em style="color: #92400E;">My read: low relevance. Not a regulatory or integrity concern. Recommend clear with note.</em></div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-label">Composite risk output</div>
+          <p style="margin:0; font-size: 14px;">
+            <strong>Risk rating:</strong> Medium-Low · Standard EDD complete · No escalation to compliance required
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAGE 5 ============ -->
+<section id="s5">
+  <div class="wrap">
+    <div class="section-label">08 · Stage 5</div>
+    <h2 class="section-title">Products &amp; Credit</h2>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <div class="stage-head-num">STAGE 05 · DAY 4</div>
+        <h3>Configure. Price. Memo. Approve.</h3>
+        <div class="stage-head-time">Expected duration: 1 day · Hero moment · Credit Memo Drafter</div>
+      </div>
+      <div class="stage-body">
+        <p class="lead">
+          The meatiest stage by far. Every product needs configuration: accounts (currencies,
+          signatories, limits), FX (pairs, forwards), trade lines (LC/SBLC), and the big one —
+          the credit facility (USD 50M revolving). AI proposes optimal structures and drafts
+          the credit memo; RM reviews and approves.
+        </p>
+
+        <h4>What happens · per product</h4>
+        <table class="table">
+          <tr><th>Product</th><th>Client configures</th><th>AI proposes</th><th>RM approves</th></tr>
+          <tr>
+            <td><strong>Accounts</strong></td>
+            <td>Currencies, signatories, daily limits</td>
+            <td>Multi-entity structure, sweep setup</td>
+            <td>Against policy, pricing</td>
+          </tr>
+          <tr>
+            <td><strong>Cash Mgmt</strong></td>
+            <td>Payment types, approval rules</td>
+            <td>Notional pooling design</td>
+            <td>Operational fit</td>
+          </tr>
+          <tr>
+            <td><strong>FX</strong></td>
+            <td>Pairs, expected volumes</td>
+            <td>Pricing tiers, hedging framework</td>
+            <td>Spread, exposure</td>
+          </tr>
+          <tr>
+            <td><strong>Trade</strong></td>
+            <td>LC/SBLC needs, counterparties</td>
+            <td>Line sizing from trade flow data</td>
+            <td>Credit exposure</td>
+          </tr>
+          <tr>
+            <td><strong>Credit</strong></td>
+            <td>Facility ask, tenor, purpose</td>
+            <td><strong>Full credit memo drafted</strong></td>
+            <td>Sign-off + pricing</td>
+          </tr>
+        </table>
+
+        <div class="hero-moment">
+          <div class="hero-moment-tag">◆ Hero Moment · Credit Memo Drafter</div>
+          <h4>From audited statements to credit memo in minutes.</h4>
+          <p style="color: var(--ink-soft); font-size: 14px;">
+            RM clicks "Draft credit memo". Memo template appears. Each section streams in as AI
+            writes it, with source pins linking back to the data it used. RM reviews section by
+            section — Accept / Edit / Regenerate.
+          </p>
+
+          <h5 style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin: 16px 0 6px;">Memo structure</h5>
+          <ol style="font-size: 14px; color: var(--ink-soft);">
+            <li><strong>Executive summary</strong> — one paragraph, the ask, the recommendation</li>
+            <li><strong>Client overview</strong> — from entity tree + industry data</li>
+            <li><strong>Financial analysis</strong> — 3y spread from audited financials (revenue, EBITDA, debt, coverage)</li>
+            <li><strong>Proposed facility structure</strong> — size, tenor, purpose, drawdown mechanics</li>
+            <li><strong>Risk rating &amp; key risks</strong> — from screening + industry + financial analysis</li>
+            <li><strong>Covenants &amp; conditions precedent</strong> — suggested, pulled from policy library</li>
+            <li><strong>Recommendation</strong> — approve / approve with conditions / decline</li>
+          </ol>
+
+          <h5 style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin: 16px 0 6px;">What the RM sees streaming</h5>
+          <div class="mock" style="background: var(--paper);">
+            <div class="mock-row" style="background: white;">
+              <div class="mock-dot" style="background: #DCFCE7;">1</div>
+              <div class="mock-text"><strong>Executive summary</strong><br><span style="font-size: 12px; color: var(--ink-soft);">Kaisei Manufacturing requests a USD 50M 3-year revolving facility to support regional working capital across SG/HK/UK operations...</span><br><span class="mock-meta" style="color: #14532D;">✓ accepted</span></div>
+            </div>
+            <div class="mock-row" style="background: white;">
+              <div class="mock-dot" style="background: #DCFCE7;">2</div>
+              <div class="mock-text"><strong>Client overview</strong><br><span class="mock-meta" style="color: #14532D;">✓ accepted</span></div>
+            </div>
+            <div class="mock-row" style="background: var(--fresh-green-soft);">
+              <div class="mock-dot" style="background: var(--fresh-green);">3</div>
+              <div class="mock-text"><strong>Financial analysis</strong> <span class="pill pill-green">drafting</span><br><span style="font-size: 12px; color: var(--ink-soft);">3Y CAGR 8.2%. EBITDA margin expanding from 11.4% to 13.8%. Interest coverage...</span></div>
+            </div>
+            <div class="mock-row" style="background: white; opacity: 0.5;">
+              <div class="mock-dot" style="background: var(--mist);">4</div>
+              <div class="mock-text"><strong>Proposed facility structure</strong> <span class="pill pill-ghost">queued</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-label">What this changes</div>
+          <p style="margin:0;">
+            Today: RM spends ~3 days manually spreading financials and drafting memo. With Origin:
+            memo is drafted in minutes, RM spends time on the <em>judgment</em> — is this deal right,
+            at the right price, for the right risk.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAGE 6 ============ -->
+<section id="s6">
+  <div class="wrap">
+    <div class="section-label">09 · Stage 6</div>
+    <h2 class="section-title">Activation</h2>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <div class="stage-head-num">STAGE 06 · DAY 5</div>
+        <h3>Go live on SMBC Connect.</h3>
+        <div class="stage-head-time">Expected duration: 1 hour · Ceremony + handoff</div>
+      </div>
+      <div class="stage-body">
+        <p class="lead">
+          The closing ceremony. Client receives credentials + welcome pack. Handoff to service
+          team. Relationship dashboard spun up in SMBC Connect. Perpetual KYC monitoring begins
+          in the background.
+        </p>
+
+        <h4>What happens</h4>
+        <div class="lanes">
+          <div class="lane client">
+            <div class="lane-head"><span class="lane-dot"></span>Client · Yuki</div>
+            <ul>
+              <li>Sees "You're live!" screen with confetti restraint (not tacky)</li>
+              <li>Receives credentials for SMBC Connect</li>
+              <li>Sees a walkthrough of what she can do next (move money, set up users, etc.)</li>
+              <li>Can download a summary pack (signed docs, config, product details)</li>
+            </ul>
+          </div>
+          <div class="lane rm">
+            <div class="lane-head"><span class="lane-dot"></span>RM · James</div>
+            <ul>
+              <li>Hands off to service team via in-app workflow</li>
+              <li>Sets up ongoing relationship dashboard</li>
+              <li>Schedules 30/60/90 day check-ins (auto)</li>
+              <li>Application moves from "active onboarding" to "lifecycle monitoring"</li>
+            </ul>
+          </div>
+          <div class="lane ai">
+            <div class="lane-head"><span class="lane-dot"></span>AI · in background</div>
+            <ul>
+              <li>Provisions accounts in core banking (mocked)</li>
+              <li>Starts perpetual KYC watchtower — triggers on registry changes, adverse media, sanctions updates</li>
+              <li>Schedules periodic review reminders based on risk tier</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout hero">
+          <div class="callout-label">Teaser: what comes next</div>
+          <p style="margin: 0;">
+            Stage 6 is also where we teaser <strong>Perpetual KYC</strong> — onboarding never
+            really "ends" in modern banking. Every registry filing, every adverse media event,
+            every periodic review triggers an update. We show this as a subtle "we're watching"
+            card, hinting at a future prototype.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COPILOT ============ -->
+<section id="copilot">
+  <div class="wrap">
+    <div class="section-label">10 · Cross-cutting</div>
+    <h2 class="section-title">The RM Copilot</h2>
+    <p class="section-intro">
+      Not a stage — a presence. Available anywhere in the RM cockpit via ⌘J or the prominent
+      Fresh Green button. The fourth AI hero moment: natural language over the RM's entire portfolio.
+    </p>
+
+    <div class="hero-moment">
+      <div class="hero-moment-tag">◆ Hero Moment · RM Copilot</div>
+      <h4>A colleague in a keystroke.</h4>
+      <p style="color: var(--ink-soft); font-size: 14px;">
+        Persistent sidecar across /rm/*. Claude API backend, with tool-calling into Supabase so
+        it can reason across applications, entities, documents, memos, and screening results
+        for the RM's entire book.
+      </p>
+
+      <h5 style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin: 16px 0 6px;">Example prompts</h5>
+      <ul style="font-size: 14px; color: var(--ink-soft);">
+        <li>"What's outstanding on Kaisei?"</li>
+        <li>"Draft a KYC memo summarising screening results"</li>
+        <li>"Compare Kaisei's risk profile against my portfolio average"</li>
+        <li>"Who else in my portfolio is expanding to Singapore? Any parallels?"</li>
+        <li>"Summarise this application in 3 bullets for my Monday call"</li>
+        <li>"What's my pipeline value at risk this week?"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DESIGN SYSTEM ============ -->
+<section id="design">
+  <div class="wrap">
+    <div class="section-label">11 · Design System</div>
+    <h2 class="section-title">Visual language, at a glance.</h2>
+
+    <h3>Colour palette</h3>
+    <div class="swatches">
+      <div class="swatch" style="background: #004832; color: white;">
+        <div class="swatch-hex">#004832</div>
+        <div class="swatch-name">Trad Green · primary</div>
+      </div>
+      <div class="swatch" style="background: #BFD730; color: #00301F;">
+        <div class="swatch-hex">#BFD730</div>
+        <div class="swatch-name">Fresh Green · AI / CTA</div>
+      </div>
+      <div class="swatch" style="background: #FAFBF7; color: #0A1410;">
+        <div class="swatch-hex">#FAFBF7</div>
+        <div class="swatch-name">Paper · workspace</div>
+      </div>
+      <div class="swatch" style="background: #0A1410; color: white;">
+        <div class="swatch-hex">#0A1410</div>
+        <div class="swatch-name">Ink · body text</div>
+      </div>
+      <div class="swatch" style="background: #E8A317; color: white;">
+        <div class="swatch-hex">#E8A317</div>
+        <div class="swatch-name">Signal Amber · attention</div>
+      </div>
+      <div class="swatch" style="background: #C73E1D; color: white;">
+        <div class="swatch-hex">#C73E1D</div>
+        <div class="swatch-name">Signal Red · blocked</div>
+      </div>
+    </div>
+    <p class="note">
+      Fresh Green is used sparingly and intentionally — it signals AI activity, primary CTAs,
+      and success states. When the RM sees green, something intelligent just happened.
+    </p>
+
+    <h3>Typography system</h3>
+    <table class="table">
+      <tr><th>Use</th><th>Font</th><th>Example</th></tr>
+      <tr><td>Display, headings, numerals</td><td>Fraunces</td><td class="serif" style="font-size: 22px;">Good morning, James.</td></tr>
+      <tr><td>UI body</td><td>Inter Tight</td><td style="font-size: 14px;">Active applications · 8 in progress</td></tr>
+      <tr><td>Japanese</td><td>Noto Sans JP</td><td class="jp" style="font-size: 15px;">2026年4月24日 金曜日</td></tr>
+      <tr><td>Data / IDs / timestamps</td><td>IBM Plex Mono</td><td class="mono" style="font-size: 12px;">REF-OR-20260424 · 09:14 SGT</td></tr>
+    </table>
+
+    <h3>Rising Mark</h3>
+    <div style="background: var(--trad-green); border-radius: 12px; padding: 40px; text-align: center; margin: 16px 0;">
+      <svg width="80" height="56" viewBox="0 0 40 28" fill="none" style="display: inline-block;">
+        <path d="M3 26 L17 4 L22 4 L8 26 Z" fill="#BFD730"/>
+        <path d="M19 26 L33 4 L38 4 L24 26 Z" fill="#BFD730"/>
+      </svg>
+      <div class="serif" style="color: white; font-size: 24px; margin-top: 12px;">Origin</div>
+      <div style="color: rgba(255,255,255,0.5); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 6px;">SMBC</div>
+    </div>
+    <p class="note">
+      Two ascending wedges inspired by SMBC's brand Rising Mark — suggests growth, partnership,
+      forward motion. Fresh Green on Trad Green.
+    </p>
+  </div>
+</section>
+
+<!-- ============ APPROACH ============ -->
+<section id="approach">
+  <div class="wrap">
+    <div class="section-label">12 · Build Approach</div>
+    <h2 class="section-title">Six phases. Claude Code for each.</h2>
+    <p class="section-intro">
+      We build in phases, each a discrete Claude Code session. The master brief lives in
+      <span class="mono">ORIGIN_DESIGN.md</span> at the repo root; Claude Code reads it first every session.
+    </p>
+
+    <div class="phase">
+      <div class="phase-num">0</div>
+      <div>
+        <div class="phase-title">Foundation</div>
+        <div class="phase-body">Next.js + TS + Tailwind scaffold. Supabase project, schema migration, RLS. Design tokens in globals.css. Auth (magic link) + role-based routing. Demo role switcher for dev.</div>
+        <div class="phase-meta">~1 day</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div>
+        <div class="phase-title">RM cockpit skeleton</div>
+        <div class="phase-body">Dashboard home with seed pipeline. Application detail shell with tabs. All 8 seed applications in varied stages.</div>
+        <div class="phase-meta">~1 day</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div>
+        <div class="phase-title">Client portal skeleton</div>
+        <div class="phase-body">Journey dashboard with stepper. All 6 stage screens wired up read-only from seed. Message thread basic.</div>
+        <div class="phase-meta">~1 day</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div>
+        <div class="phase-title">Hero: UBO Intelligence + Doc Extraction</div>
+        <div class="phase-body">React Flow UBO tree with build animation. Doc dropzone with streaming mock extraction. Shown on both client and RM sides.</div>
+        <div class="phase-meta">~1.5 days</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">4</div>
+      <div>
+        <div class="phase-title">Hero: Copilot + Credit Memo</div>
+        <div class="phase-body">RM Copilot sidecar (Claude API + tool-calling into Supabase). Credit Memo Drafter with sectioned streaming.</div>
+        <div class="phase-meta">~1.5 days</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">5</div>
+      <div>
+        <div class="phase-title">Polish &amp; seed</div>
+        <div class="phase-body">Make Kaisei deeply realistic. Empty/loading/error states. Activity timelines. Perpetual KYC teaser on Stage 6. Demo script + walkthrough notes.</div>
+        <div class="phase-meta">~1 day</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Total build estimate</div>
+      <p style="margin:0;"><strong>~7 working days</strong> from clean repo to polished demo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPEN QUESTIONS ============ -->
+<section id="questions">
+  <div class="wrap">
+    <div class="section-label">13 · Open Questions</div>
+    <h2 class="section-title">Things to decide before or during build.</h2>
+
+    <table class="table">
+      <tr><th>Question</th><th>Impact</th><th>My lean</th></tr>
+      <tr>
+        <td>Dark-mode RM cockpit option?</td>
+        <td>Adds polish · adds scope</td>
+        <td>Skip for v1, add if time</td>
+      </tr>
+      <tr>
+        <td>Depth of Perpetual KYC teaser?</td>
+        <td>Minutes to days</td>
+        <td>One teaser screen + narrative</td>
+      </tr>
+      <tr>
+        <td>Current-state vs. future-state split screen anywhere?</td>
+        <td>Can be powerful, can be cliché</td>
+        <td>Skip — let the doc do that work</td>
+      </tr>
+      <tr>
+        <td>Full Japanese UI translation?</td>
+        <td>~30% extra build effort</td>
+        <td>Skip — keep JP as heritage flavour only</td>
+      </tr>
+      <tr>
+        <td>Real Claude API for Copilot, or fully mocked?</td>
+        <td>Magic vs. predictable</td>
+        <td>Real Claude — mocked responses feel hollow</td>
+      </tr>
+      <tr>
+        <td>How "agentic" should screening demo feel?</td>
+        <td>Pace of the demo</td>
+        <td>Show working state + narration, like UBO moment</td>
+      </tr>
+      <tr>
+        <td>One hero story (Kaisei) or multiple?</td>
+        <td>Depth vs. breadth</td>
+        <td>Kaisei deep · 6 others as texture in pipeline</td>
+      </tr>
+      <tr>
+        <td>Credit memo: full PDF export?</td>
+        <td>Adds polish</td>
+        <td>Yes — downloadable memo at end is a money-shot</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <svg width="30" height="22" viewBox="0 0 40 28" fill="none" style="display: inline-block; opacity: 0.7;">
+      <path d="M3 26 L17 4 L22 4 L8 26 Z" fill="#BFD730"/>
+      <path d="M19 26 L33 4 L38 4 L24 26 Z" fill="#BFD730"/>
+    </svg>
+    <div style="margin-top: 12px;">
+      <strong>SMBC Origin</strong> · Journey Design Document · v0.1
+    </div>
+    <div style="margin-top: 4px; opacity: 0.7; font-family: 'IBM Plex Mono', monospace; font-size: 11px;">
+      Pre-build scoping · Kit · 2026.04.24
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

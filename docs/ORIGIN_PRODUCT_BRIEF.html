@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMBC Origin · Product Brief (Detailed)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--trad-green:#004832;--trad-green-deep:#00301F;--fresh-green:#BFD730;--fresh-green-soft:#E5EFBE;--ink:#0A1410;--ink-soft:#3C4540;--ink-muted:#7A827D;--paper:#FAFBF7;--paper-deep:#F3F5EE;--mist:#E8EDE4;--mist-deep:#D9E0D4;--signal-amber:#E8A317;--signal-red:#C73E1D;--signal-info:#2A6F97}
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Inter Tight',system-ui,sans-serif;background:var(--paper);color:var(--ink);letter-spacing:-0.005em;line-height:1.6}
+.serif{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-variation-settings:"SOFT" 50,"WONK" 0;letter-spacing:-0.025em}
+.jp{font-family:'Noto Sans JP',sans-serif;font-weight:500}
+.mono{font-family:'IBM Plex Mono',monospace}
+.wrap{max-width:740px;margin:0 auto;padding:0 20px}
+.cover{background:var(--trad-green);color:#E8EDE4;padding:44px 0 52px;position:relative;overflow:hidden}
+.cover-kanji{position:absolute;top:-40px;right:-20px;font-family:'Noto Sans JP',sans-serif;font-size:300px;font-weight:200;color:rgba(191,215,48,.05);line-height:1;pointer-events:none}
+.cover-brand{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fresh-green);margin-bottom:28px;display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+.cover-type{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,237,228,.5);margin-bottom:8px;position:relative;z-index:1}
+.cover h1{font-family:'Fraunces',serif;font-size:clamp(34px,7vw,52px);line-height:1.03;margin:0 0 16px;font-weight:400;letter-spacing:-0.028em;max-width:580px;position:relative;z-index:1}
+.cover-sub{font-size:15px;color:rgba(232,237,228,.75);max-width:540px;line-height:1.55;position:relative;z-index:1}
+.cover-meta{margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15);display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;font-family:'IBM Plex Mono',monospace;position:relative;z-index:1}
+@media(min-width:560px){.cover-meta{grid-template-columns:repeat(4,1fr)}}
+.cover-meta strong{color:var(--fresh-green);font-weight:500;display:block;margin-bottom:3px;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+.cover-meta span{font-family:'Inter Tight',sans-serif;font-size:13px;color:#E8EDE4;line-height:1.3}
+.tldr{background:white;margin:-28px auto 0;max-width:700px;border:1px solid var(--mist);border-radius:14px;padding:24px 26px;box-shadow:0 6px 28px rgba(0,48,31,.1);position:relative;z-index:2}
+.tldr-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fresh-green);margin-bottom:10px;font-weight:600}
+.tldr h2{font-family:'Fraunces',serif;font-size:22px;line-height:1.3;margin:0 0 12px;font-weight:500;letter-spacing:-0.02em}
+.tldr p{margin:0 0 10px;color:var(--ink-soft);font-size:14px;line-height:1.65}
+.tldr p:last-child{margin-bottom:0}
+.tldr-grid{margin-top:16px;padding-top:14px;border-top:1px dashed var(--mist-deep);display:grid;grid-template-columns:repeat(2,1fr);gap:12px;font-size:13px}
+@media(min-width:560px){.tldr-grid{grid-template-columns:repeat(4,1fr)}}
+.tldr-grid div strong{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:2px;font-family:'IBM Plex Mono',monospace}
+.doc-guide{background:var(--paper-deep);border-top:1px solid var(--mist);padding:28px 0 8px}
+.doc-guide ol{list-style:none;padding:0;margin:8px 0 0;display:grid;grid-template-columns:1fr;gap:1px}
+@media(min-width:620px){.doc-guide ol{grid-template-columns:1fr 1fr;column-gap:20px}}
+.doc-guide li{border-bottom:1px dashed var(--mist-deep);padding:6px 0;font-size:13px}
+.doc-guide a{display:flex;justify-content:space-between;align-items:baseline;gap:10px;color:var(--ink);text-decoration:none}
+.doc-guide a:hover{color:var(--trad-green)}
+.doc-guide .n{font-family:'IBM Plex Mono',monospace;color:var(--ink-muted);font-size:10px;flex-shrink:0}
+section{padding:44px 0 12px}
+section+section{border-top:1px solid var(--mist)}
+.subsection{margin-top:32px}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--trad-green);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:18px;height:1.5px;background:var(--fresh-green)}
+h2.section-title{font-family:'Fraunces',serif;font-size:clamp(26px,5vw,36px);line-height:1.08;margin:0 0 14px;font-weight:500;letter-spacing:-0.025em;color:var(--ink)}
+.section-intro{font-size:15px;color:var(--ink-soft);line-height:1.65;margin-bottom:24px;max-width:640px}
+h3{font-family:'Fraunces',serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.02em;margin:32px 0 8px;color:var(--ink)}
+h4{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-muted);margin:24px 0 8px;font-family:'IBM Plex Mono',monospace}
+h5{font-size:14px;font-weight:600;color:var(--ink);margin:16px 0 6px}
+p{margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--ink)}
+p strong{font-weight:600;color:var(--ink)}
+p em{color:var(--ink-soft)}
+ul,ol{margin:0 0 14px;padding-left:20px}
+li{margin-bottom:6px;line-height:1.6;font-size:15px}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0 14px}
+@media(min-width:620px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:white;border:1px solid var(--mist);border-radius:10px;padding:14px}
+.kpi-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px}
+.kpi-value{font-family:'Fraunces',serif;font-size:30px;line-height:1;color:var(--trad-green);font-weight:400;letter-spacing:-0.03em;margin-bottom:4px}
+.kpi-sub{font-size:11px;color:var(--ink-muted);line-height:1.35}
+.kpi.accent{background:linear-gradient(135deg,white 0%,#FDFEF6 100%);border-color:#DCE5C8}
+.kpi.accent .kpi-value{color:#6B7D1C}
+.kpi.red .kpi-value{color:var(--signal-red)}
+.compare{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:1px;background:var(--mist);border-radius:10px;overflow:hidden;margin:16px 0;border:1px solid var(--mist);font-size:13px}
+.compare-head{background:var(--paper-deep);padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);font-weight:500}
+.compare-cell{background:white;padding:12px 14px;color:var(--ink-soft);line-height:1.5}
+.compare-cell strong{color:var(--ink)}
+.compare-cell.today{background:#FFFBF5}
+.compare-cell.future{background:#F5F9ED;color:var(--ink)}
+.compare-cell.future strong{color:var(--trad-green)}
+.scope-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:16px 0}
+@media(min-width:560px){.scope-grid{grid-template-columns:1fr 1fr}}
+.scope-box{border:1px solid var(--mist);border-radius:10px;padding:16px 18px;background:white}
+.scope-box.in{border-left:3px solid var(--fresh-green)}
+.scope-box.out{border-left:3px solid var(--mist-deep);background:var(--paper-deep)}
+.scope-box h4{margin-top:0;margin-bottom:10px;color:var(--ink)}
+.scope-box ul{margin:0;padding-left:16px}
+.scope-box li{font-size:13px;color:var(--ink-soft);margin-bottom:4px}
+.timeline{position:relative;padding-left:28px;margin:16px 0}
+.timeline::before{content:'';position:absolute;left:10px;top:8px;bottom:8px;width:1px;background:var(--mist-deep)}
+.timeline-item{position:relative;padding:10px 0 16px}
+.timeline-item::before{content:'';position:absolute;left:-22px;top:16px;width:8px;height:8px;border-radius:50%;background:white;border:2px solid var(--fresh-green)}
+.timeline-item.milestone::before{background:var(--fresh-green);box-shadow:0 0 0 4px var(--fresh-green-soft)}
+.timeline-week{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fresh-green);font-weight:600;margin-bottom:2px}
+.timeline-title{font-family:'Fraunces',serif;font-size:17px;font-weight:500;color:var(--ink);margin:0 0 4px;letter-spacing:-0.02em}
+.timeline-desc{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.t{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;background:white;border:1px solid var(--mist);border-radius:8px;overflow:hidden}
+.t th{background:var(--paper-deep);padding:10px 12px;text-align:left;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);font-weight:500;font-family:'IBM Plex Mono',monospace;border-bottom:1px solid var(--mist)}
+.t td{padding:10px 12px;border-top:1px solid var(--mist);color:var(--ink-soft);vertical-align:top;line-height:1.5}
+.t td:first-child{font-weight:500;color:var(--ink)}
+.t tr:first-child td{border-top:none}
+.pill{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+.pill.high{background:#FEE4E0;color:#8B1E07}
+.pill.med{background:#FEF3C7;color:#92400E}
+.pill.low{background:#DCFCE7;color:#14532D}
+.pill.ghost{background:var(--mist);color:var(--ink-soft)}
+.pill.green{background:var(--fresh-green-soft);color:#4D5C15}
+.callout{background:white;border:1px solid var(--mist);border-left:3px solid var(--fresh-green);border-radius:8px;padding:16px 18px;margin:18px 0}
+.callout-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px}
+.callout p{margin:0;font-size:14px}
+.callout.insight{border-left-color:var(--signal-info);background:#F5F9FB}
+.callout.warn{border-left-color:var(--signal-amber);background:#FFFBF2}
+.quote{font-family:'Fraunces',serif;font-size:19px;line-height:1.4;letter-spacing:-0.02em;color:var(--ink);padding:16px 22px;border-left:2px solid var(--trad-green);margin:20px 0;background:var(--paper-deep);border-radius:0 8px 8px 0}
+.quote-attr{font-family:'Inter Tight',sans-serif;font-size:11px;color:var(--ink-muted);margin-top:8px}
+.card{background:white;border:1px solid var(--mist);border-radius:12px;padding:20px;margin:14px 0}
+.card-head{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--fresh-green);margin-bottom:8px;font-weight:600}
+.card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:500;color:var(--ink);letter-spacing:-0.02em;margin:0 0 8px}
+.persona{background:white;border:1px solid var(--mist);border-radius:12px;padding:20px;margin:16px 0}
+.persona-head{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--mist);margin-bottom:14px}
+.persona-avatar{width:52px;height:52px;border-radius:50%;background:var(--paper-deep);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:22px;color:var(--trad-green);flex-shrink:0;border:1px solid var(--mist)}
+.persona-name{font-family:'Fraunces',serif;font-size:22px;font-weight:500;color:var(--ink);margin:0;line-height:1.2}
+.persona-role{font-size:13px;color:var(--ink-muted);margin-top:3px}
+.persona-body h5{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin:12px 0 6px;font-family:'IBM Plex Mono',monospace}
+.persona-body p,.persona-body li{font-size:14px;color:var(--ink-soft);line-height:1.55}
+.ai-spec{background:linear-gradient(135deg,#FDFEF9 0%,#F5F9ED 100%);border:1px solid #DCE5C8;border-radius:14px;padding:22px;margin:18px 0;position:relative;overflow:hidden}
+.ai-spec::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(191,215,48,.15) 0%,transparent 70%);pointer-events:none}
+.ai-spec-tag{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#6B7D1C;background:white;padding:4px 10px;border-radius:20px;border:1px solid #DCE5C8;margin-bottom:10px}
+.ai-spec h4{font-family:'Fraunces',serif;font-size:22px;font-weight:500;color:var(--ink);margin:0 0 10px;text-transform:none;letter-spacing:-0.02em}
+.ai-spec .spec-block{margin:14px 0 0}
+.ai-spec .spec-block h5{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin:0 0 6px;font-weight:600}
+.ai-spec .spec-block p,.ai-spec .spec-block li{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.arch-diagram{background:var(--paper-deep);border:1px solid var(--mist);border-radius:10px;padding:18px;margin:16px 0;overflow-x:auto}
+.arch-diagram svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.glossary-list{margin:14px 0;padding:0;list-style:none}
+.glossary-list li{padding:10px 0;border-bottom:1px dashed var(--mist-deep);font-size:13px;display:grid;grid-template-columns:1fr;gap:4px}
+@media(min-width:520px){.glossary-list li{grid-template-columns:120px 1fr;gap:16px}}
+.glossary-term{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--trad-green);font-size:12px}
+.glossary-def{color:var(--ink-soft);line-height:1.55}
+.scene{background:white;border:1px solid var(--mist);border-radius:10px;padding:14px 18px;margin-bottom:8px;display:grid;grid-template-columns:90px 1fr;gap:14px;align-items:start}
+.scene-time{font-family:'Fraunces',serif;font-size:22px;font-weight:500;color:var(--fresh-green);line-height:1;letter-spacing:-0.03em}
+.scene-time span{font-size:11px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;display:block;margin-top:3px;text-transform:uppercase;letter-spacing:.1em}
+.scene-title{font-family:'Fraunces',serif;font-size:16px;font-weight:500;color:var(--ink);margin:0 0 4px}
+.scene-body{font-size:13px;color:var(--ink-soft);line-height:1.55}
+footer{background:var(--trad-green-deep);color:rgba(232,237,228,.7);padding:36px 0 40px;margin-top:36px;font-size:12px;text-align:center}
+footer strong{color:white;font-weight:500}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-kanji">縁</div>
+  <div class="wrap">
+    <div class="cover-brand"><svg width="18" height="13" viewBox="0 0 40 28" fill="none"><path d="M3 26 L17 4 L22 4 L8 26 Z" fill="#BFD730"/><path d="M19 26 L33 4 L38 4 L24 26 Z" fill="#BFD730"/></svg> SMBC Origin</div>
+    <div class="cover-type">Product Brief · Detailed · v0.2</div>
+    <h1 class="serif">The onboarding front door for SMBC's next generation of global clients.</h1>
+    <p class="cover-sub">A future-state corporate onboarding prototype demonstrating how agentic AI and embedded intelligence can compress a 90–180 day journey into five days — for Japanese MNCs expanding globally. This brief covers strategic context, problem analysis, solution architecture, commercial case, and phased build plan.</p>
+    <div class="cover-meta">
+      <div><strong>Owner</strong><span>Kit</span></div>
+      <div><strong>Status</strong><span>Pre-build · Scope locked</span></div>
+      <div><strong>Audience</strong><span>SMBC leadership · client workshops</span></div>
+      <div><strong>Updated</strong><span>24 April 2026</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="tldr">
+  <div class="tldr-label">◆ Executive Summary</div>
+  <h2 class="serif">In one page.</h2>
+  <p><strong>The problem.</strong> Corporate banking onboarding for MNCs is the most painful phase of the client relationship — 90 to 180 days, hundreds of manual touches, repeated document submissions to different internal teams, and opaque status. RMs spend ~40% of their time on administrative work that could be automated. The bank loses revenue to slow time-to-live, and increasingly to digital-native competitors.</p>
+  <p><strong>The opportunity.</strong> SMBC has publicly committed to onboarding and lifecycle transformation through the Fenergo rollout (Jan 2026) and launched SMBC Connect (Apr 2026) as the new global transaction banking portal. What's missing is the <em>front door</em> — the onboarding experience that feeds into SMBC Connect and demonstrates the future state of how clients begin their SMBC relationship.</p>
+  <p><strong>The proposal.</strong> Build <strong>SMBC Origin</strong> — a dual-persona web prototype (client portal + RM cockpit) showcasing four agentic AI capabilities: entity structure intelligence, live document extraction, portfolio-aware RM copilot, and auto-drafted credit memos. Targets ~5 day TTL versus today's 90–180. Built as a ~7 day engagement using Next.js, Supabase, and Claude API.</p>
+  <p><strong>The outcome.</strong> An internal capability showpiece and client workshop playback asset — demonstrating SMBC's ambition beyond what competitors (DBS IDEAL, HSBCnet, Standard Chartered Straight2Bank) have yet put into market.</p>
+  <div class="tldr-grid">
+    <div><strong>Segment</strong>Japanese MNCs · multi-jurisdiction</div>
+    <div><strong>Products</strong>Accounts · Cash · FX · Trade · Credit</div>
+    <div><strong>AI moments</strong>UBO · Doc · Copilot · Memo</div>
+    <div><strong>Build effort</strong>~7 working days</div>
+  </div>
+</div>
+
+<div class="doc-guide">
+  <div class="wrap">
+    <div class="section-label" style="margin-bottom:14px">Document guide</div>
+    <ol>
+      <li><a href="#s1"><span>Strategic context</span><span class="n">01</span></a></li>
+      <li><a href="#s2"><span>The problem</span><span class="n">02</span></a></li>
+      <li><a href="#s3"><span>Vision &amp; value</span><span class="n">03</span></a></li>
+      <li><a href="#s4"><span>Users &amp; personas</span><span class="n">04</span></a></li>
+      <li><a href="#s5"><span>Solution overview</span><span class="n">05</span></a></li>
+      <li><a href="#s6"><span>AI capability set</span><span class="n">06</span></a></li>
+      <li><a href="#s7"><span>Technical architecture</span><span class="n">07</span></a></li>
+      <li><a href="#s8"><span>Scope, assumptions, dependencies</span><span class="n">08</span></a></li>
+      <li><a href="#s9"><span>Build approach &amp; plan</span><span class="n">09</span></a></li>
+      <li><a href="#s10"><span>Seed scenarios</span><span class="n">10</span></a></li>
+      <li><a href="#s11"><span>Success metrics</span><span class="n">11</span></a></li>
+      <li><a href="#s12"><span>Risk register</span><span class="n">12</span></a></li>
+      <li><a href="#s13"><span>Commercial &amp; productisation</span><span class="n">13</span></a></li>
+      <li><a href="#s14"><span>Governance</span><span class="n">14</span></a></li>
+      <li><a href="#s15"><span>Next steps</span><span class="n">15</span></a></li>
+      <li><a href="#a1"><span>Appendix A · Glossary</span><span class="n">A</span></a></li>
+      <li><a href="#a2"><span>Appendix B · Demo script</span><span class="n">B</span></a></li>
+      <li><a href="#a3"><span>Appendix C · Document map</span><span class="n">C</span></a></li>
+    </ol>
+  </div>
+</div>
+
+<section id="s1"><div class="wrap">
+<div class="section-label">01 · Strategic context</div>
+<h2 class="section-title">Why this, why now.</h2>
+<p class="section-intro">SMBC Origin is not built in a vacuum. It sits directly downstream of two initiatives SMBC has already committed to publicly, and directly upstream of one of the largest unaddressed pain points in corporate banking globally. The timing window is real.</p>
+
+<div class="subsection"><h3>1.1 · The market backdrop</h3>
+<p>Corporate banking has been the slowest segment of banking to digitise. Retail has been through two waves of transformation (digital-first, then mobile-first); SME banking is mid-wave with challengers like Airwallex, Wise Business, Revolut Business. Corporate and wholesale banking — where relationships are high-touch, high-value, and high-complexity — has lagged because the problems are harder and the cost of "almost right" is far higher.</p>
+<p>That has changed in the last 18 months. Three forces have converged to open a real window:</p>
+<ul>
+<li><strong>Agentic AI moving from lab to production</strong> — capable of reasoning across multi-step workflows, not just classifying or extracting</li>
+<li><strong>Corporate treasurer expectations</strong> — the post-pandemic CFO expects consumer-grade enterprise tools and will move banks to get them</li>
+<li><strong>Regulatory tolerance for continuous (perpetual) KYC</strong> — enabling automation that was previously blocked by periodic-review compliance postures</li>
+</ul></div>
+
+<div class="subsection"><h3>1.2 · SMBC's stated direction</h3>
+<p>Two public commitments anchor this brief in SMBC's existing strategy:</p>
+<div class="card"><div class="card-head">Anchor 1 · January 2026</div><h4 class="card-title serif">Fenergo rollout in Americas</h4><p style="font-size:14px;color:var(--ink-soft)">SMBC Americas announced deployment of Fenergo as its client lifecycle management platform, describing it as part of a "multi-year transformation of uplifting our core capabilities, simplifying the technology infrastructure and removing manual processes from our workflow." This signals executive commitment to onboarding modernisation at infrastructure level.</p></div>
+<div class="card"><div class="card-head">Anchor 2 · April 2026</div><h4 class="card-title serif">SMBC Connect launches in the US</h4><p style="font-size:14px;color:var(--ink-soft)">New global transaction banking portal went live in the US market, with the stated design philosophy that "cash management systems should be as intuitive and frictionless as the apps on our smartphones." SMBC has committed to progressively rolling SMBC Connect out across North America and beyond, with transaction banking identified as a "key growth focus" in the Group's three-year strategic plan.</p></div>
+<div class="callout insight"><div class="callout-label">The gap</div><p>Both Fenergo and SMBC Connect target <strong>post-onboarding</strong> experiences. Neither yet addresses the <strong>pre-onboarding</strong> journey — the 3–6 month wait that remains the most visible point of friction. SMBC Origin demonstrates what this missing front door could look like.</p></div></div>
+
+<div class="subsection"><h3>1.3 · Competitive landscape</h3>
+<p>The current state of corporate onboarding across top global and regional corporate banks. None of these institutions currently offer a client-facing onboarding portal with embedded agentic AI. The field is genuinely open.</p>
+<table class="t">
+<tr><th>Bank</th><th>Portal</th><th>Onboarding UX</th><th>AI depth</th></tr>
+<tr><td><strong>DBS</strong> (SG)</td><td>IDEAL</td><td>Strong SME digital onboarding; MNC still RM-led</td><td>Low–medium</td></tr>
+<tr><td><strong>HSBC</strong></td><td>HSBCnet</td><td>Corporate focus; onboarding a separate, manual track</td><td>Low</td></tr>
+<tr><td><strong>Standard Chartered</strong></td><td>Straight2Bank</td><td>TB-heavy; onboarding is email-driven</td><td>Low</td></tr>
+<tr><td><strong>Citi</strong></td><td>CitiDirect</td><td>Scale, but workflow-heavy. Onboarding team model.</td><td>Medium</td></tr>
+<tr><td><strong>J.P. Morgan</strong></td><td>Access</td><td>Sophisticated but high-touch for corporate onboarding</td><td>Medium</td></tr>
+<tr><td><strong>BNP Paribas</strong></td><td>Connexis</td><td>Strong EMEA TB presence; onboarding RM-led</td><td>Low</td></tr>
+<tr><td><strong>MUFG</strong> (JP)</td><td>COMSUITE</td><td>Japan-focused. Legacy UX.</td><td>Low</td></tr>
+<tr><td><strong>Mizuho</strong> (JP)</td><td>Global eBanking</td><td>Domestic-strong. Relationship-driven onboarding.</td><td>Low</td></tr>
+</table>
+<div class="callout"><div class="callout-label">Implication</div><p>No peer has publicly deployed an AI-forward client-facing corporate onboarding experience. First-mover positioning is achievable.</p></div></div>
+
+<div class="subsection"><h3>1.4 · Why the MNC segment</h3>
+<ol>
+<li><strong>Strategic alignment.</strong> Japanese MNCs expanding into APAC and EMEA are SMBC's defining segment globally. Every major regional office is structured around Japanese corporates desks.</li>
+<li><strong>Complexity is the showcase.</strong> MNC onboarding is the most complex case — multi-entity, multi-jurisdiction, multi-product. Solving for this segment demonstrates capability at the hardest end; simpler segments fall out naturally.</li>
+<li><strong>Demonstrable cross-border value.</strong> The UBO intelligence agent and jurisdiction-aware document logic are most valuable precisely when the client operates across 4+ jurisdictions — the default for MNCs.</li>
+</ol></div>
+
+<div class="subsection"><h3>1.5 · Why now — the window</h3>
+<ul>
+<li><strong>Internal window</strong> — Fenergo + SMBC Connect launches create the context for onboarding transformation conversations at executive level</li>
+<li><strong>Technology window</strong> — agentic AI is production-viable (Claude 4.x, GPT-5-class), but not yet deployed in corporate banking at scale</li>
+<li><strong>Competitive window</strong> — peers will start building within 12–24 months; first-mover advantage is now</li>
+</ul></div>
+</div></section>
+
+<section id="s2"><div class="wrap">
+<div class="section-label">02 · The problem</div>
+<h2 class="section-title">What we're actually solving.</h2>
+<p class="section-intro">This is the section most Product Briefs skip or shallow. It matters. The reason corporate onboarding is slow is not simply "we haven't digitised yet" — it's a series of interlocking root causes that explain why digitisation alone hasn't fixed it.</p>
+
+<div class="subsection"><h3>2.1 · The journey today (stage-by-stage)</h3>
+<p>A typical Japanese MNC onboarding at any major bank today:</p>
+<table class="t">
+<tr><th>Stage</th><th>Typical duration</th><th>Primary friction</th></tr>
+<tr><td>Mandate signed · initial docs requested</td><td>1–2 weeks</td><td>RM sends generic checklist; client surprised by scope</td></tr>
+<tr><td>Entity &amp; structure collation</td><td>3–4 weeks</td><td>Manual emails; registry pulls one jurisdiction at a time</td></tr>
+<tr><td>Document collection &amp; review</td><td>4–8 weeks</td><td>Same docs re-submitted across teams; translation delays</td></tr>
+<tr><td>KYC / AML screening</td><td>2–4 weeks</td><td>False positives; manual disposition; escalations</td></tr>
+<tr><td>Credit underwriting &amp; memo</td><td>3–6 weeks</td><td>Manual spreading; memo drafting; committee queue</td></tr>
+<tr><td>Product config &amp; provisioning</td><td>2–4 weeks</td><td>Per-product specialists; multi-signature collection</td></tr>
+<tr><td>Activation</td><td>1 week</td><td>Credentials + training</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>16–29 weeks</strong></td><td></td></tr>
+</table></div>
+
+<div class="subsection"><h3>2.2 · Client pain, quantified</h3>
+<div class="kpis">
+<div class="kpi red"><div class="kpi-label">Time to live</div><div class="kpi-value">90–180<span style="font-size:.5em">d</span></div><div class="kpi-sub">for MNCs typically</div></div>
+<div class="kpi red"><div class="kpi-label">Doc resubmissions</div><div class="kpi-value">5–8×</div><div class="kpi-sub">same doc across teams</div></div>
+<div class="kpi red"><div class="kpi-label">Status opacity</div><div class="kpi-value">0</div><div class="kpi-sub">portal visibility today</div></div>
+<div class="kpi red"><div class="kpi-label">Client touches</div><div class="kpi-value">40+</div><div class="kpi-sub">emails + calls typical</div></div>
+</div>
+<h4>Voice-of-client themes</h4>
+<ul>
+<li>"We uploaded the same M&amp;A document five times to five different teams."</li>
+<li>"I have no idea what stage my application is actually in."</li>
+<li>"Every jurisdiction surprises me — nobody told us upfront what would be different."</li>
+<li>"Our CFO is asking when we go live. I have no answer to give."</li>
+</ul>
+<p>Industry research (2024–26) consistently reports that over 90% of corporate clients are dissatisfied with onboarding experiences and that 56% experience repeated requests for identical information. For SMBC this is reputational risk with high-value accounts.</p></div>
+
+<div class="subsection"><h3>2.3 · RM pain, quantified</h3>
+<div class="kpis">
+<div class="kpi red"><div class="kpi-label">Time on admin</div><div class="kpi-value">~40<span style="font-size:.6em">%</span></div><div class="kpi-sub">of RM working week</div></div>
+<div class="kpi red"><div class="kpi-label">Credit memo</div><div class="kpi-value">3<span style="font-size:.5em">d</span></div><div class="kpi-sub">manual drafting</div></div>
+<div class="kpi red"><div class="kpi-label">Systems visited</div><div class="kpi-value">8+</div><div class="kpi-sub">per application</div></div>
+<div class="kpi red"><div class="kpi-label">Pipeline blindness</div><div class="kpi-value">~1<span style="font-size:.5em">wk</span></div><div class="kpi-sub">delay to spot stalls</div></div>
+</div>
+<p>Beyond time cost, the qualitative toll on RMs is significant. Senior RMs — expensive commercial talent — spend a material share of their week on activity that is effectively administrative. This is a major retention and morale issue.</p></div>
+
+<div class="subsection"><h3>2.4 · Bank pain, quantified</h3>
+<ul>
+<li><strong>Revenue friction</strong> — delayed activation = delayed transaction flow, FX spread, and interest income. For a USD 50M facility, each week of delay is material.</li>
+<li><strong>Operational cost</strong> — industry estimates per-application onboarding cost at USD ~128 per account at scale. MNC accounts are materially higher given complexity.</li>
+<li><strong>Revenue loss from abandonment</strong> — industry reports £3.3B annual revenue loss across banks due to KYC/AML friction.</li>
+<li><strong>Inconsistent risk</strong> — manual screening disposition means inconsistent judgment across RMs and compliance officers</li>
+<li><strong>Audit overhead</strong> — every manual touch is an audit trail obligation</li>
+</ul></div>
+
+<div class="subsection"><h3>2.5 · Root causes (why digitisation alone hasn't fixed it)</h3>
+<p>This matters because prior waves of "digital onboarding" investments have largely failed to materially move MNC time-to-live.</p>
+<ol>
+<li><strong>Siloed systems.</strong> Most banks have distinct systems for KYC, credit, product provisioning, and client management. Digitising each in isolation doesn't remove hand-offs between them.</li>
+<li><strong>Compliance-first culture.</strong> Every shortcut requires compliance sign-off. Even when technology enables a faster path, organisational risk tolerance constrains it.</li>
+<li><strong>Jurisdictional fragmentation.</strong> A single MNC spans 4+ jurisdictions; each has distinct documentation and regulatory requirements. Unifying UX across them is non-trivial.</li>
+<li><strong>Client data not self-service-able.</strong> In many banks, clients cannot directly upload, check, or correct their own data — everything is mediated by RM or ops.</li>
+<li><strong>No single source of truth.</strong> Entity data in KYC system; financial in credit; product in core banking. No single view means no single flow.</li>
+<li><strong>AI deployed point-wise, not end-to-end.</strong> Banks have deployed AI for document extraction OR screening OR memo summarisation — never all at once across a single lifecycle.</li>
+</ol>
+<div class="callout insight"><div class="callout-label">Insight</div><p>The opportunity is not "digitise onboarding." That's been tried. The opportunity is to <strong>re-orchestrate the entire journey around a shared state + agentic AI</strong>, so every step builds on the previous automatically rather than requiring a human to push data from one system to the next.</p></div></div>
+</div></section>
+
+<section id="s3"><div class="wrap">
+<div class="section-label">03 · Vision &amp; value proposition</div>
+<h2 class="section-title">What we're aiming for.</h2>
+<div class="quote">The RM sends one invite. AI unwraps the corporate structure, extracts data from every document, screens every entity, configures products across every jurisdiction, and drafts the credit memo. The client is live in days, not months — and their RM spent their time on the relationship, not paperwork.<div class="quote-attr">— The 30-second pitch</div></div>
+
+<div class="subsection"><h3>3.1 · Design principles</h3>
+<ol>
+<li><strong>AI is quiet, not loud.</strong> Fresh Green is rationed. When you see it, intelligence happened. The cockpit is calm; the AI is a well-dressed colleague, not a chatbot that shouts.</li>
+<li><strong>Parallel, not sequential.</strong> The RM and client operate in parallel lanes. AI bridges them. Nothing blocks waiting for a human button-push unless judgment is genuinely required.</li>
+<li><strong>Explain the magic.</strong> Every AI decision is auditable — confidence scores, source registries, extraction logs, citations. The RM is in command, not overruled.</li>
+<li><strong>Heritage through restraint.</strong> Japanese design sensibility — whitespace, precision, considered typography. Kanji as watermark, not decoration.</li>
+<li><strong>Demo every moment.</strong> This is a showpiece. If an AI moment isn't visually memorable, it fails the mission.</li>
+</ol></div>
+
+<div class="subsection"><h3>3.2 · Value levers</h3>
+<table class="t">
+<tr><th>Lever</th><th>How Origin delivers</th><th>Measurable impact</th></tr>
+<tr><td><strong>Time</strong></td><td>Parallel lanes, AI orchestration, zero waiting on data entry</td><td>TTL: 90–180d → ~5d</td></tr>
+<tr><td><strong>Cost</strong></td><td>40% RM admin freed; memo drafting automated; ops touches reduced</td><td>Per-application cost: 60–70% reduction</td></tr>
+<tr><td><strong>Risk</strong></td><td>Consistent AI screening, full audit trail, provenance on every data point</td><td>Escalation rate: measurable reduction</td></tr>
+<tr><td><strong>Client experience</strong></td><td>Single portal, real-time status, smart doc requests, consumer-grade polish</td><td>NPS lift at onboarding stage</td></tr>
+<tr><td><strong>Revenue</strong></td><td>Faster activation = earlier transaction flow, FX, interest income</td><td>Weeks of earlier revenue per facility</td></tr>
+</table></div>
+
+<div class="subsection"><h3>3.3 · Benchmark — current vs. future</h3>
+<div class="compare">
+<div class="compare-head">Dimension</div><div class="compare-head">Today</div><div class="compare-head" style="color:var(--fresh-green)">SMBC Origin</div>
+<div class="compare-cell"><strong>Time to live</strong></div><div class="compare-cell today">90–180 days</div><div class="compare-cell future"><strong>~5 days</strong></div>
+<div class="compare-cell"><strong>Client doc uploads</strong></div><div class="compare-cell today">5–8× the same doc</div><div class="compare-cell future"><strong>Once per doc</strong></div>
+<div class="compare-cell"><strong>UBO resolution</strong></div><div class="compare-cell today">Days of manual email</div><div class="compare-cell future"><strong>Minutes, agentic</strong></div>
+<div class="compare-cell"><strong>Credit memo</strong></div><div class="compare-cell today">3 days of RM time</div><div class="compare-cell future"><strong>Minutes, RM reviews</strong></div>
+<div class="compare-cell"><strong>Client status visibility</strong></div><div class="compare-cell today">Email ping-pong</div><div class="compare-cell future"><strong>Real-time portal</strong></div>
+<div class="compare-cell"><strong>Doc list logic</strong></div><div class="compare-cell today">Generic checklist</div><div class="compare-cell future"><strong>Per jurisdiction + risk</strong></div>
+<div class="compare-cell"><strong>Screening disposition</strong></div><div class="compare-cell today">Manual, inconsistent</div><div class="compare-cell future"><strong>AI-narrated, consistent</strong></div>
+<div class="compare-cell"><strong>RM admin time</strong></div><div class="compare-cell today">~40% of week</div><div class="compare-cell future"><strong>&lt;15% of week</strong></div>
+<div class="compare-cell"><strong>Systems RM touches</strong></div><div class="compare-cell today">8+ systems per case</div><div class="compare-cell future"><strong>1 cockpit</strong></div>
+</div></div>
+
+<div class="subsection"><h3>3.4 · Target state KPIs</h3>
+<div class="kpis">
+<div class="kpi accent"><div class="kpi-label">Target TTL</div><div class="kpi-value">~5<span style="font-size:.6em">d</span></div><div class="kpi-sub">from invite to live</div></div>
+<div class="kpi accent"><div class="kpi-label">Doc uploads</div><div class="kpi-value">1×</div><div class="kpi-sub">per doc, per entity</div></div>
+<div class="kpi accent"><div class="kpi-label">RM time freed</div><div class="kpi-value">30<span style="font-size:.5em">%+</span></div><div class="kpi-sub">for relationship</div></div>
+<div class="kpi accent"><div class="kpi-label">Memo drafting</div><div class="kpi-value">min</div><div class="kpi-sub">AI-drafted</div></div>
+</div></div>
+</div></section>
+
+<section id="s4"><div class="wrap">
+<div class="section-label">04 · Users &amp; personas</div>
+<h2 class="section-title">Who we're building for.</h2>
+<p class="section-intro">Two primary personas, operating in parallel through a shared journey. One codebase delivers two purpose-built experiences. Understanding both deeply is essential because the magic of Origin lies in how the two lanes interact.</p>
+
+<div class="persona">
+<div class="persona-head"><div class="persona-avatar">YT</div><div><div class="persona-name">Yuki Tanaka</div><div class="persona-role">Group Treasurer · Kaisei Manufacturing KK · Tokyo</div></div></div>
+<div class="persona-body">
+<h5>Background</h5><p>48 years old. Oversees global treasury function for a ¥380B automotive parts manufacturer with 4,200 employees. Reports to the CFO. Currently manages domestic Japanese banking (MUFG primary) and is now leading the mandate to establish regional banking across SG, HK, and UK as part of Kaisei's global expansion.</p>
+<h5>Context</h5><p>Under pressure from CFO to have regional operations live before end of Q2. Has experienced two previous international onboarding attempts with another bank, both of which took &gt;4 months and failed on process quality. Was involved in SMBC selection based on Japanese-language relationship and strong APAC footprint.</p>
+<h5>Goals</h5><ul><li>Get Kaisei's regional operations banking live before Q2 close</li><li>Consolidate under one relationship bank for simplicity</li><li>Demonstrate ROI of SMBC partnership to CFO</li><li>Minimise her team's onboarding workload (lean treasury function)</li></ul>
+<h5>Pain points (current state)</h5><ul><li>"We upload the same M&amp;A document five times to five teams."</li><li>"I have no idea what stage my application is actually in."</li><li>"Every jurisdiction asks for different things — nobody told us upfront."</li><li>"My team doesn't have bandwidth for this alongside normal treasury work."</li></ul>
+<h5>What success looks like</h5><p>Single portal access. Clear progress at a glance. Answers live in the portal, not email threads. No surprises. Able to delegate specific tasks to team members without losing oversight.</p>
+<h5>Jobs to be done</h5><ul><li><em>When expanding into a new jurisdiction</em>, help me set up banking with minimum disruption so I can focus on other treasury priorities.</li><li><em>When my CFO asks for status</em>, give me a clear answer in under 30 seconds.</li><li><em>When the bank needs something</em>, make the ask specific, explain why, and confirm what's already covered.</li></ul>
+<h5>Tech comfort</h5><p>High. Daily Bloomberg Terminal user. Excel-heavy workflows. Expects consumer-grade polish on enterprise tools. English/Japanese bilingual; prefers Japanese for complex communication.</p>
+</div></div>
+
+<div class="persona">
+<div class="persona-head"><div class="persona-avatar">JL</div><div><div class="persona-name">James Lee</div><div class="persona-role">Senior Relationship Manager · Japanese Corporates Desk · SMBC Singapore</div></div></div>
+<div class="persona-body">
+<h5>Background</h5><p>Mid-career senior RM. Manages 25 MNC clients on the Japanese corporates desk in Singapore — mix of newly-onboarded, fully-active, and expansion-stage relationships. Fluent bilingual JP/EN. Reports to Regional Head of Japanese Corporates.</p>
+<h5>Context</h5><p>Under commercial pressure to grow wallet share and originate new mandates. Recognised in performance reviews that he's spending more time on administrative work than on commercial side of his job. Has seen colleagues leave for fintechs where tools are better.</p>
+<h5>Goals</h5><ul><li>Close new onboardings faster to start revenue flowing</li><li>Spot problems in pipeline before clients escalate</li><li>Spend time on judgment calls and relationship, not copying data between systems</li><li>Stay credible with sophisticated MNC clients (pickier than domestic)</li></ul>
+<h5>Pain points (current state)</h5><ul><li>"I spend 40% of my week chasing docs and copying data between systems."</li><li>"I don't know what's blocking onboarding until the client emails me angry."</li><li>"Credit memo takes me three days of manual spreading."</li><li>"Every new colleague who joins needs months to get context on my book."</li></ul>
+<h5>What success looks like</h5><p>Pipeline visible at a glance. AI handles the admin. His time goes on the commercial judgment calls and relationship-building that require him — not on work a system should do. Fewer fire drills; more origination.</p>
+<h5>Jobs to be done</h5><ul><li><em>When a new mandate signs</em>, get it into the pipeline on the fast track with minimum set-up friction.</li><li><em>When an application is stuck</em>, tell me immediately and tell me why.</li><li><em>When I need to draft a credit memo</em>, do 80% of the work and let me focus on judgment.</li><li><em>When I prepare for a client call</em>, give me a 60-second summary of everything open on their book.</li></ul>
+<h5>Tech comfort</h5><p>High. Lives in CRM + spreadsheets. Fluent bilingual power user. Open to AI tools if genuinely useful.</p>
+</div></div>
+
+<div class="subsection"><h3>4.3 · Secondary stakeholders</h3>
+<p>Not primary users but whose needs the product respects:</p>
+<ul>
+<li><strong>SMBC Ops / KYC</strong> — fewer escalations, cleaner audit trails, AI-proposed risk narratives they can validate</li>
+<li><strong>Credit / Risk</strong> — pre-drafted memos with full provenance back to sources; consistent risk framing</li>
+<li><strong>Compliance</strong> — full AI decision audit log; override controls; confidence thresholds configurable</li>
+<li><strong>Product leadership</strong> — onboarding signals feed into SMBC Connect usage patterns</li>
+<li><strong>Regional heads</strong> — portfolio-level view of pipeline, time-to-live, and risk composition</li>
+</ul></div>
+</div></section>
+
+<section id="s5"><div class="wrap">
+<div class="section-label">05 · Solution overview</div>
+<h2 class="section-title">What we're building.</h2>
+<p class="section-intro">A web-based dual-persona prototype: a client self-service portal and an RM cockpit, sharing a single onboarding application state. Four agentic AI capabilities orchestrate between them. Covered in depth in Section 6.</p>
+
+<div class="subsection"><h3>5.1 · Product shape</h3>
+<p>One codebase, two portals, one shared state, four AI capabilities, six stages.</p>
+<div class="arch-diagram"><svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" style="font-family:'IBM Plex Mono',monospace">
+<rect x="20" y="40" width="180" height="60" rx="6" fill="#004832"/>
+<text x="110" y="65" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="Fraunces,serif">Client Portal</text>
+<text x="110" y="82" text-anchor="middle" font-size="10" fill="#BFD730">/client/*</text>
+<text x="110" y="95" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.6)">6 stages · messaging · status</text>
+<rect x="500" y="40" width="180" height="60" rx="6" fill="#004832"/>
+<text x="590" y="65" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="Fraunces,serif">RM Cockpit</text>
+<text x="590" y="82" text-anchor="middle" font-size="10" fill="#BFD730">/rm/*</text>
+<text x="590" y="95" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.6)">pipeline · memos · copilot</text>
+<rect x="240" y="130" width="220" height="50" rx="6" fill="#BFD730"/>
+<text x="350" y="152" text-anchor="middle" font-size="13" fill="#00301F" font-weight="700" font-family="Fraunces,serif">Shared Application State</text>
+<text x="350" y="168" text-anchor="middle" font-size="10" fill="#00301F">Supabase · Postgres · RLS</text>
+<rect x="40" y="215" width="120" height="60" rx="6" fill="white" stroke="#DCE5C8"/>
+<text x="100" y="238" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">UBO Agent</text>
+<text x="100" y="252" text-anchor="middle" font-size="9" fill="#6B7D1C">Structure intel</text>
+<rect x="180" y="215" width="120" height="60" rx="6" fill="white" stroke="#DCE5C8"/>
+<text x="240" y="238" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">Doc Extract</text>
+<text x="240" y="252" text-anchor="middle" font-size="9" fill="#6B7D1C">OCR + reasoning</text>
+<rect x="320" y="215" width="120" height="60" rx="6" fill="white" stroke="#DCE5C8"/>
+<text x="380" y="238" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">RM Copilot</text>
+<text x="380" y="252" text-anchor="middle" font-size="9" fill="#6B7D1C">Portfolio reasoning</text>
+<rect x="460" y="215" width="120" height="60" rx="6" fill="white" stroke="#DCE5C8"/>
+<text x="520" y="238" text-anchor="middle" font-size="11" fill="#0A1410" font-weight="600">Credit Memo</text>
+<text x="520" y="252" text-anchor="middle" font-size="9" fill="#6B7D1C">Drafter</text>
+<rect x="600" y="215" width="80" height="60" rx="6" fill="#F3F5EE" stroke="#D9E0D4" stroke-dasharray="3,3"/>
+<text x="640" y="238" text-anchor="middle" font-size="10" fill="#7A827D">Screen +</text>
+<text x="640" y="252" text-anchor="middle" font-size="10" fill="#7A827D">pKYC</text>
+<g stroke="#D9E0D4" stroke-width="1" fill="none">
+<path d="M 110 100 L 110 155 L 240 155"/>
+<path d="M 590 100 L 590 155 L 460 155"/>
+<path d="M 350 180 L 350 195"/>
+<path d="M 350 195 L 100 195 L 100 215"/>
+<path d="M 350 195 L 240 215"/>
+<path d="M 350 195 L 380 215"/>
+<path d="M 350 195 L 520 215"/>
+<path d="M 350 195 L 640 215"/>
+</g>
+</svg></div></div>
+
+<div class="subsection"><h3>5.2 · The 6-stage journey</h3>
+<p>Full end-to-end journey from invite to activation. Deep detail in the Journey Document; summary here.</p>
+<table class="t">
+<tr><th>#</th><th>Stage</th><th>Duration</th><th>AI moment</th></tr>
+<tr><td>1</td><td><strong>Invite &amp; Intent</strong></td><td>5 min</td><td>—</td></tr>
+<tr><td>2</td><td><strong>Entity &amp; Structure</strong></td><td>4 hrs</td><td><span class="pill green">◆ UBO Agent</span></td></tr>
+<tr><td>3</td><td><strong>Documentation</strong></td><td>6 hrs</td><td><span class="pill green">◆ Doc Extract</span></td></tr>
+<tr><td>4</td><td><strong>KYC / AML Screening</strong></td><td>2 hrs</td><td><span class="pill ghost">Screening</span></td></tr>
+<tr><td>5</td><td><strong>Products &amp; Credit</strong></td><td>1 day</td><td><span class="pill green">◆ Credit Memo</span></td></tr>
+<tr><td>6</td><td><strong>Activation</strong></td><td>1 hr</td><td><span class="pill ghost">pKYC teaser</span></td></tr>
+</table></div>
+
+<div class="subsection"><h3>5.3 · Supporting capabilities</h3>
+<ul>
+<li><strong>Activity timeline</strong> — unified audit log across client, RM, AI actions</li>
+<li><strong>Messaging thread</strong> — direct client ↔ RM communication bound to the application</li>
+<li><strong>Notifications</strong> — proactive updates both sides when something happens</li>
+<li><strong>Smart doc requests</strong> — jurisdiction + risk-tier aware checklist, not generic</li>
+<li><strong>Handover pack</strong> — auto-generated summary at activation</li>
+<li><strong>Perpetual KYC watchtower teaser</strong> — Stage 6 hints at ongoing monitoring</li>
+</ul></div>
+</div></section>
+
+<section id="s6"><div class="wrap">
+<div class="section-label">06 · AI capability set</div>
+<h2 class="section-title">The four hero moments, fully specced.</h2>
+<p class="section-intro">Each AI capability is designed as a <em>hero moment</em> — a visibly memorable demonstration of what agentic AI enables. Below: detailed specs for each, including behaviour, confidence model, failure handling, UX specification, and data flow.</p>
+
+<div class="ai-spec">
+<div class="ai-spec-tag">◆ Hero Moment 1</div>
+<h4 class="serif">UBO Intelligence Agent</h4>
+<p style="font-size:14px;color:var(--ink-soft)">The signature moment. When James clicks "Run structure analysis" the UI animates the corporate tree building itself, layer by layer, with live narration. Each node pulses in as it resolves. Shell companies appear as dashed nodes. Natural persons appear at the top with confidence scores.</p>
+<div class="spec-block"><h5>What it does</h5><ul>
+<li>Queries jurisdictional corporate registries in parallel (ACRA, Companies House, CR-HK, Japan hōjin)</li>
+<li>Builds entity hierarchy layer-by-layer</li>
+<li>Unwraps shell companies (BVI, Cayman) recursively</li>
+<li>Identifies natural persons at top of structure</li>
+<li>Produces ownership narrative with confidence per node</li>
+</ul></div>
+<div class="spec-block"><h5>Confidence model</h5><ul>
+<li><strong>90–100%</strong> — confirmed via authoritative registry filing</li>
+<li><strong>70–89%</strong> — inferred from multiple corroborating sources</li>
+<li><strong>50–69%</strong> — inferred from single source; flag for RM review</li>
+<li><strong>&lt;50%</strong> — insufficient data; escalate to human</li>
+</ul></div>
+<div class="spec-block"><h5>Failure handling</h5><ul>
+<li>Registry API failure → retry with exponential backoff; fall back to client-supplied data</li>
+<li>Unreachable jurisdiction → flag node as "manual research required"</li>
+<li>Conflicting data across sources → show both, flag for disposition</li>
+</ul></div>
+<div class="spec-block"><h5>UX specification</h5><ul>
+<li>React Flow for the tree; Framer Motion for node reveals staggered 120ms</li>
+<li>Narration streams beside tree as plain text</li>
+<li>Confidence shown as colour intensity on node border</li>
+<li>Click any node → full provenance panel (source, timestamp, raw data)</li>
+</ul></div>
+</div>
+
+<div class="ai-spec">
+<div class="ai-spec-tag">◆ Hero Moment 2</div>
+<h4 class="serif">Document Extraction Agent</h4>
+<p style="font-size:14px;color:var(--ink-soft)">Client drops a PDF. Right panel shows "Reading document..." with streaming progress. Middle panel shows live extraction log. Left panel populates structured fields one by one. Discrepancy badges appear if data conflicts with the entity tree from Stage 2.</p>
+<div class="spec-block"><h5>What it does</h5><ul>
+<li>OCR + LLM vision on uploaded PDFs (including Japanese)</li>
+<li>Extracts structured fields per document type</li>
+<li>Cross-references extractions against Stage 2 entity tree + registry data</li>
+<li>Flags discrepancies with confidence + suggested resolution</li>
+<li>Translates Japanese-language docs inline when needed</li>
+</ul></div>
+<div class="spec-block"><h5>Document types supported</h5><ul>
+<li>Certificate of Incorporation (all in-scope jurisdictions)</li>
+<li>Memorandum &amp; Articles (M&amp;A)</li>
+<li>Board resolutions</li>
+<li>Signatory identification (passport, national ID)</li>
+<li>Audited financial statements (for credit)</li>
+<li>Japanese corporate registry extracts (登記簿)</li>
+</ul></div>
+<div class="spec-block"><h5>Discrepancy handling</h5><ul>
+<li>Extracted data ≠ Stage 2 tree → amber flag; client disposes or RM escalates</li>
+<li>Conflicting data across 2+ documents → flag with both values</li>
+<li>Confidence &lt;70% on any field → field marked "needs review"</li>
+</ul></div>
+<div class="spec-block"><h5>UX specification</h5><ul>
+<li>Three-pane layout: PDF preview · extraction log · structured fields</li>
+<li>Fields pulse in Fresh Green tint as they populate</li>
+<li>Discrepancies show inline with orange border + "⚠" affordance</li>
+<li>Accept / Edit / Request more info per field</li>
+</ul></div>
+</div>
+
+<div class="ai-spec">
+<div class="ai-spec-tag">◆ Hero Moment 3</div>
+<h4 class="serif">RM Copilot</h4>
+<p style="font-size:14px;color:var(--ink-soft)">Persistent sidecar across the RM cockpit. ⌘J to summon or tap the Fresh Green CTA. Natural-language interface over the RM's entire portfolio. Reasons across applications, entities, documents, memos, screening. Real Claude API with tool-calling into Supabase.</p>
+<div class="spec-block"><h5>Example prompts (demo)</h5><ul>
+<li>"What's outstanding on Kaisei?"</li>
+<li>"Draft a KYC memo summarising screening results for Kaisei"</li>
+<li>"Compare Kaisei's risk profile against my portfolio average"</li>
+<li>"Who else in my portfolio is expanding to Singapore? Any parallels?"</li>
+<li>"Summarise this application in 3 bullets for my Monday call"</li>
+<li>"What's my pipeline value at risk this week?"</li>
+<li>"Show me applications stalled &gt;48 hours"</li>
+</ul></div>
+<div class="spec-block"><h5>Tool-calling capabilities</h5><ul>
+<li>Read any data the RM has access to (role-scoped via RLS)</li>
+<li>Generate text (memos, summaries, emails)</li>
+<li>Propose draft actions for RM approval</li>
+<li>Never autonomously mutates state without explicit RM confirm</li>
+</ul></div>
+<div class="spec-block"><h5>Governance</h5><ul>
+<li>All prompts + responses logged with timestamps</li>
+<li>Model version pinned per session for auditability</li>
+<li>Outputs flagged as "AI-generated" before insertion downstream</li>
+<li>Confidence shown where meaningful</li>
+</ul></div>
+<div class="spec-block"><h5>UX specification</h5><ul>
+<li>Slide-in sidecar from right, 400px wide desktop, full-screen mobile</li>
+<li>Conversation view with turn-by-turn history</li>
+<li>Command bar at bottom; suggested prompts when idle</li>
+<li>Structured outputs (memo, summary) can be "send to..." an application</li>
+</ul></div>
+</div>
+
+<div class="ai-spec">
+<div class="ai-spec-tag">◆ Hero Moment 4</div>
+<h4 class="serif">Credit Memo Drafter</h4>
+<p style="font-size:14px;color:var(--ink-soft)">The highest-value AI moment from RM perspective. Click "Draft credit memo". Template appears. Each section streams in as AI writes it, with source pins linking back to data used. RM reviews section-by-section with Accept / Edit / Regenerate. Final memo exportable as PDF with full provenance appendix.</p>
+<div class="spec-block"><h5>Memo structure (7 sections)</h5><ol>
+<li><strong>Executive summary</strong> — 1 para, the ask, the recommendation</li>
+<li><strong>Client overview</strong> — from entity tree + industry reference data</li>
+<li><strong>Financial analysis</strong> — 3-year spread</li>
+<li><strong>Proposed facility structure</strong> — size, tenor, purpose, drawdown</li>
+<li><strong>Risk rating &amp; key risks</strong> — from screening + industry + financials</li>
+<li><strong>Covenants &amp; conditions precedent</strong> — from policy library</li>
+<li><strong>Recommendation</strong> — approve / approve w/ conditions / decline</li>
+</ol></div>
+<div class="spec-block"><h5>Sources the drafter pulls from</h5><ul>
+<li>Entity tree from Stage 2 (structure)</li>
+<li>UBOs from Stage 2 (ownership, control)</li>
+<li>Uploaded audited financials from Stage 3</li>
+<li>Screening results from Stage 4 (risk)</li>
+<li>Client's credit ask from Stage 5</li>
+<li>SMBC policy library (mocked — covenants &amp; conditions)</li>
+<li>Industry reference data (mocked — sector outlook)</li>
+</ul></div>
+<div class="spec-block"><h5>Quality controls</h5><ul>
+<li>Every numerical claim has a source pin</li>
+<li>Any inferred (vs. sourced) claim is flagged</li>
+<li>RM can Accept, Edit, or Regenerate each section</li>
+<li>Final memo requires RM sign-off before submission</li>
+</ul></div>
+<div class="spec-block"><h5>UX specification</h5><ul>
+<li>Full-page document layout; hover any statement to see source pin</li>
+<li>Sections stream in with visible progress</li>
+<li>Sidebar shows memo outline; click to jump</li>
+<li>Export to PDF with full provenance appendix</li>
+</ul></div>
+</div>
+
+<div class="subsection"><h3>6.5 · Supporting AI (not hero)</h3>
+<ul>
+<li><strong>Screening Agent</strong> — runs sanctions/PEP/adverse media in parallel, clears obvious false positives autonomously, narrates amber/red hits with recommended disposition</li>
+<li><strong>Perpetual KYC watchtower (teaser)</strong> — post-activation, monitors registry filings, adverse media, sanctions updates; triggers alerts on change</li>
+</ul></div>
+
+<div class="subsection"><h3>6.6 · AI governance &amp; trust</h3>
+<p>Every AI capability in Origin is designed with governance from day one. This matters for banking where AI deployment must survive compliance, audit, and regulatory review.</p>
+<ul>
+<li><strong>Full audit log</strong> — every prompt, response, tool call recorded</li>
+<li><strong>Confidence surfacing</strong> — every output comes with confidence indicator</li>
+<li><strong>Source provenance</strong> — every factual claim links to source data</li>
+<li><strong>Human-in-the-loop by default</strong> — AI proposes; humans approve anything material</li>
+<li><strong>Model version pinning</strong> — auditable which model produced which output</li>
+<li><strong>Override controls</strong> — RM / compliance can reject any AI disposition with reason</li>
+</ul></div>
+</div></section>
+
+<section id="s7"><div class="wrap">
+<div class="section-label">07 · Technical architecture</div>
+<h2 class="section-title">How it's built.</h2>
+
+<div class="subsection"><h3>7.1 · Stack overview</h3>
+<table class="t">
+<tr><th>Layer</th><th>Choice</th><th>Rationale</th></tr>
+<tr><td>Framework</td><td>Next.js 14 · App Router · TypeScript strict</td><td>Server Components for streaming AI UX; strong typing</td></tr>
+<tr><td>UI</td><td>Tailwind · shadcn/ui · Framer Motion</td><td>Speed of build; design tokens; motion for hero moments</td></tr>
+<tr><td>Fonts</td><td>Fraunces · Inter Tight · Noto Sans JP · IBM Plex Mono</td><td>Editorial feel with institutional gravity</td></tr>
+<tr><td>Backend</td><td>Supabase · Postgres · Auth · Storage · RLS</td><td>Single service covers auth + DB + file storage</td></tr>
+<tr><td>AI</td><td>Anthropic Claude API · server-side route handlers</td><td>Tool-calling for Copilot; streaming for memo</td></tr>
+<tr><td>Viz</td><td>React Flow · Recharts</td><td>Tree viz for UBO; chart rendering for memo</td></tr>
+<tr><td>Deploy</td><td>Vercel</td><td>Edge runtime · instant preview</td></tr>
+<tr><td>Repo</td><td>GitHub · main branch · Claude Code</td><td>Single dev; fast iteration; phased build</td></tr>
+</table></div>
+
+<div class="subsection"><h3>7.2 · Data model (summary)</h3>
+<p>10 Supabase tables, lean, all with RLS. Full schema in <span class="mono">ORIGIN_DESIGN.md</span>:</p>
+<ul>
+<li><strong>profiles</strong> — extends auth.users; role (rm / client_admin / client_user)</li>
+<li><strong>organizations</strong> — corporate customer parent</li>
+<li><strong>applications</strong> — one onboarding case; ties everything together</li>
+<li><strong>entities</strong> — legal entities under application (tree via self-reference)</li>
+<li><strong>ubos</strong> — natural persons with ownership / control</li>
+<li><strong>documents</strong> — uploads + extracted data as jsonb</li>
+<li><strong>screening_results</strong> — sanctions/PEP/media hits with AI narrative</li>
+<li><strong>products</strong> — requested products with config as jsonb</li>
+<li><strong>credit_memos</strong> — sections, status, sign-off</li>
+<li><strong>activities</strong> — unified timeline across client/RM/AI/system</li>
+</ul></div>
+
+<div class="subsection"><h3>7.3 · AI API architecture</h3>
+<p>AI calls are handled server-side via Next.js route handlers to keep keys secret and allow tool-calling into Supabase:</p>
+<ul>
+<li><strong>Streaming text</strong> (Credit Memo) — server streams Claude output via SSE</li>
+<li><strong>Tool-calling loop</strong> (RM Copilot) — multi-turn Claude with Supabase read tools</li>
+<li><strong>Scripted agentic</strong> (UBO, Doc Extract) — scripted sequences with mock data + realistic delays; production would orchestrate real registry APIs + Claude reasoning</li>
+</ul></div>
+
+<div class="subsection"><h3>7.4 · Security &amp; data considerations</h3>
+<p>Security-aware patterns used throughout so architecture could survive a real deployment review:</p>
+<ul>
+<li><strong>Row-level security</strong> on every Supabase table</li>
+<li><strong>Role-scoped access</strong> — RMs see portfolio; clients see only their application</li>
+<li><strong>No PII in client logs</strong> — AI prompts sanitised before logging</li>
+<li><strong>Encryption at rest</strong> — Supabase default</li>
+<li><strong>Signed uploads</strong> — Supabase storage with signed URLs</li>
+<li><strong>Magic link auth</strong> — no password storage</li>
+<li><strong>Audit log immutability</strong> — activities table append-only via RLS</li>
+</ul>
+<div class="callout warn"><div class="callout-label">Prototype caveat</div><p>This is a showpiece, not production. Security hardening (pen testing, WAF, DLP, enterprise SSO) is deferred to productisation.</p></div></div>
+</div></section>
+
+<section id="s8"><div class="wrap">
+<div class="section-label">08 · Scope, assumptions, dependencies</div>
+<h2 class="section-title">Drawing the lines.</h2>
+
+<div class="subsection"><h3>8.1 · What's in scope</h3>
+<div class="scope-grid">
+<div class="scope-box in"><h4>Functional</h4><ul>
+<li>Dual-persona web prototype (client portal + RM cockpit)</li>
+<li>Full 6-stage journey, end-to-end</li>
+<li>4 AI hero moments (UBO, Doc Extract, Copilot, Credit Memo)</li>
+<li>Screening agent (non-hero)</li>
+<li>Perpetual KYC teaser screen</li>
+<li>1 hero scenario (Kaisei) + 6 background scenarios</li>
+<li>Products: Accounts, Cash, FX, Trade, Credit</li>
+<li>Jurisdictions: Japan, Singapore, Hong Kong, UK</li>
+<li>Messaging thread between client and RM</li>
+<li>Activity timeline across all actors</li>
+</ul></div>
+<div class="scope-box in"><h4>Technical</h4><ul>
+<li>Next.js + Supabase + Claude API</li>
+<li>Real Claude API for Copilot + Credit Memo</li>
+<li>Scripted agentic flows for UBO + Doc Extract</li>
+<li>Responsive design (desktop-first, mobile-viewable)</li>
+<li>Vercel deployment with shareable link</li>
+<li>Seed data realistic under demo questioning</li>
+</ul></div></div></div>
+
+<div class="subsection"><h3>8.2 · What's out of scope</h3>
+<div class="scope-grid">
+<div class="scope-box out"><h4>Explicitly excluded</h4><ul>
+<li>Real KYC / AML / registry API integrations (mocked)</li>
+<li>Real payment processing (teaser only)</li>
+<li>Multi-language UI (English only; JP as heritage flavour)</li>
+<li>Mobile native apps (responsive web only)</li>
+<li>WCAG accessibility audit</li>
+<li>Production RLS / security hardening</li>
+<li>Real email delivery (invite simulated)</li>
+<li>SMBC Connect deep integration</li>
+<li>Dedicated Ops / Compliance / Credit-Risk views</li>
+<li>Multi-RM collaboration on same application</li>
+</ul></div>
+<div class="scope-box out"><h4>Deferred to v1 productisation</h4><ul>
+<li>Real registry API integrations</li>
+<li>Ops / Compliance / Credit workbenches</li>
+<li>SSO / enterprise identity</li>
+<li>PII classification &amp; DLP</li>
+<li>Perpetual KYC full implementation</li>
+<li>Multi-language support</li>
+<li>Deep SMBC Connect integration</li>
+<li>Mobile app if demanded</li>
+<li>Analytics / reporting infrastructure</li>
+<li>Full compliance documentation pack</li>
+</ul></div></div></div>
+
+<div class="subsection"><h3>8.3 · Key assumptions</h3>
+<ul>
+<li><strong>Stakeholder audience accepts prototype status</strong> — this is a showpiece, not a pilot</li>
+<li><strong>No real SMBC data used</strong> — all seed data fictional but realistic</li>
+<li><strong>Claude API remains available + affordable</strong> — token costs negligible</li>
+<li><strong>Google Fonts + CDNs remain accessible</strong> — no air-gapped requirement</li>
+<li><strong>Single developer (Kit) + Claude Code</strong> — no multi-dev coordination</li>
+</ul></div>
+
+<div class="subsection"><h3>8.4 · Dependencies</h3>
+<ul>
+<li><strong>Anthropic Claude API</strong> — for Copilot + Credit Memo</li>
+<li><strong>Supabase</strong> — backend infrastructure</li>
+<li><strong>Vercel</strong> — hosting + CI/CD</li>
+<li><strong>GitHub</strong> — source control</li>
+<li><strong>Google Fonts</strong> — typography delivery</li>
+<li><strong>Claude Code</strong> — development workflow</li>
+</ul></div>
+</div></section>
+
+<section id="s9"><div class="wrap">
+<div class="section-label">09 · Build approach &amp; plan</div>
+<h2 class="section-title">From locked scope to demo-ready in 7 days.</h2>
+
+<div class="subsection"><h3>9.1 · Build principles</h3>
+<ul>
+<li><strong>Master brief as source of truth</strong> — <span class="mono">ORIGIN_DESIGN.md</span> at repo root; Claude Code reads every session</li>
+<li><strong>Phased with clean gates</strong> — each phase has entry criteria + deliverables</li>
+<li><strong>Demo-driven development</strong> — walk through demo at each phase gate</li>
+<li><strong>Seed data early</strong> — Kaisei populated from Phase 1</li>
+<li><strong>Ship the vertical slice, then broaden</strong> — one complete journey before polishing any one stage</li>
+</ul></div>
+
+<div class="subsection"><h3>9.2 · Phased plan</h3>
+<div class="timeline">
+<div class="timeline-item milestone">
+<div class="timeline-week">Phase 0 · Day 1</div>
+<div class="timeline-title">Foundation</div>
+<div class="timeline-desc"><p style="margin:0 0 6px">Next.js 14 + TypeScript strict + Tailwind scaffold. Supabase project, schema migration with RLS. Design tokens in globals.css. Magic link auth. Role-based routing (/rm, /client). Dev role switcher.</p><p style="margin:0;font-size:12px;color:var(--ink-muted)"><strong>Exit gate:</strong> Can log in and see empty shells.</p></div>
+</div>
+<div class="timeline-item">
+<div class="timeline-week">Phase 1 · Day 2</div>
+<div class="timeline-title">RM cockpit skeleton</div>
+<div class="timeline-desc"><p style="margin:0 0 6px">Dashboard home (stats, Needs You, AI has been busy, pipeline kanban). Application detail shell with tabs. Seed: Kaisei at Stage 4 + 6 others across stages.</p><p style="margin:0;font-size:12px;color:var(--ink-muted)"><strong>Exit gate:</strong> Cockpit looks lived-in.</p></div>
+</div>
+<div class="timeline-item">
+<div class="timeline-week">Phase 2 · Day 3</div>
+<div class="timeline-title">Client portal skeleton</div>
+<div class="timeline-desc"><p style="margin:0 0 6px">Journey dashboard with 6-stage stepper. All 6 stage screens wired (read-only from seed). Message thread. Notifications.</p><p style="margin:0;font-size:12px;color:var(--ink-muted)"><strong>Exit gate:</strong> Can walk Yuki's journey end-to-end.</p></div>
+</div>
+<div class="timeline-item milestone">
+<div class="timeline-week">Phase 3 · Days 4–5</div>
+<div class="timeline-title">Hero moments · UBO + Doc Extraction</div>
+<div class="timeline-desc"><p style="margin:0 0 6px">React Flow UBO tree with scripted build animation. Doc dropzone with three-pane extraction UX. Both moments visible client + RM sides.</p><p style="margin:0;font-size:12px;color:var(--ink-muted)"><strong>Exit gate:</strong> Two "wow" moments that hold up to repeat viewing.</p></div>
+</div>
+<div class="timeline-item milestone">
+<div class="timeline-week">Phase 4 · Day 6</div>
+<div class="timeline-title">Hero moments · Copilot + Credit Memo</div>
+<div class="timeline-desc"><p style="margin:0 0 6px">RM Copilot sidecar with real Claude API + tool-calling. Credit Memo Drafter with sectioned streaming, source pins, accept/edit/regenerate per section. PDF export.</p><p style="margin:0;font-size:12px;color:var(--ink-muted)"><strong>Exit gate:</strong> Live Claude responses land convincingly.</p></div>
+</div>
+<div class="timeline-item milestone">
+<div class="timeline-week">Phase 5 · Day 7</div>
+<div class="timeline-title">Polish, seed depth &amp; demo-ready</div>
+<div class="timeline-desc"><p style="margin:0 0 6px">Kaisei deepened (financials, entity details, UBO profiles). All states handled (empty, loading, error). Activity timeline. pKYC teaser. Demo script. Fallback video.</p><p style="margin:0;font-size:12px;color:var(--ink-muted)"><strong>Exit gate:</strong> 15-min walkthrough holds up to live questioning.</p></div>
+</div>
+</div></div>
+
+<div class="subsection"><h3>9.3 · Seed data strategy</h3>
+<ul>
+<li><strong>Hero scenario (Kaisei)</strong> — deep. Every field realistic. Stress-tested against reviewer questioning.</li>
+<li><strong>Background scenarios (6)</strong> — shallow but coherent. Pipeline feels real.</li>
+<li><strong>All scenarios fictional</strong> — names, hōjin, UENs, CRNs invented.</li>
+<li><strong>Financials from sector norms</strong> — Kaisei consistent with auto parts manufacturer of its scale.</li>
+</ul></div>
+
+<div class="subsection"><h3>9.4 · Tools &amp; workflow</h3>
+<ul>
+<li><strong>Claude Code</strong> — primary build tool; session-per-phase</li>
+<li><strong>GitHub</strong> — main branch; atomic commits; phase tags</li>
+<li><strong>Supabase CLI</strong> — local migrations; push to cloud per phase</li>
+<li><strong>Vercel</strong> — auto-deploy from main; preview per PR</li>
+<li><strong>Claude.ai</strong> — design iteration; brief refinement</li>
+<li><strong>Mac Mini server</strong> — optional background Claude Code sessions</li>
+</ul></div>
+</div></section>
+
+<section id="s10"><div class="wrap">
+<div class="section-label">10 · Seed scenarios</div>
+<h2 class="section-title">The cast.</h2>
+<p class="section-intro">Seven fictional but realistic client scenarios populate the prototype. One hero (deeply developed) and six supporting (enough to furnish the pipeline).</p>
+
+<div class="subsection"><h3>10.1 · Hero · Kaisei Manufacturing KK</h3>
+<div class="card">
+<div class="card-head">Hero scenario · Stage 2 → Stage 6 journey</div>
+<h4 class="card-title serif">Kaisei Manufacturing KK · <span class="jp">架星製造株式会社</span></h4>
+<table class="t" style="margin-top:12px">
+<tr><td>Parent</td><td>Kaisei Manufacturing KK · Tokyo · hōjin 2010401012345</td></tr>
+<tr><td>Industry</td><td>Automotive components manufacturing (Tier-2 supplier)</td></tr>
+<tr><td>Revenue</td><td>¥380B (~USD 2.5B)</td></tr>
+<tr><td>Employees</td><td>4,200 globally</td></tr>
+<tr><td>Founded</td><td>1962</td></tr>
+<tr><td>Current banking</td><td>MUFG (Japan primary); no material international relationships</td></tr>
+<tr><td>Expansion trigger</td><td>New OEM supply contracts in APAC + Europe</td></tr>
+<tr><td>Entities in scope</td><td>4 legal entities (parent + 3 new regional subs) + 1 existing Tech KK</td></tr>
+<tr><td>UBOs identified</td><td>7 natural persons (Kaisei family + investor + trust beneficiaries)</td></tr>
+<tr><td>Products sought</td><td>Accounts · Cash · FX · Trade · Credit (USD 50M revolving)</td></tr>
+<tr><td>Target TTL</td><td>5 days from invite to live</td></tr>
+</table>
+<h5>Entity tree</h5>
+<ul style="font-size:13px;color:var(--ink-soft)">
+<li><strong>Kaisei Manufacturing KK</strong> (Japan · parent)</li>
+<li style="margin-left:16px">→ <strong>Kaisei Asia Pacific Pte Ltd</strong> (Singapore · 100% · UEN 202100123X)</li>
+<li style="margin-left:16px">→ <strong>Kaisei Trading HK Ltd</strong> (Hong Kong · 100% · BR 2987651)</li>
+<li style="margin-left:16px">→ <strong>Kaisei Europe Ltd</strong> (UK · 100% · CH 12345678)</li>
+<li style="margin-left:16px">→ <strong>Kaisei Technology KK</strong> (Japan · 80% / 20% Morita Holdings BVI)</li>
+<li style="margin-left:32px">→ Morita Holdings (BVI shell) unwrapped to Tanaka Family Trust → 4 natural persons</li>
+</ul>
+<h5>UBOs</h5>
+<ul style="font-size:13px;color:var(--ink-soft)">
+<li>Hiroshi Kaisei (founder's grandson; 42% via holdings; CEO)</li>
+<li>Yuki Kaisei (sister; 18%; non-executive director)</li>
+<li>Kenji Morita (external investor; 12% via BVI → shell to unwrap)</li>
+<li>Tanaka Family Trust beneficiaries × 4 (each &lt;5%)</li>
+</ul></div></div>
+
+<div class="subsection"><h3>10.2 · Supporting cast · 6 scenarios for pipeline texture</h3>
+<table class="t">
+<tr><th>Scenario</th><th>Industry</th><th>Stage</th><th>Notable</th></tr>
+<tr><td><strong>Hayashi Foods</strong></td><td>F&amp;B distribution</td><td>Stage 1 · invited</td><td>Recently sent, awaiting welcome</td></tr>
+<tr><td><strong>Fujiwara Pharma</strong></td><td>Pharmaceuticals</td><td>Stage 3 · documents</td><td>Stalled 1d 3h · Q on M&amp;A translation</td></tr>
+<tr><td><strong>Sato Trading</strong></td><td>Commodity trading</td><td>Stage 4 · screening</td><td>1 amber hit awaiting disposition</td></tr>
+<tr><td><strong>Ishikawa Logistics</strong></td><td>Logistics / freight</td><td>Stage 5 · products</td><td>Credit memo 80% drafted</td></tr>
+<tr><td><strong>Mitsubishi Chemical</strong></td><td>Chemicals</td><td>Stage 5 · products</td><td>5 accounts being configured</td></tr>
+<tr><td><strong>Nakamura Electronics</strong></td><td>Consumer electronics</td><td>Stage 6 · live today</td><td>Activated this morning</td></tr>
+</table>
+<p style="font-size:13px;color:var(--ink-muted)">Plus: <strong>Ota Robotics</strong> (on hold, regulatory clarification) — surfaced in "On hold" view.</p></div>
+</div></section>
+
+<section id="s11"><div class="wrap">
+<div class="section-label">11 · Success metrics</div>
+<h2 class="section-title">How we know it landed.</h2>
+
+<div class="subsection"><h3>11.1 · Primary reactions we're targeting</h3>
+<p>Because this is a showpiece prototype, success is qualitative — measured by stakeholder reaction and downstream opportunity generation. After a 15-minute walkthrough, <strong>3 of these 5 reactions landing = success</strong>:</p>
+<ol>
+<li>"That feels 5 years ahead of where we are today."</li>
+<li>"The UBO agent is magic."</li>
+<li>"I want the credit memo drafter yesterday."</li>
+<li>"The RM cockpit is a tool I'd actually use."</li>
+<li>"The client experience is consumer-grade."</li>
+</ol></div>
+
+<div class="subsection"><h3>11.2 · Leading indicators (during build)</h3>
+<ul>
+<li><strong>Visual consistency</strong> — every screen feels part of one product</li>
+<li><strong>AI moment impact</strong> — each hero produces visible "wow" in internal testing</li>
+<li><strong>Seed data depth</strong> — Kaisei holds up to unscripted questioning</li>
+<li><strong>Demo pacing</strong> — 15-min walkthrough covers all 6 stages without rushing or padding</li>
+<li><strong>Load performance</strong> — no dead time during AI moments</li>
+</ul></div>
+
+<div class="subsection"><h3>11.3 · Downstream outcomes (lagging)</h3>
+<ul>
+<li>At least one follow-up conversation on productisation</li>
+<li>At least one client workshop using prototype as playback</li>
+<li>Adoption of Origin's visual language in related SMBC initiatives</li>
+<li>Citation in internal strategy or innovation reviews</li>
+</ul></div>
+
+<div class="subsection"><h3>11.4 · Feedback capture</h3>
+<p>Every stakeholder walkthrough captures structured feedback: reactions (verbatim), questions asked, features they want more/less of, openness to productisation. Feeds into a v0.3 brief if prototype moves forward.</p></div>
+</div></section>
+
+<section id="s12"><div class="wrap">
+<div class="section-label">12 · Risk register</div>
+<h2 class="section-title">What could go wrong.</h2>
+<table class="t">
+<tr><th>#</th><th>Risk</th><th style="width:55px">P</th><th style="width:55px">I</th><th>Mitigation</th></tr>
+<tr><td>R1</td><td><strong>AI hero moments feel scripted or hollow</strong></td><td><span class="pill med">Med</span></td><td><span class="pill high">High</span></td><td>Use real Claude API for Copilot + Credit Memo. Mock only registry APIs.</td></tr>
+<tr><td>R2</td><td><strong>Scope creep</strong> — "just one more feature"</td><td><span class="pill high">High</span></td><td><span class="pill med">Med</span></td><td>Master brief locked. Out-of-scope explicit. Secondary personas reserved for v1.</td></tr>
+<tr><td>R3</td><td><strong>Seed data feels thin</strong> under live questioning</td><td><span class="pill med">Med</span></td><td><span class="pill high">High</span></td><td>Dedicated polish phase. Pre-rehearse reviewer questions.</td></tr>
+<tr><td>R4</td><td><strong>Demo failure</strong> during live walkthrough</td><td><span class="pill low">Low</span></td><td><span class="pill high">High</span></td><td>Fallback demo video recorded. Cacheable AI responses. Vercel edge.</td></tr>
+<tr><td>R5</td><td><strong>Perceived as "just another onboarding demo"</strong></td><td><span class="pill med">Med</span></td><td><span class="pill med">Med</span></td><td>Explicit positioning vs. SMBC Connect. Hero moments must land visually.</td></tr>
+<tr><td>R6</td><td><strong>"Can we deploy tomorrow?"</strong> catches us off-guard</td><td><span class="pill low">Low</span></td><td><span class="pill med">Med</span></td><td>Productisation roadmap sketched. Clear prototype-vs-product framing.</td></tr>
+<tr><td>R7</td><td><strong>Compliance pushes back on AI autonomy</strong> depicted</td><td><span class="pill med">Med</span></td><td><span class="pill med">Med</span></td><td>Human-in-the-loop model clear. Every action auditable. Overrides visible.</td></tr>
+<tr><td>R8</td><td><strong>Japanese MNC framing doesn't resonate</strong> non-JP</td><td><span class="pill low">Low</span></td><td><span class="pill low">Low</span></td><td>Core patterns segment-agnostic. Can be reskinned post-v0.</td></tr>
+<tr><td>R9</td><td><strong>Claude API pricing changes</strong> during build</td><td><span class="pill low">Low</span></td><td><span class="pill low">Low</span></td><td>Prototype token usage negligible.</td></tr>
+<tr><td>R10</td><td><strong>Key-person risk</strong> — single developer</td><td><span class="pill low">Low</span></td><td><span class="pill med">Med</span></td><td>Master brief + journey + product brief comprehensive enough for another dev to continue.</td></tr>
+</table>
+<p style="font-size:12px;color:var(--ink-muted)">P = probability · I = impact</p>
+</div></section>
+
+<section id="s13"><div class="wrap">
+<div class="section-label">13 · Commercial &amp; productisation</div>
+<h2 class="section-title">Beyond the prototype.</h2>
+<p class="section-intro">SMBC Origin v0.1 is a prototype. If it lands well, there's a natural progression toward productisation. This section sketches how.</p>
+
+<div class="subsection"><h3>13.1 · Prototype investment</h3>
+<table class="t">
+<tr><th>Line</th><th>Estimate</th></tr>
+<tr><td>Developer time (solo build)</td><td>~7 working days</td></tr>
+<tr><td>Claude API (prototype usage)</td><td>&lt;USD 100</td></tr>
+<tr><td>Supabase (dev tier)</td><td>Free</td></tr>
+<tr><td>Vercel (hobby tier)</td><td>Free</td></tr>
+<tr><td>Design / direction time</td><td>Folded into dev time</td></tr>
+<tr><td><strong>Total cash cost</strong></td><td><strong>&lt;USD 100</strong> + dev time</td></tr>
+</table></div>
+
+<div class="subsection"><h3>13.2 · Productisation roadmap</h3>
+<table class="t">
+<tr><th>Version</th><th>Scope</th><th>Effort</th></tr>
+<tr><td><strong>v0.1</strong><br>Prototype</td><td>Current scope — showpiece, one segment, one journey, 4 AI moments</td><td>~7 days</td></tr>
+<tr><td><strong>v0.2</strong><br>Internal pilot</td><td>2–3 real clients (consent). Real registry APIs. Compliance + Risk feedback loop.</td><td>6–10 weeks</td></tr>
+<tr><td><strong>v1.0</strong><br>MVP production</td><td>One region live. Ops / Compliance / Credit workbenches. SSO. Security hardening. SMBC Connect integration.</td><td>6–9 months</td></tr>
+<tr><td><strong>v2.0</strong><br>Scale</td><td>Multi-region. Multi-language. pKYC production. Additional segments (FI, SME).</td><td>12–18 months</td></tr>
+</table></div>
+
+<div class="subsection"><h3>13.3 · Rough value case (if productised)</h3>
+<p>Directional, not commitment-grade:</p>
+<ul>
+<li><strong>TTL reduction</strong> — each day of TTL reduction = earlier revenue. USD 50M facility, each week earlier is material.</li>
+<li><strong>RM capacity released</strong> — if RMs reclaim 20% of week, at current desk size that's ≈ 5 RM FTEs across Japanese corporates desk globally</li>
+<li><strong>Operational cost per application</strong> — automation of doc extraction, screening, memo drafting could reduce ops cost 50–70%</li>
+<li><strong>Competitive win rate</strong> — consumer-grade onboarding as deal-differentiator</li>
+<li><strong>Downstream Connect adoption</strong> — clients onboarded through Origin have higher likelihood of deep Connect usage</li>
+</ul>
+<div class="callout warn"><div class="callout-label">Caveat</div><p>Value quantification is a full exercise for v0.2 / v1.0. Not appropriate to commit to numbers at prototype stage.</p></div></div>
+
+<div class="subsection"><h3>13.4 · Build vs. buy considerations</h3>
+<p>SMBC's existing Fenergo investment means onboarding/CLM infrastructure already exists. A natural productisation path positions Origin as the <strong>UX layer on top of Fenergo</strong> — Fenergo handles structured CLM data; Origin handles the AI-native client + RM experience. Preserves existing investment while adding the front-door layer Fenergo alone doesn't deliver.</p></div>
+</div></section>
+
+<section id="s14"><div class="wrap">
+<div class="section-label">14 · Governance</div>
+<h2 class="section-title">How we run this.</h2>
+
+<div class="subsection"><h3>14.1 · Decision rights</h3>
+<ul>
+<li><strong>Scope &amp; vision</strong> — Kit (pre-build); sponsor (if committed) post-build</li>
+<li><strong>Design direction</strong> — Kit, with Claude iteration</li>
+<li><strong>Technical decisions</strong> — Kit, with Claude Code</li>
+<li><strong>Demo scheduling</strong> — Kit</li>
+</ul></div>
+
+<div class="subsection"><h3>14.2 · Cadence</h3>
+<ul>
+<li>Pre-build: scope lock complete (this brief)</li>
+<li>During build: daily GitHub commits; phase-end demo check</li>
+<li>Post-build: v0.1 deployed; demo-ready; walkthroughs scheduled</li>
+</ul></div>
+
+<div class="subsection"><h3>14.3 · Working artefacts</h3>
+<table class="t">
+<tr><th>Artefact</th><th>Purpose</th><th>Primary audience</th></tr>
+<tr><td><span class="mono">ORIGIN_DESIGN.md</span></td><td>Technical master brief</td><td>Claude Code (every session)</td></tr>
+<tr><td><span class="mono">ORIGIN_JOURNEY_DOC.html</span></td><td>Detailed UX / journey bible</td><td>Design reviewers, Kit</td></tr>
+<tr><td><span class="mono">ORIGIN_PRODUCT_BRIEF.html</span></td><td>This brief</td><td>Leadership, sponsors, workshops</td></tr>
+<tr><td><span class="mono">/rm-cockpit-home.html</span></td><td>Interactive cockpit mockup</td><td>Design iteration</td></tr>
+<tr><td><span class="mono">/type-exploration.html</span></td><td>Type specimen comparison</td><td>Design decision</td></tr>
+</table></div>
+</div></section>
+
+<section id="s15"><div class="wrap">
+<div class="section-label">15 · Next steps</div>
+<h2 class="section-title">What happens after sign-off.</h2>
+<ol>
+<li><strong>Lock remaining open questions</strong> — dark-mode cockpit · pKYC depth · credit memo PDF · Japanese UI depth</li>
+<li><strong>Finalise hero seed data</strong> — Kaisei entity tree, UBOs, financials, RM portfolio texture</li>
+<li><strong>Complete design direction sign-off</strong> — RM cockpit home v2 before Phase 1</li>
+<li><strong>Spin up repo</strong> at <span class="mono">~/Projects/smbc-origin</span> with master brief + Supabase + Vercel</li>
+<li><strong>Begin Phase 0 build</strong> via Claude Code, iterating through phases 1–5</li>
+<li><strong>Internal dry run</strong> after Phase 5 — record walkthrough video</li>
+<li><strong>Showpiece / workshop ready</strong> — v0.1 live, shareable, demo script, feedback process</li>
+<li><strong>Review window</strong> — 2 weeks after launch to assess reactions and decide on v0.2</li>
+</ol></div></section>
+
+<section id="a1"><div class="wrap">
+<div class="section-label">Appendix A</div>
+<h2 class="section-title">Glossary.</h2>
+<p class="section-intro">Banking and AI terminology used throughout this brief.</p>
+<ul class="glossary-list">
+<li><div class="glossary-term">ACRA</div><div class="glossary-def">Accounting and Corporate Regulatory Authority — Singapore's registrar of companies.</div></li>
+<li><div class="glossary-term">AML</div><div class="glossary-def">Anti-Money Laundering — regulatory and operational framework for detecting illicit funds.</div></li>
+<li><div class="glossary-term">BVI</div><div class="glossary-def">British Virgin Islands — offshore jurisdiction commonly used for holding structures.</div></li>
+<li><div class="glossary-term">CLM</div><div class="glossary-def">Client Lifecycle Management — process + systems that manage a client from onboarding through ongoing servicing.</div></li>
+<li><div class="glossary-term">COI</div><div class="glossary-def">Certificate of Incorporation — document proving legal formation of an entity.</div></li>
+<li><div class="glossary-term">Copilot</div><div class="glossary-def">AI assistant embedded in a user's workflow, providing natural-language interaction over their data.</div></li>
+<li><div class="glossary-term">E2E</div><div class="glossary-def">End-to-end — describing a journey from initiation to completion without gaps.</div></li>
+<li><div class="glossary-term">EDD</div><div class="glossary-def">Enhanced Due Diligence — deeper KYC performed for higher-risk clients.</div></li>
+<li><div class="glossary-term">FATCA / CRS</div><div class="glossary-def">Cross-border tax reporting frameworks — relevant to account opening documentation.</div></li>
+<li><div class="glossary-term">FATF</div><div class="glossary-def">Financial Action Task Force — global AML standards body.</div></li>
+<li><div class="glossary-term">Fenergo</div><div class="glossary-def">Enterprise CLM software used by large banks (including SMBC) to manage onboarding and ongoing KYC.</div></li>
+<li><div class="glossary-term">Hōjin</div><div class="glossary-def">Japanese corporate identification number (法人番号) — analogous to Singapore's UEN.</div></li>
+<li><div class="glossary-term">KYB</div><div class="glossary-def">Know Your Business — the corporate equivalent of KYC.</div></li>
+<li><div class="glossary-term">KYC</div><div class="glossary-def">Know Your Customer — mandatory identity and risk verification for banking customers.</div></li>
+<li><div class="glossary-term">LC / SBLC</div><div class="glossary-def">Letter of Credit / Standby Letter of Credit — trade finance instruments.</div></li>
+<li><div class="glossary-term">M&amp;A</div><div class="glossary-def">Memorandum &amp; Articles of Association — foundational corporate governance documents.</div></li>
+<li><div class="glossary-term">MNC</div><div class="glossary-def">Multinational corporation — clients with operations across multiple jurisdictions.</div></li>
+<li><div class="glossary-term">NPS</div><div class="glossary-def">Net Promoter Score — customer satisfaction metric.</div></li>
+<li><div class="glossary-term">PEP</div><div class="glossary-def">Politically Exposed Person — individual holding prominent public function, subject to enhanced screening.</div></li>
+<li><div class="glossary-term">pKYC</div><div class="glossary-def">Perpetual KYC — continuous monitoring of client risk rather than periodic manual review.</div></li>
+<li><div class="glossary-term">RACI</div><div class="glossary-def">Responsibility Assignment framework — Responsible, Accountable, Consulted, Informed.</div></li>
+<li><div class="glossary-term">RLS</div><div class="glossary-def">Row-Level Security — database-level access control ensuring users see only authorised data.</div></li>
+<li><div class="glossary-term">RM</div><div class="glossary-def">Relationship Manager — the banker who owns and manages the client relationship.</div></li>
+<li><div class="glossary-term">SMBC Connect</div><div class="glossary-def">SMBC's global transaction banking portal, launched April 2026.</div></li>
+<li><div class="glossary-term">SSO</div><div class="glossary-def">Single Sign-On — enterprise identity pattern.</div></li>
+<li><div class="glossary-term">STP</div><div class="glossary-def">Straight-Through Processing — workflow completed end-to-end without human intervention.</div></li>
+<li><div class="glossary-term">TOM</div><div class="glossary-def">Target Operating Model — the future-state way of working an organisation is heading toward.</div></li>
+<li><div class="glossary-term">TTL</div><div class="glossary-def">Time-to-Live — elapsed time from application initiation to client going live.</div></li>
+<li><div class="glossary-term">UBO</div><div class="glossary-def">Ultimate Beneficial Owner — the natural person(s) who ultimately own or control a legal entity.</div></li>
+<li><div class="glossary-term">UEN</div><div class="glossary-def">Unique Entity Number — Singapore entity identifier.</div></li>
+<li><div class="glossary-term">WCAG</div><div class="glossary-def">Web Content Accessibility Guidelines — accessibility standard.</div></li>
+<li><div class="glossary-term">Wolfsberg</div><div class="glossary-def">Wolfsberg Group — consortium of 13 global banks issuing anti-financial-crime standards.</div></li>
+</ul>
+</div></section>
+
+<section id="a2"><div class="wrap">
+<div class="section-label">Appendix B</div>
+<h2 class="section-title">15-minute demo script.</h2>
+<p class="section-intro">Scene-by-scene walkthrough for stakeholder review. Flexible to shorter (8 min) or longer (25 min) variants.</p>
+
+<div class="scene"><div class="scene-time">00:00<span>open</span></div><div><div class="scene-title">RM cockpit home — James's world</div><div class="scene-body">Open to James's cockpit on a Friday morning. Point out pipeline across 6 stages · AI has been busy feed · Needs you queue. Key beat: James walks in and <em>already knows</em> his day's shape.</div></div></div>
+
+<div class="scene"><div class="scene-time">01:30<span>stage 1</span></div><div><div class="scene-title">A new mandate arrives — Kaisei signed this week</div><div class="scene-body">James creates the application. Hōjin lookup auto-fills company data. Picks jurisdictions + products. Sends magic-link invite. Cut to Yuki's inbox.</div></div></div>
+
+<div class="scene"><div class="scene-time">02:30<span>stage 2</span></div><div><div class="scene-title">Hero 1 · UBO Intelligence</div><div class="scene-body">Yuki lands on Stage 2. AI agent runs. <strong>Animated tree builds itself.</strong> BVI shell appears and unwraps. Narration streams. James approves on his side. First "wow".</div></div></div>
+
+<div class="scene"><div class="scene-time">05:00<span>stage 3</span></div><div><div class="scene-title">Hero 2 · Document Extraction</div><div class="scene-body">Yuki drops a PDF. Three-pane extraction UX: live log streams, fields populate. Discrepancy badge appears — Yuki clarifies inline. Stage 3 complete.</div></div></div>
+
+<div class="scene"><div class="scene-time">07:00<span>stage 4</span></div><div><div class="scene-title">Screening — the quiet win</div><div class="scene-body">All cleared except 1 amber on Kenji Morita. AI narrative recommends clear with note. James dispositions in one click.</div></div></div>
+
+<div class="scene"><div class="scene-time">08:30<span>copilot</span></div><div><div class="scene-title">Hero 3 · RM Copilot</div><div class="scene-body">James ⌘J. "Summarise Kaisei in 3 bullets for my Monday call." Real Claude streams response. "What's my pipeline value at risk this week?" — Copilot queries Supabase and answers. Second "wow".</div></div></div>
+
+<div class="scene"><div class="scene-time">10:30<span>stage 5</span></div><div><div class="scene-title">Hero 4 · Credit Memo Drafter</div><div class="scene-body">James clicks "Draft credit memo". Seven sections stream in with source pins. Financial analysis chart. James accepts 5 sections, edits 2. Exports PDF. Third "wow".</div></div></div>
+
+<div class="scene"><div class="scene-time">13:00<span>stage 6</span></div><div><div class="scene-title">Activation — go-live on SMBC Connect</div><div class="scene-body">Yuki sees "You're live" screen. Credentials. Walkthrough of SMBC Connect. pKYC teaser — "We'll keep watching". James's handoff complete.</div></div></div>
+
+<div class="scene"><div class="scene-time">14:00<span>close</span></div><div><div class="scene-title">The punchline</div><div class="scene-body">Back to cockpit. Kaisei moved Stage 1→6 in 5 days. TTL stat 4.2 days — 68% below baseline. Open questions + next steps.</div></div></div>
+</div></section>
+
+<section id="a3"><div class="wrap">
+<div class="section-label">Appendix C</div>
+<h2 class="section-title">Document map.</h2>
+<p class="section-intro">Three primary artefacts govern this initiative. Each plays a distinct role.</p>
+<table class="t">
+<tr><th>Artefact</th><th>Purpose</th><th>Audience</th></tr>
+<tr><td><strong>Product Brief (this doc)</strong><br><span class="mono">ORIGIN_PRODUCT_BRIEF.html</span></td><td>Strategic alignment, sponsor sign-off, executive orientation</td><td>SMBC leadership · sponsors · workshop audiences</td></tr>
+<tr><td><strong>Journey Document</strong><br><span class="mono">ORIGIN_JOURNEY_DOC.html</span></td><td>Deep UX / journey narrative with visual walk-through per stage</td><td>Design reviewers · RM / Ops consultation · demo prep</td></tr>
+<tr><td><strong>Master Design Brief</strong><br><span class="mono">ORIGIN_DESIGN.md</span></td><td>Technical master spec — data model, components, phases</td><td>Claude Code · developers · technical reviewers</td></tr>
+</table>
+<div class="callout"><div class="callout-label">Reading order for new stakeholder</div><p><strong>Exec</strong>: TL;DR → Section 3 Vision → Section 5 Solution → Demo Script (B).<br><strong>RM / Ops consultation</strong>: this brief cover-to-cover, then Journey Doc.<br><strong>Design / Dev</strong>: Journey Doc first, then Master Design Brief.</p></div>
+</div></section>
+
+<footer>
+<div class="wrap">
+<svg width="28" height="20" viewBox="0 0 40 28" fill="none" style="display:inline-block;opacity:.7"><path d="M3 26 L17 4 L22 4 L8 26 Z" fill="#BFD730"/><path d="M19 26 L33 4 L38 4 L24 26 Z" fill="#BFD730"/></svg>
+<div style="margin-top:12px"><strong>SMBC Origin</strong> · Product Brief · v0.2 (Detailed)</div>
+<div style="margin-top:4px;opacity:.6;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em">Owner: Kit · 2026.04.24 · Pre-build · Scope locked</div>
+<div style="margin-top:20px;opacity:.5;font-size:11px;line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto">Fictional prototype scoping document. Kaisei Manufacturing KK and client scenarios are invented for illustrative purposes. SMBC brand elements used for design context; no SMBC affiliation or endorsement is implied.</div>
+</div>
+</footer>
+
+</body>
+</html>
