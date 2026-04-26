@@ -4,7 +4,7 @@
  * Covers the contract surface added in Plan 04:
  *   - IntakeTokenError reason mapping (D-54)
  *   - submitIntake idempotency (D-54)
- *   - _createApplicationFull composite return (CONTEXT addendum A-02)
+ *   - createApplication composite return (ApplicationCreated)
  *   - subscribeToPortfolio lifecycle (D-55 + Pattern H)
  *   - Composite views: ApplicationDetail with D-64 timestamps, getCreditMemo null/non-null
  *
@@ -15,7 +15,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import mockAPI, {
   IntakeTokenError,
-  _createApplicationFull,
   __resetStoreForTests,
   __clearListenersForTests,
 } from '@/lib/api.mock'
@@ -101,9 +100,9 @@ describe('lib/api.mock — submitIntake idempotency (D-54)', () => {
   })
 })
 
-describe('lib/api.mock — _createApplicationFull composite return (CONTEXT addendum A-02)', () => {
+describe('lib/api.mock — createApplication composite return (ApplicationCreated)', () => {
   it('returns { application, intakeToken } with correct initial state', async () => {
-    const result = await _createApplicationFull({
+    const result = await mockAPI.createApplication({
       organizationId: 'org-maritime', // 8th seeded org per D-50 refinement
       rmUserId: 'rm-james',
       targetJurisdictions: ['SG'],
@@ -121,21 +120,6 @@ describe('lib/api.mock — _createApplicationFull composite return (CONTEXT adde
     expect(ttlDays).toBeGreaterThan(6.9)
     expect(ttlDays).toBeLessThan(7.1)
   })
-
-  it('createApplication (default OriginAPI shape) returns just the Application', async () => {
-    const app = await mockAPI.createApplication({
-      organizationId: 'org-maritime',
-      rmUserId: 'rm-james',
-      targetJurisdictions: ['SG'],
-      productsRequested: ['accounts'],
-    })
-    expect(app.status).toBe('invited')
-    expect(app.currentStage).toBe(1)
-    // Result shape matches Application, not ApplicationCreated.
-    expect(
-      (app as unknown as { intakeToken?: unknown }).intakeToken,
-    ).toBeUndefined()
-  })
 })
 
 describe('lib/api.mock — subscribeToPortfolio lifecycle (D-55 + Pattern H)', () => {
@@ -150,7 +134,7 @@ describe('lib/api.mock — subscribeToPortfolio lifecycle (D-55 + Pattern H)', (
     const onUpdate = vi.fn()
     const unsubscribe = await mockAPI.subscribeToPortfolio('rm-james', onUpdate)
     // initial = call 1
-    await _createApplicationFull({
+    await mockAPI.createApplication({
       organizationId: 'org-maritime',
       rmUserId: 'rm-james',
       targetJurisdictions: ['SG'],
@@ -165,7 +149,7 @@ describe('lib/api.mock — subscribeToPortfolio lifecycle (D-55 + Pattern H)', (
     const onUpdate = vi.fn()
     const unsubscribe = await mockAPI.subscribeToPortfolio('rm-james', onUpdate)
     unsubscribe()
-    await _createApplicationFull({
+    await mockAPI.createApplication({
       organizationId: 'org-maritime',
       rmUserId: 'rm-james',
       targetJurisdictions: ['SG'],

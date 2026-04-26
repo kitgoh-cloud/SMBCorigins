@@ -11,26 +11,20 @@
  *
  * Reactivity: tiny event-emitter (Pattern H).
  *   - Mutations call emit() after writing.
- *   - subscribeToPortfolio returns Promise<() => void> per evan/api-routes shape.
+ *   - subscribeToPortfolio returns Promise<() => void>; onUpdate is an
+ *     invalidation signal — caller re-fetches via getPortfolio.
  *
  * Error surface: bounded to intake flow (D-54).
  *   - IntakeTokenError extends Error with reason: 'expired' | 'unknown' | 'consumed'.
  *   - All other methods are happy-path. No random failures.
  *
  * Latency: per-method map (D-53). No jitter — predictable demo run-throughs.
- *
- * REBASE TODO (Pattern K — once evan/api-routes merges to main):
- *   1. Change `import type { ApplicationCreated, SubscribeToPortfolio } from '@/lib/types-pending'`
- *      to import these from '@/types/origin' (ApplicationCreated) and '@/lib/api' (SubscribeToPortfolio).
- *   2. Delete lib/types-pending.ts.
- *   3. Replace `createApplication`'s body with the body of `_createApplicationFull`
- *      (lib/api.ts contract changes to Promise<ApplicationCreated>).
- *   4. Run npm run typecheck && npm run lint && npm run test && npm run build.
  */
 
 import type {
   Activity,
   Application,
+  ApplicationCreated,
   ApplicationDetail,
   CreateApplicationInput,
   CreditMemo,
@@ -47,8 +41,6 @@ import type {
   User,
 } from '@/types/origin'
 import type { OriginAPI } from './api'
-// Pattern K — temporary shim, deleted on rebase post-evan/api-routes merge.
-import type { ApplicationCreated, SubscribeToPortfolio } from '@/lib/types-pending'
 import { deriveStages } from '@/lib/stages'
 import {
   demoNewClientTemplate,
@@ -342,14 +334,11 @@ async function getCreditMemo(
 // ---------------------------------------------------------------------------
 
 /**
- * Internal canonical createApplication — returns ApplicationCreated composite
- * per evan/api-routes (commit 33f8500). Exposed as a NAMED export for tests +
- * future RM-invite caller flow that needs the intakeToken.
- *
- * On rebase post-evan/api-routes merge: rename to `createApplication` and
- * update lib/api.ts contract to Promise<ApplicationCreated>.
+ * createApplication — returns ApplicationCreated composite per the
+ * lib/api.ts contract. RM-invite flow needs both the new Application
+ * AND the freshly-minted IntakeToken in one round-trip.
  */
-export async function _createApplicationFull(
+async function createApplication(
   input: CreateApplicationInput,
 ): Promise<ApplicationCreated> {
   await sleep(LATENCY_MS.createApplication)
@@ -408,13 +397,6 @@ export async function _createApplicationFull(
   emit()
 
   return { application, intakeToken }
-}
-
-async function createApplication(
-  input: CreateApplicationInput,
-): Promise<Application> {
-  const result = await _createApplicationFull(input)
-  return result.application
 }
 
 async function submitIntake(
@@ -525,29 +507,24 @@ async function getIntakeByToken(token: string): Promise<IntakeToken> {
 // subscribeToPortfolio (Pattern H — Promise-returning).
 // ---------------------------------------------------------------------------
 
-const subscribeToPortfolio: SubscribeToPortfolio = async (
-  rmUserId,
+const subscribeToPortfolio: OriginAPI['subscribeToPortfolio'] = async (
+  _rmUserId,
   onUpdate,
 ) => {
-  // Initial emission so the consumer sees data without waiting for the first
-  // mutation. The caller awaits the returned unsubscribe — initial emit happens
-  // synchronously from their POV (within this Promise's resolution).
-  onUpdate(computePortfolio(rmUserId, getStore()))
+  // Invalidation signal — caller re-fetches via getPortfolio. Fire once
+  // immediately so initial render gets data without waiting for a mutation.
+  onUpdate()
   const unsubscribe = subscribe(() => {
-    onUpdate(computePortfolio(rmUserId, getStore()))
+    onUpdate()
   })
   return unsubscribe
 }
 
 // ---------------------------------------------------------------------------
-// Default export — OriginAPI conformance + subscribeToPortfolio extension.
+// Default export — OriginAPI conformance.
 // ---------------------------------------------------------------------------
 
-type MockAPISurface = OriginAPI & {
-  subscribeToPortfolio: SubscribeToPortfolio
-}
-
-const mockAPI: MockAPISurface = {
+const mockAPI: OriginAPI = {
   getApplication,
   getClientApplication,
   getApplicationDetail,
