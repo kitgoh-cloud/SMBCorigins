@@ -388,9 +388,10 @@ const realAPI: OriginAPI = {
   },
 
   // TODO: implement in BOUND-04
-  createApplication:  () => Promise.reject(new Error('createApplication not implemented')),
-  submitIntake:       () => Promise.reject(new Error('submitIntake not implemented')),
-  getIntakeByToken:   () => Promise.reject(new Error('getIntakeByToken not implemented')),
+  createApplication:    () => Promise.reject(new Error('createApplication not implemented')),
+  submitIntake:         () => Promise.reject(new Error('submitIntake not implemented')),
+  getIntakeByToken:     () => Promise.reject(new Error('getIntakeByToken not implemented')),
+  subscribeToPortfolio: () => Promise.reject(new Error('subscribeToPortfolio not implemented')),
 }
 
 export default realAPI
