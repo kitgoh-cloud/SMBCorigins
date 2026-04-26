@@ -1,11 +1,12 @@
 ---
 phase: 4
 slug: app-shell-primitives
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-04-26
 revised: 2026-04-26
+addendum: 2026-04-26
 ---
 
 # Phase 4 — UI Design Contract
@@ -17,6 +18,32 @@ revised: 2026-04-26
 > **Visual source of truth:** `docs/Origin Prototype.html` (Claude artifact bundle; relevant assets `4c54d558*` shell + `77ddc8bb*` primitives, captured during discuss-phase into CONTEXT.md as the proxy — do NOT re-extract from the bundle in plan/execute phases unless an explicit shape question arises).
 >
 > **Revision 1 (2026-04-26):** Typography consolidated to 4 sizes (checker Option C). Weight override formally declared (Resolution B) — 3-weight matrix is a project-level brand decision predating Phase 4, not a Phase 4 design choice. Icon primitive gains `ariaLabel?` prop with values declared for TopStrip mail/help. TopStrip height locked at 56px. Chrome metric exceptions subsection added to Spacing.
+>
+> **Post-approval addendum (2026-04-26):** After checker VERIFIED, three locked additions per user direction so the planner picks them up rather than the executor inventing them: (1) Planner Directives section (file-level actions, including the IBM Plex Mono weight swap with safety pre-check); (2) Theme Posture section (light-only v1, locked so Phase 5+ inherits a known posture); (3) Interaction States section (ActionCard `onClick` hover/focus/active + ModeSwitcher `<Link>` segment hover/focus, with disabled/loading explicitly N/A in Phase 4).
+
+---
+
+## Planner Directives — required actions before PLAN.md is written
+
+These are **file-level actions** the planner must lock in PLAN.md tasks (not defer to the executor). They are distinct from the design contract below — these are the **plumbing fixes** the contract assumes have happened.
+
+### PD-1 — IBM Plex Mono weight bundle: swap `'700'` → `'500'`
+
+**File:** `app/layout.tsx`
+**Line:** **31** (the `weight: ['400', '700']` array literal inside the `IBM_Plex_Mono({...})` call)
+**Change:** `weight: ['400', '700']` → `weight: ['400', '500']`
+
+**Why:** This UI-SPEC declares mono surfaces at weights **400 and 500** (Eyebrow primitive 10/500, mode-switcher label 14/500, Avatar initials 12/400, micro/mono 12/400). The current bundle loads `400` and `700`, so `font-weight: 500` on a mono element would silently snap to 400 or 700 via browser font-matching. Weight `700` is **not** in the locked weight matrix (400/500/600 per UI-SPEC line 112) — keeping it loaded is dead weight in the bundle.
+
+**Safety pre-check (verified at this UI-SPEC's authoring date — 2026-04-26):**
+- `grep -rn "font-bold" app/ components/ lib/` → **0 references**. No code uses `font-bold` (which Tailwind maps to weight 700) on any surface, mono or otherwise.
+- Existing mono surfaces in repo (`app/(client)/journey/page.tsx:17`, `app/(rm)/cockpit/page.tsx:11,16`, `app/page.tsx` swatches) all use `font-mono` without a `font-{weight}` modifier → they render at the family default (400). Dropping `700` from the bundle does not visually regress any of them.
+
+**Planner must re-verify the safety pre-check at plan-phase time** (someone may have added a `font-bold` on mono between now and plan-phase). If a `font-bold` on mono surface is found, the planner has two options: (a) refactor that surface to `font-medium` (500) and proceed with the swap, or (b) keep `'700'` in the bundle additively (`['400', '500', '700']`) and document the third loaded weight as a Phase 2 / 3 legacy carve-out — but this conflicts with the Typography Weight Override's "Forbidden additions" rule, so option (a) is preferred.
+
+**Acceptance criterion for PD-1:**
+- `app/layout.tsx` contains `weight: ['400', '500']` (not `['400', '700']` and not `['400', '500', '700']`)
+- `grep -rn "font-bold" app/ components/ lib/` returns 0 matches at the time of the plan's verification gate
 
 ---
 
@@ -182,6 +209,35 @@ export type AvatarColor =
 
 ---
 
+## Theme Posture — locked
+
+| Property | Value |
+|----------|-------|
+| v1 posture | **Light-only** |
+| Dark-mode plan | **Out of scope for v1** — no dark theme work in any v1 phase (Phases 4–8) |
+| `prefers-color-scheme` handling | **Ignored** — site renders the warm-paper palette regardless of OS preference |
+| Dark-mode-ready tokens | **None reserved** — `@theme` declares only the warm-paper palette; no `dark:` Tailwind variants; no `@media (prefers-color-scheme: dark)` blocks in `globals.css` |
+| Phase 5+ inheritance | Phase 5–8 inherit light-only posture. If any consuming phase wants dark mode, it must (a) propose a dark palette additive to `@theme`, (b) trigger a UI-SPEC revision in **that** phase, (c) document the inheritance break |
+
+**Rationale:**
+- CLAUDE.md "Design system" locks a warm-paper palette (`#FAFBF7`); no dark companion tokens are declared.
+- The product is a desktop-first stakeholder demo (CLAUDE.md: *"Desktop-first, designed for 1440px"*). Workshop room lighting is uniform; OS dark-mode auto-switch does not affect the demo audience.
+- A real dark mode would force re-tokenization of the entire palette (paper, trad-green, fresh-green, ink, signal-*), re-derivation of all 5 retrofit replacements (D-88), AND a fresh visual audit that the SHELL-05 fresh-green allowlist still reads as "AI-only" against a dark substrate. That is a non-trivial second design pass that v1 explicitly defers.
+- `prefers-color-scheme: dark` users see the warm-paper palette regardless. This is acceptable for a demo prototype; production hardening (itself out of scope per CLAUDE.md "Non-goals") would revisit.
+
+**Implementation directives for the planner:**
+- Do **NOT** add `dark:` Tailwind variants to any Phase 4 utility class (no `dark:bg-*`, `dark:text-*`, `dark:border-*`, etc.).
+- Do **NOT** add `@media (prefers-color-scheme: dark)` blocks to `app/globals.css`.
+- The `<html>` element should **NOT** have a `class="light"` (which would imply a sibling `class="dark"` exists). Plan-phase confirms `app/layout.tsx` does not toggle a theme class.
+- Components use raw token utilities (`bg-paper`, `text-trad-green-deep`, etc.) — no theme-conditional palette switching.
+
+**Acceptance criteria for theme posture (planner verification gate):**
+- `grep -rn "dark:" app/ components/` returns 0 matches in Phase 4 PR.
+- `grep -n "prefers-color-scheme" app/globals.css` returns 0 matches.
+- `app/layout.tsx`'s `<html>` has no `class="light"` / `class="dark"` toggle.
+
+---
+
 ## Component Inventory — 8 primitives + 6 chrome components
 
 ### Primitives (`components/primitives/`)
@@ -299,6 +355,62 @@ Three-zone layout: sidebar (220px fixed) + workspace (flex-1) + **empty copilot-
 Sidebar active-route indicator dot retrofitted from fresh-green to **`var(--trad-green)`** per retrofit #5 (recommendation; plan-phase locks).
 
 **Copilot trigger button:** NOT shipped in Phase 4 (CONTEXT "Specifics"). The prototype's bottom-right fixed-position trigger (`background: var(--trad-green-deep), color: var(--fresh-green)`) is fresh-green-correct (it IS the AI trigger) but is paired with the copilot itself which is Phase 8. Phase 4 ships the empty slot only. Plan-phase MAY decide to ship a placeholder no-op trigger if visual completeness on the demo page matters — UI-SPEC defers to plan-phase on this.
+
+---
+
+## Interaction States — locked
+
+Hover, focus-visible, and active treatments must be declared at this UI-SPEC level so the planner cannot defer them to the executor (each surface inventing its own treatment produces drift). The patterns below are the **canonical interaction language** for Phase 4; Phase 5+ surfaces inherit them unless a future UI-SPEC explicitly extends.
+
+**Shared transition baseline:** `transition: background-color 200ms ease-out, color 200ms ease-out, outline-color 200ms ease-out` — matches the 200ms default from `docs/ORIGIN_DESIGN.md` §8.5. Phase 4 surfaces use **only** `background-color` / `color` / `outline-color` transitions; no transform or opacity transitions in the chrome.
+
+**Shared focus-visible pattern:** `outline: 2px solid {token}; outline-offset: 2px` — NOT `box-shadow` rings (avoids any chance a ring color could read as fresh-green-adjacent). The outline `{token}` depends on substrate (see per-surface tables below).
+
+### `ActionCard` (when `onClick` is provided)
+
+ActionCard is a **row primitive** (D-76). The `onClick` prop is what makes it interactive. When `onClick` is **not** provided, ActionCard is presentational — no hover, no focus-visible, no `cursor: pointer`. The planner must NOT add hover styles to non-clickable ActionCards.
+
+| State | Treatment | Notes |
+|-------|-----------|-------|
+| Default | `background: var(--color-paper)`, `border: 1px solid var(--color-mist)`, `cursor: default` | Resting state |
+| Default + `onClick` provided | Same as Default + `cursor: pointer` | The `cursor: pointer` is the only "this is clickable" cue at rest |
+| Hover (when `onClick` provided) | `background: var(--color-paper-deep)` (`#F3F5EE`), border unchanged, `cursor: pointer` | Subtle bg lift; no border-color change (avoids border-shimmer on common scroll-hover) |
+| Focus-visible (keyboard-only, when `onClick` provided) | `outline: 2px solid var(--color-trad-green); outline-offset: 2px` | Trad-green outline reads on the paper substrate; offset gives breathing room |
+| Active (mouse-down or keyboard space/enter, when `onClick` provided) | `background: var(--color-mist)` (`#E8EDE4`) | Slightly deeper than hover — visual confirmation the click registered |
+| `faint?: true` (separate prop, not a state) | All text rendered at `var(--color-ink-muted)`; indicator at **60% opacity**; cursor unchanged from `onClick` rule | `faint` is visual de-emphasis (e.g., "this row is older / lower-priority"), NOT a disabled state. Plan-phase may adjust the 60% opacity if it conflicts with the indicator's own opacity logic. |
+| Disabled | **N/A in Phase 4** — no Phase 4 consumer renders ActionCard in a disabled state. If Phase 5+ adds disabled, that phase's UI-SPEC must declare the treatment. Until then, ActionCard accepts no `disabled` prop. |
+| Loading | **N/A in Phase 4** — no Phase 4 consumer puts ActionCard in a loading state. Same rule as Disabled — accept no `loading` prop until a consumer arrives. |
+
+**Implementation note:** When `onClick` is provided, render ActionCard as a `<button type="button">` (or a `<div role="button" tabIndex={0}>` if a `<button>` produces unwanted default styling that Tailwind reset doesn't catch). The native focus-visible behavior matches the contract above. Plan-phase picks the element; both are acceptable as long as keyboard activation (Space + Enter) and `:focus-visible` semantics work.
+
+### `ModeSwitcher` link segments (the two `<Link>`s per D-69)
+
+The two segments live inside the `--ink-muted`-tinted dashed-border container (retrofit #3). The dashed border itself does NOT change on hover or focus — it is a "DEMO" affordance hint, not an interaction surface.
+
+| State | Active mode (current) | Inactive mode |
+|-------|-----------------------|---------------|
+| Default | `background: var(--color-paper)`, `text: var(--color-trad-green-deep)` | `background: var(--color-trad-green-deep)`, `text: var(--color-paper)` |
+| Hover | (no change — already current) | `background: var(--color-trad-green)` (lighter than `-deep`); text unchanged | 
+| Focus-visible (keyboard) | `outline: 2px solid var(--color-paper); outline-offset: 2px` | Same: `outline: 2px solid var(--color-paper); outline-offset: 2px` |
+| Active (mouse-down or keyboard space/enter) | (no change — already current) | `background: var(--color-trad-green-deep)` (return to default — visual feedback that the click registered before the route transition completes) |
+| Disabled | **N/A in Phase 4** — neither segment is ever disabled (the gate that hides ModeSwitcher entirely is the env-var gate, not a per-segment disable) |
+| Loading | **N/A in Phase 4** — `<Link>` navigation is the only behavior; no in-place loading state |
+
+**Why outline color is `--color-paper` (not `--color-trad-green`) for ModeSwitcher:** ModeSwitcher segments sit on `--color-trad-green-deep` chrome; a trad-green outline would be invisible against that background. ActionCards sit on `--color-paper` workspace; a paper outline there would be invisible. Outline color must contrast with the substrate, not with the surface — picking the right token per surface is part of this UI-SPEC's contract.
+
+### Other interactive surfaces in Phase 4 chrome
+
+| Surface | Interactive in Phase 4? | Hover / focus-visible / active |
+|---------|--------------------------|--------------------------------|
+| `LanguageToggle` (`EN` / `日本語`) | **No** — visual-only per CLAUDE.md "Language: English only in UI body" | None. Cursor `default`, no hover, no focus-visible. Render as `<span>` (not `<button>` or `<Link>`) so it never receives focus. |
+| `<Icon name="mail">` in TopStrip | **No** — placeholder for Phase 8 (notification popover wiring) | None. The amber notification dot is purely visual. The icon's `aria-label="Mail"` is for screen readers, not interaction. |
+| `<Icon name="help">` in TopStrip | **No** — placeholder for Phase 8 (help dialog wiring) | None. |
+| `Avatar` in TopStrip | **No** in Phase 4 (Phase 6+ adds settings/profile click) | None. Cursor `default`. |
+| RMShell sidebar nav items | **Plan-phase decides:** either inert `<span>` items (no hover, no cursor) OR placeholder `<Link>` items pointing at future routes (in which case hover/focus-visible follow the ActionCard pattern: paper-deep bg on hover, trad-green outline on focus-visible — substrate is paper-toned sidebar interior, NOT the trad-green sidebar surround). UI-SPEC has no preference; whichever the planner picks must be applied uniformly to all sidebar items. | See cell at left |
+
+### Why these are locked at UI-SPEC level (not deferred to executor)
+
+Hover, focus-visible, and active states drift fast across primitives if each surface picks its own treatment during execution. A consistent pattern (200ms ease-out, 2px outline offset 2px, paper / trad-green-deep / mist palette) keeps Phase 4 chrome cohesive AND gives Phase 5+ a known interaction language to mirror. The `disabled` and `loading` N/A clarification prevents the executor from inventing those states for Phase 4 consumers that don't exist — adding them later in Phase 5+ is fine, but speculation in Phase 4 is not.
 
 ---
 
@@ -486,15 +598,22 @@ If a future phase introduces a third-party UI registry, the gate runs at that ph
 - TopStrip height locked at **56px** (FLAG 2 fix), replacing the prior "~52–56px" range. New Chrome metric exceptions subsection added to Spacing, codifying that StagePill 34px / Avatar 30px / RisingMark 24px / TopStrip 56px / sidebar 220px are component-dimension constants ported from the prototype, NOT spacing-scale values, and NOT subject to the multiple-of-4 spacing rule because circular component diameters are dimensions, not gutters.
 - Downstream cross-references updated: Copywriting Contract typography annotations now reference 14/500 (was 13/500), demo page title note now reflects 16/600 with explanation that display-md tier was removed, mono Avatar initials now 12/400 (was 12/700) consistent with the 400/500/600 weight matrix, OD-17 added for TopStrip height lock.
 
+**Post-approval addendum (2026-04-26 — user-directed, after VERIFIED):**
+- New "Planner Directives — required actions before PLAN.md is written" section added near the top. Distills the IBM Plex Mono weight-bundle swap (PD-1: `app/layout.tsx:31` `weight: ['400', '700']` → `['400', '500']`) with a verified safety pre-check (`grep -rn "font-bold" app/ components/ lib/` returns 0 matches as of 2026-04-26; existing `font-mono` surfaces use no weight modifier and default to 400, so dropping 700 is non-regressive). Planner must re-verify the safety pre-check at plan-phase time before applying the swap.
+- New "Theme Posture — locked" section added after Color. Locks v1 as **light-only**; no `dark:` Tailwind variants, no `prefers-color-scheme` blocks, no theme class on `<html>`. Phase 5+ inherits light-only unless a future UI-SPEC explicitly extends. Three acceptance criteria added for the planner's verification gate.
+- New "Interaction States — locked" section added after Inner Shells. Specifies (a) ActionCard hover / focus-visible / active treatments **only when `onClick` is provided** (paper-deep bg on hover, trad-green outline on focus-visible, mist bg on active); (b) ModeSwitcher `<Link>` segment hover (trad-green bg on inactive segments) and focus-visible (paper outline on the dark chrome substrate); (c) explicit N/A for `disabled` and `loading` in Phase 4 (no consumers); (d) all other Phase 4 chrome surfaces (LanguageToggle, mail/help icons, Avatar) declared non-interactive with rationale. Sidebar nav items remain a planner-pick (inert `<span>` vs placeholder `<Link>`); whichever is chosen must be applied uniformly. Shared transition baseline (200ms ease-out on bg/color/outline) and shared focus-visible pattern (2px outline, 2px offset, NOT box-shadow ring) declared as canonical for Phase 5+ inheritance.
+
 ---
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS (4 sizes; Typography Weight Override anchored to CLAUDE.md + ORIGIN_DESIGN.md §8.1 + D-31)
+- [x] Dimension 5 Spacing: PASS (all scale values multiples of 4; chrome metric exceptions documented as non-spacing component dimensions)
+- [x] Dimension 6 Registry Safety: PASS (no third-party registry)
 
-**Approval:** pending (revision 1 of max 2)
+**Approval:** APPROVED on 2026-04-26 after revision 1 of max 2 (checker round 2 returned `## UI-SPEC VERIFIED`). Two non-blocking checker recommendations folded into post-approval addendum (PD-1: IBM Plex Mono weight bundle swap, with safety pre-check; PD-2 — see Theme Posture section — was a user-direction lock, not a checker recommendation).
+
+**Post-approval addendum status:** added 2026-04-26 by user direction. Additions are **additive contract lockdowns** that do not contradict any of the 6 dimension verdicts above (no new sizes, no new weights, no new spacing values, no new colors, no registry change, no copywriting drift) — they specify behavior in places the prior contract was silent. Re-running the checker is not required because the additions are scoped to interaction states, theme posture, and a planner directive — none of which are evaluated by the 6-dimension rubric. If a future UI-SPEC revision adds anything that touches the 6 dimensions (sizes, weights, palette, spacing scale, copywriting, registry), the checker MUST re-run.
