@@ -8,17 +8,19 @@
  * Active when NEXT_PUBLIC_USE_MOCK=false.
  */
 
-import { supabase } from '@/lib/supabase'
-import { STAGE_NAMES } from '@/types/origin'
+import { getSupabase } from '@/lib/supabase'
+import { deriveStages } from '@/lib/stages'
 import type {
   Application,
   ApplicationDetail,
   CreditMemo,
   Document,
   Entity,
+  EntityAddress,
   Organization,
   PortfolioItem,
   Product,
+  ProductType,
   ScreeningHit,
   Stage,
   StageNumber,
@@ -26,6 +28,9 @@ import type {
   User,
 } from '@/types/origin'
 import type { OriginAPI } from './api'
+
+// Lazy accessor — db() is called inside methods, not at module load.
+const db = () => getSupabase()
 
 // ---------------------------------------------------------------------------
 // Row → domain type mappers
@@ -58,7 +63,14 @@ function toOrganization(row: Record<string, unknown>): Organization {
   }
 }
 
+const VALID_PRODUCT_TYPES = new Set<string>([
+  'accounts', 'cash_management', 'fx', 'trade_finance', 'credit',
+])
+
 function toApplication(row: Record<string, unknown>): Application {
+  const rawProducts = Array.isArray(row.products_requested)
+    ? row.products_requested
+    : []
   return {
     id:                   row.id as string,
     organizationId:       row.organization_id as string,
@@ -66,10 +78,29 @@ function toApplication(row: Record<string, unknown>): Application {
     status:               row.status as Application['status'],
     currentStage:         row.current_stage as Application['currentStage'],
     targetJurisdictions:  row.target_jurisdictions as string[],
-    productsRequested:    row.products_requested as Application['productsRequested'],
+    productsRequested:    rawProducts.filter(
+      (v): v is ProductType => typeof v === 'string' && VALID_PRODUCT_TYPES.has(v),
+    ),
     openedAt:             row.opened_at as string,
     targetCloseDate:     (row.target_close_date as string | null) ?? null,
     closedAt:            (row.closed_at as string | null) ?? null,
+  }
+}
+
+// Validates JSONB address — discards silently-malformed rows rather than
+// letting components crash on a missing required `country` field.
+function toEntityAddress(raw: unknown): EntityAddress | null {
+  if (raw === null || typeof raw !== 'object') return null
+  const obj = raw as Record<string, unknown>
+  if (typeof obj.country !== 'string') {
+    console.warn('[api.real] toEntity: registeredAddress missing country, discarding')
+    return null
+  }
+  return {
+    street:   typeof obj.street   === 'string' ? obj.street   : undefined,
+    city:     typeof obj.city     === 'string' ? obj.city     : undefined,
+    postcode: typeof obj.postcode === 'string' ? obj.postcode : undefined,
+    country:  obj.country,
   }
 }
 
@@ -82,7 +113,7 @@ function toEntity(row: Record<string, unknown>): Entity {
     registrationNumber:(row.registration_number as string | null) ?? null,
     jurisdiction:      (row.jurisdiction as string | null) ?? null,
     entityType:        (row.entity_type as string | null) ?? null,
-    registeredAddress: (row.registered_address as Entity['registeredAddress']) ?? null,
+    registeredAddress:  toEntityAddress(row.registered_address),
     ownershipPct:      (row.ownership_pct as number | null) ?? null,
     confidenceScore:   (row.confidence_score as number | null) ?? null,
     isShell:            row.is_shell as boolean,
@@ -166,20 +197,6 @@ function toCreditMemo(row: Record<string, unknown>): CreditMemo {
   }
 }
 
-// Derives Stage[] from an Application's currentStage.
-// Both mock and real use this same logic — single source of truth here.
-export function deriveStages(app: Application): Stage[] {
-  return ([1, 2, 3, 4, 5, 6] as StageNumber[]).map((n) => ({
-    number: n,
-    name: STAGE_NAMES[n],
-    status:
-      n < app.currentStage ? 'complete'
-      : n === app.currentStage ? 'in_progress'
-      : 'not_started',
-    completedAt: null,   // populated from activities if needed
-  }))
-}
-
 // ---------------------------------------------------------------------------
 // Error helper
 // ---------------------------------------------------------------------------
@@ -200,7 +217,7 @@ function assertData<T>(
 
 const realAPI: OriginAPI = {
   async getApplication(id) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('applications')
       .select('*')
       .eq('id', id)
@@ -210,14 +227,14 @@ const realAPI: OriginAPI = {
 
   async getClientApplication(userId) {
     // Client belongs to an org; find the application for their org
-    const { data: profile, error: profileError } = await supabase
+    const { data: profile, error: profileError } = await db()
       .from('profiles')
       .select('org_id')
       .eq('id', userId)
       .single()
     assertData(profile, profileError, 'getClientApplication/profile')
 
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('applications')
       .select('*')
       .eq('organization_id', profile!.org_id)
@@ -228,25 +245,26 @@ const realAPI: OriginAPI = {
   },
 
   async getApplicationDetail(id) {
+    const client = db()
     const [appResult, rmResult, activitiesResult] = await Promise.all([
-      supabase
+      client
         .from('applications')
         .select('*, organizations(*)')
         .eq('id', id)
         .single(),
-      supabase
+      client
         .from('applications')
         .select('rm_user_id')
         .eq('id', id)
         .single()
         .then(({ data }: { data: { rm_user_id: string } | null }) =>
-          supabase
+          client
             .from('profiles')
             .select('*')
             .eq('id', data!.rm_user_id)
             .single()
         ),
-      supabase
+      client
         .from('activities')
         .select('*')
         .eq('application_id', id)
@@ -277,7 +295,7 @@ const realAPI: OriginAPI = {
   },
 
   async getPortfolio(rmUserId) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('applications')
       .select(`
         *,
@@ -310,7 +328,7 @@ const realAPI: OriginAPI = {
   },
 
   async getEntities(applicationId) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('entities')
       .select('*')
       .eq('application_id', applicationId)
@@ -320,7 +338,7 @@ const realAPI: OriginAPI = {
   },
 
   async getUBOs(applicationId) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('ubos')
       .select('*')
       .eq('application_id', applicationId)
@@ -330,7 +348,7 @@ const realAPI: OriginAPI = {
   },
 
   async getDocuments(applicationId) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('documents')
       .select('*')
       .eq('application_id', applicationId)
@@ -340,7 +358,7 @@ const realAPI: OriginAPI = {
   },
 
   async getScreeningHits(applicationId) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('screening_results')
       .select('*')
       .eq('application_id', applicationId)
@@ -350,7 +368,7 @@ const realAPI: OriginAPI = {
   },
 
   async getProducts(applicationId) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('products')
       .select('*')
       .eq('application_id', applicationId)
@@ -360,7 +378,7 @@ const realAPI: OriginAPI = {
   },
 
   async getCreditMemo(applicationId) {
-    const { data, error } = await supabase
+    const { data, error } = await db()
       .from('credit_memos')
       .select('*')
       .eq('application_id', applicationId)

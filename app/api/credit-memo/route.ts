@@ -10,7 +10,7 @@
  */
 
 import { NextRequest } from 'next/server'
-import { anthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
+import { getAnthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
 import { createServiceClient } from '@/lib/supabase'
 import { sseResponse, delay } from '@/lib/sse'
 import type { CreditMemoSections } from '@/types/origin'
@@ -221,7 +221,7 @@ async function* realStream(applicationId: string) {
 
     let sectionContent = ''
 
-    const sectionStream = anthropic.messages.stream({
+    const sectionStream = getAnthropic().messages.stream({
       model: CLAUDE_MODEL,
       max_tokens: 600,
       system: [

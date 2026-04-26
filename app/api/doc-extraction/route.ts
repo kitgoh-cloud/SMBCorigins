@@ -10,7 +10,7 @@
  */
 
 import { NextRequest } from 'next/server'
-import { anthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
+import { getAnthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
 import { createServiceClient } from '@/lib/supabase'
 import { sseResponse, delay } from '@/lib/sse'
 
@@ -129,7 +129,7 @@ async function* realStream(documentId: string, applicationId: string) {
 
   // In production this would fetch the actual file from Supabase Storage and pass
   // it to Claude. For v1 prototype we pass metadata and ask Claude to simulate extraction.
-  const stream = anthropic.messages.stream({
+  const stream = getAnthropic().messages.stream({
     model: CLAUDE_MODEL,
     max_tokens: 600,
     system: [

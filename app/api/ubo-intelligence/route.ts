@@ -9,7 +9,7 @@
  */
 
 import { NextRequest } from 'next/server'
-import { anthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
+import { getAnthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
 import { createServiceClient } from '@/lib/supabase'
 import { sseResponse, delay } from '@/lib/sse'
 import type { Entity, UBO } from '@/types/origin'
@@ -166,7 +166,7 @@ async function* realStream(applicationId: string) {
     .join('\n')
 
   // Stream Claude narrative with prompt caching on the stable system context
-  const stream = anthropic.messages.stream({
+  const stream = getAnthropic().messages.stream({
     model: CLAUDE_MODEL,
     max_tokens: 400,
     system: [

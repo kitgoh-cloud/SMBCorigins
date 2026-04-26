@@ -9,7 +9,7 @@
  */
 
 import { NextRequest } from 'next/server'
-import { anthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
+import { getAnthropic, CLAUDE_MODEL, SYSTEM_BASE } from '@/lib/claude'
 import { createServiceClient } from '@/lib/supabase'
 
 interface Message {
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        const response = anthropic.messages.stream({
+        const response = getAnthropic().messages.stream({
           model: CLAUDE_MODEL,
           max_tokens: 1024,
           system: [

@@ -190,8 +190,8 @@ export interface ScreeningHit {
 
 // ---------------------------------------------------------------------------
 // 7. Stage  (derived view of an application's 6-stage journey)
-//    Not a DB table — computed from Application.currentStage by both
-//    lib/api.mock.ts and lib/api.real.ts using the STAGE_NAMES constant below.
+//    Not a DB table — computed from Application.currentStage.
+//    Stage names and deriveStages() live in lib/stages.ts (Kit-owned).
 // ---------------------------------------------------------------------------
 
 export interface Stage {
@@ -199,15 +199,6 @@ export interface Stage {
   name: string
   status: StageStatus
   completedAt: string | null
-}
-
-export const STAGE_NAMES: Record<StageNumber, string> = {
-  1: 'Invite & Intent',
-  2: 'Entity & Structure',
-  3: 'Documentation',
-  4: 'Screening',
-  5: 'Products & Credit',
-  6: 'Activation',
 }
 
 // ---------------------------------------------------------------------------

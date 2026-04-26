@@ -1,8 +1,15 @@
 import Anthropic from '@anthropic-ai/sdk'
 
-export const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
+let _client: Anthropic | null = null
+
+// Lazy singleton — instantiated on first call, not at module load.
+// Prevents crashes when ANTHROPIC_API_KEY is absent (e.g., mock-only CI).
+export function getAnthropic(): Anthropic {
+  if (!_client) {
+    _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+  }
+  return _client
+}
 
 // Default model for all hero moment routes.
 // claude-sonnet-4-6 balances capability and latency for streaming responses.
