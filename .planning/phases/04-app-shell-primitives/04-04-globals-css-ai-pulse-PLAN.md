@@ -175,7 +175,7 @@ Plan 04-04 modifies a CSS file additively. The applicable ASVS category is V14 C
 | T-04-04-01 | V14 Configuration | app/globals.css | accept | CSS keyframes execute in the browser's compositor thread; no eval, no scripted side effect, no user input. The animation runs whenever AIPulseDot mounts; no security implication. |
 | T-04-04-02 | XSS via CSS | @keyframes ai-pulse | accept | Static literal CSS; no interpolation from user input; no `expression()`-style legacy IE syntax. No risk. |
 
-No active threats. The "carve-out" decision (D-89 strategy (c) + this single keyframe) is documented in the comment header of the new CSS block + in DECISIONS.md D-26/D-27 from Plan 04-02 (audit trail).
+No active threats. The "carve-out" decision (D-89 strategy (c) + this single keyframe) is documented in the comment header of the new CSS block + in DECISIONS.md D-64/D-65 from Plan 04-02 (audit trail).
 </threat_model>
 
 <verification>

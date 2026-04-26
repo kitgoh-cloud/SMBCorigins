@@ -3,7 +3,7 @@ phase: 04-app-shell-primitives
 plan: 10
 type: execute
 wave: 4
-depends_on: [04-02, 04-03, 04-05, 04-06, 04-07, 04-08, 04-09]
+depends_on: [04-02, 04-03, 04-04, 04-05, 04-06, 04-07, 04-08, 04-09]
 files_modified:
   - components/shell/TopStrip.tsx
   - components/shell/TopStrip.test.tsx

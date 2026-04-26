@@ -15,7 +15,7 @@ must_haves:
   truths:
     - "lib/persona.ts exports PERSONAS as a Record<'client' | 'rm', Persona> typed constant — TopStrip can index by mode without noUncheckedIndexedAccess undefined-narrowing pain"
     - "lib/persona.ts exports PERSONA_HOME with /journey for client and /cockpit for RM"
-    - "modeForPathname returns 'client' | 'rm' | 'demo' (3-arm union per RESEARCH §8.2 — /dev/* paths return 'demo')"
+    - "modeForPathname returns 'client' | 'rm' | 'demo' (3-arm union per D-66 + RESEARCH §8.2 — /dev/* paths return 'demo')"
     - "lib/persona.test.ts verifies the route-mapping table at minimum: 6 representative paths × 3 modes = canonical case coverage"
   artifacts:
     - path: "lib/persona.ts"
@@ -113,6 +113,7 @@ function modeForPathname(p: string): 'client' | 'rm' | 'demo' {
     - /Users/wyekitgoh/Projects/SMBCorigins/lib/api.mock.ts (lines 1–22 — file-header JSDoc convention)
     - .planning/phases/04-app-shell-primitives/04-RESEARCH.md §"Pitfall 2: noUncheckedIndexedAccess breaks naive map lookups" (lines 457–466) — narrowing pattern for PERSONAS lookup
     - .planning/phases/04-app-shell-primitives/04-RESEARCH.md §8.2 (lines 1356–1410) — `'demo'` arm rationale; modeForPathname Option A locked
+    - DECISIONS.md D-66 (appended by Plan 04-02 Task 3) — authorizes the 3-arm union extension of CONTEXT D-67
     - .planning/phases/04-app-shell-primitives/04-UI-SPEC.md §"Component Inventory" (lines 273–283) — confirms `as const` + single-file shape (OD-13)
   </read_first>
   <files>lib/persona.ts</files>

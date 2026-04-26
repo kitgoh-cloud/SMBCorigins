@@ -3,7 +3,7 @@ phase: 04-app-shell-primitives
 plan: 11
 type: execute
 wave: 5
-depends_on: [04-01, 04-04, 04-06, 04-08, 04-09, 04-10]
+depends_on: [04-01, 04-04, 04-05, 04-06, 04-07, 04-08, 04-09, 04-10]
 files_modified:
   - .freshgreen-allowlist
   - scripts/check-fresh-green.sh

@@ -15,15 +15,19 @@ must_haves:
   truths:
     - "IBM Plex Mono loads weights 400 + 500 (NOT 400 + 700) — the font bundle no longer ships dead-weight 700"
     - "Fraunces import is unchanged at the next/font level (OD-12 strategy b) — `axes` array NOT added; SOFT/WONK applied via inline style on the wordmark only at TopStrip composition time (Plan 04-10)"
-    - "DECISIONS.md has a new D-26 entry recording the IBM Plex Mono weight swap (PD-1 in Phase 4 PR), and a new D-27 entry recording the OD-12 Fraunces SOFT/WONK strategy lock"
+    - "DECISIONS.md has a new D-64 entry recording the IBM Plex Mono weight swap (PD-1 in Phase 4 PR), and a new D-65 entry recording the OD-12 Fraunces SOFT/WONK strategy lock"
+    - "DECISIONS.md has a new D-66 entry recording the modeForPathname 3-arm union extension (D-67 amended to add 'demo' arm per RESEARCH §8.2)"
     - "PD-1 safety pre-check (`grep -rn 'font-bold' app/ components/ lib/` returns 0) re-verified at execution time before the swap"
   artifacts:
     - path: "app/layout.tsx"
       provides: "next/font wirings with IBM Plex Mono weight ['400', '500']"
       contains: "weight: ['400', '500']"
     - path: "DECISIONS.md"
-      provides: "appended D-26 + D-27 audit-trail entries for the Phase 4 font changes"
-      contains: "D-26"
+      provides: "appended D-64 + D-65 + D-66 audit-trail entries for the Phase 4 font + persona-routing changes"
+      contains: "D-64"
+    - path: "DECISIONS.md"
+      provides: "D-66 records the modeForPathname 3-arm union extension"
+      contains: "modeForPathname route-to-mode map"
   key_links:
     - from: "app/layout.tsx"
       to: "@theme inline --font-mono"
@@ -32,17 +36,20 @@ must_haves:
 ---
 
 <objective>
-Apply UI-SPEC Planner Directive PD-1: swap IBM Plex Mono `weight: ['400', '700']` → `['400', '500']` so Phase 4's mono surfaces (Eyebrow primitive 10/500, mode-switcher labels 14/500) render the correct weight 500 and stop loading dead-weight 700. Honor OD-12 strategy (b) for Fraunces — DO NOT modify the next/font import; SOFT/WONK applied inline at the wordmark in Plan 04-10. Append D-26 + D-27 entries to DECISIONS.md per RESEARCH §2 Open Question #1 to preserve the audit trail per D-20.
+Apply UI-SPEC Planner Directive PD-1: swap IBM Plex Mono `weight: ['400', '700']` → `['400', '500']` so Phase 4's mono surfaces (Eyebrow primitive 10/500, mode-switcher labels 14/500) render the correct weight 500 and stop loading dead-weight 700. Honor OD-12 strategy (b) for Fraunces — DO NOT modify the next/font import; SOFT/WONK applied inline at the wordmark in Plan 04-10. Append D-64 + D-65 + D-66 entries to DECISIONS.md per RESEARCH §2 Open Question #1 to preserve the audit trail per D-20.
+
+Per CONTEXT.md numbering scheme: "Decision numbering continues from Phase 3 (D-63 → Phase 4 starts at D-64)." Phase 2 reserved D-26..D-41 and Phase 3 reserved D-42..D-63 — the next available decision IDs for Phase 4 are D-64 onward, regardless of whether earlier phases have flushed their entries to DECISIONS.md yet (per D-20, DECISIONS.md is canonical for what's committed; the numbering scheme is canonical for what's reserved).
 
 Purpose:
 - Without PD-1, `font-medium` (weight 500) on a mono element silently snaps to 400 or 700 via browser fallback — visually wrong.
 - Adding `axes: ['SOFT', 'WONK']` to Fraunces (OD-12 option a) was rejected by UI-SPEC OD-12 in favor of (b) — only the "Origin" wordmark needs SOFT/WONK; loading the axes globally adds bundle weight for no other consumer.
 - DECISIONS.md is canonical per D-20; phase decisions touching project-wide locks (D-31) need explicit append entries so future phases can audit.
+- D-66 is added because Plan 04-03 implements `modeForPathname` as a 3-arm union (`'client' | 'rm' | 'demo'`) extending CONTEXT D-67's 2-arm shape per RESEARCH §8.2 (so `/dev/*` paths render the demo-page chrome variant). The extension needs an explicit decision entry so future phases can audit the deviation from CONTEXT.md.
 
 Output:
 - 1 line edit in `app/layout.tsx` line 31: `weight: ['400', '700']` → `weight: ['400', '500']`
 - 0 line edits to the Fraunces config (line 8–12) — strategy (b) leaves the import untouched
-- 2 new appended lines in DECISIONS.md: D-26 (IBM Plex Mono weight swap) + D-27 (Fraunces SOFT/WONK inline-style strategy)
+- 3 new appended lines in DECISIONS.md: D-64 (IBM Plex Mono weight swap) + D-65 (Fraunces SOFT/WONK inline-style strategy) + D-66 (modeForPathname 3-arm union extension)
 
 NOT in scope for this plan:
 - Inserting `<TopStrip />` into `app/layout.tsx` body — that lands in Plan 04-10 (Wave 4)
@@ -58,6 +65,7 @@ NOT in scope for this plan:
 @.planning/phases/04-app-shell-primitives/04-UI-SPEC.md
 @.planning/phases/04-app-shell-primitives/04-RESEARCH.md
 @.planning/phases/04-app-shell-primitives/04-PATTERNS.md
+@.planning/phases/04-app-shell-primitives/04-CONTEXT.md
 @app/layout.tsx
 @DECISIONS.md
 
@@ -85,13 +93,13 @@ const fraunces = Fraunces({
 })
 ```
 
-<!-- DECISIONS.md tail (last 2 entries — D-25 is the highest current; D-26 is next) -->
+<!-- DECISIONS.md tail (last 2 entries — D-25 is the highest currently committed; D-64 is next reserved per CONTEXT.md numbering scheme) -->
 ```
 2026-04-25 · artifacts · D-24: `.github/CODEOWNERS` ...
 2026-04-25 · artifacts · D-25: `CLAUDE.md` mutation ...
 ```
 
-DECISIONS.md format per D-22: `YYYY-MM-DD · area · decision — agreed: kit + evan, YYYY-MM-DD`. Append-only per D-20.
+DECISIONS.md format per D-22: `YYYY-MM-DD · area · decision — agreed: kit + evan, YYYY-MM-DD`. Append-only per D-20. Phase 4 reserved range starts at D-64 per CONTEXT.md "Decision numbering continues from Phase 3 (D-63 → Phase 4 starts at D-64)." — Phase 2 holds D-26..D-41 and Phase 3 holds D-42..D-63 (those phases may flush their entries to DECISIONS.md in their own PRs; this plan does NOT backfill them).
 </interfaces>
 </context>
 
@@ -172,45 +180,56 @@ DECISIONS.md format per D-22: `YYYY-MM-DD · area · decision — agreed: kit + 
 </task>
 
 <task type="auto" tdd="false">
-  <name>Task 3: Append D-26 (PD-1) + D-27 (OD-12 strategy b) entries to DECISIONS.md</name>
+  <name>Task 3: Append D-64 (PD-1) + D-65 (OD-12 strategy b) + D-66 (modeForPathname 3-arm union) entries to DECISIONS.md</name>
   <read_first>
-    - /Users/wyekitgoh/Projects/SMBCorigins/DECISIONS.md (last 5 lines — confirm D-25 is currently the highest entry; new entries are D-26 and D-27)
+    - /Users/wyekitgoh/Projects/SMBCorigins/DECISIONS.md (last 5 lines — confirm the highest committed entry; per CONTEXT.md numbering scheme, the next reserved Phase 4 IDs are D-64, D-65, D-66 even if DECISIONS.md currently shows fewer entries)
+    - .planning/phases/04-app-shell-primitives/04-CONTEXT.md (decisions section — confirms "Phase 4 starts at D-64")
     - .planning/phases/04-app-shell-primitives/04-RESEARCH.md §"Open Questions" #1 (lines 1450–1454) — recommends appending a new D-NN entry for the Fraunces axes change to preserve audit trail per D-20
-    - .planning/phases/04-app-shell-primitives/04-UI-SPEC.md §"Open Decisions OD-12" + §"Planner Directives PD-1" — the source-of-truth for both new entries
+    - .planning/phases/04-app-shell-primitives/04-RESEARCH.md §8.2 (lines 1356–1410) — modeForPathname 3-arm union rationale; basis for D-66
+    - .planning/phases/04-app-shell-primitives/04-UI-SPEC.md §"Open Decisions OD-12" + §"Planner Directives PD-1" — the source-of-truth for the D-64/D-65 entries
   </read_first>
   <files>DECISIONS.md</files>
   <action>
-    APPEND-ONLY to DECISIONS.md per D-22 — never modify existing lines. Append two new lines at end of file in the existing format `YYYY-MM-DD · area · decision — agreed: kit + evan, YYYY-MM-DD`. Use today's date (2026-04-26).
+    APPEND-ONLY to DECISIONS.md per D-22 — never modify existing lines. Append three new lines at end of file in the existing format `YYYY-MM-DD · area · decision — agreed: kit + evan, YYYY-MM-DD`. Use today's date (2026-04-26).
 
-    Line 1 (D-26):
-    ```
-    2026-04-26 · typography · D-26: IBM Plex Mono weight bundle swapped from `['400', '700']` to `['400', '500']` in `app/layout.tsx:31`. Phase 4 UI-SPEC's mono surfaces (Eyebrow 10/500, ModeSwitcher labels 14/500, Avatar initials 12/400) need weight 500; weight 700 was unused dead-weight in the bundle. Safety pre-check `grep -rn font-bold app/ components/ lib/` returned 0 matches before the swap. Supersedes nothing — Phase 2 D-31 governs Fraunces only. — agreed: kit + evan, 2026-04-26
-    ```
+    Decision IDs D-64, D-65, D-66 are the next reserved Phase 4 IDs per CONTEXT.md numbering scheme (Phase 2 reserved D-26..D-41; Phase 3 reserved D-42..D-63; Phase 4 starts at D-64). Phase 2/3 may not have flushed their D-NN entries to DECISIONS.md yet — that's a separate concern; this plan does NOT backfill earlier phases.
 
-    Line 2 (D-27):
+    Line 1 (D-64):
     ```
-    2026-04-26 · typography · D-27: Fraunces SOFT/WONK variation rendered via inline `style={{ fontVariationSettings: '"SOFT" 80, "WONK" 1' }}` on the "Origin" wordmark `<span>` only (Phase 4 OD-12 strategy b). Phase 2 D-31 (Fraunces wght-only `axes`) stays in force — no font-import change. Other Phase 4 Fraunces consumers (StagePill numerals) intentionally do NOT use SOFT/WONK; if a future phase needs the axes globally, that phase revisits D-31. — agreed: kit + evan, 2026-04-26
+    2026-04-26 · typography · D-64: IBM Plex Mono weight bundle swapped from `['400', '700']` to `['400', '500']` in `app/layout.tsx:31`. Phase 4 UI-SPEC's mono surfaces (Eyebrow 10/500, ModeSwitcher labels 14/500, Avatar initials 12/400) need weight 500; weight 700 was unused dead-weight in the bundle. Safety pre-check `grep -rn font-bold app/ components/ lib/` returned 0 matches before the swap. Supersedes nothing — Phase 2 D-31 governs Fraunces only. — agreed: kit + evan, 2026-04-26
     ```
 
-    Both lines written exactly as above (single backticks for inline code, em-dashes `—`, no extra whitespace, single trailing newline at end of file). The two lines append AFTER the current D-25 line; do NOT delete or rewrite any existing line.
+    Line 2 (D-65):
+    ```
+    2026-04-26 · typography · D-65: Fraunces SOFT/WONK variation rendered via inline `style={{ fontVariationSettings: '"SOFT" 80, "WONK" 1' }}` on the "Origin" wordmark `<span>` only (Phase 4 OD-12 strategy b). Phase 2 D-31 (Fraunces wght-only `axes`) stays in force — no font-import change. Other Phase 4 Fraunces consumers (StagePill numerals) intentionally do NOT use SOFT/WONK; if a future phase needs the axes globally, that phase revisits D-31. — agreed: kit + evan, 2026-04-26
+    ```
+
+    Line 3 (D-66):
+    ```
+    2026-04-26 · architecture · D-66: D-67 (modeForPathname route-to-mode map) is amended from a 2-arm union 'client' | 'rm' to a 3-arm union 'client' | 'rm' | 'demo'. Pathnames starting with /dev return 'demo'; TopStrip suppresses persona-context block + ModeSwitcher segments are inactive in demo mode (RESEARCH §8.2). Default still falls through to 'client' for unrecognized non-/dev paths. — agreed: kit + evan, 2026-04-26
+    ```
+
+    All three lines written exactly as above (single backticks for inline code, em-dashes `—`, no extra whitespace, single trailing newline at end of file). The three lines append AFTER the current highest-numbered entry; do NOT delete or rewrite any existing line.
 
     Do NOT renumber existing D-NN entries. Do NOT add a section heading. Do NOT add a horizontal rule. The format precedent is set by D-22..D-25.
   </action>
   <verify>
     <automated>
-    grep -q "D-26: IBM Plex Mono weight bundle swapped" DECISIONS.md && grep -q "D-27: Fraunces SOFT/WONK variation" DECISIONS.md && grep -c "^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} · " DECISIONS.md | awk '{exit ($1 < 27)}'
+    grep -q "D-64: IBM Plex Mono weight bundle swapped" DECISIONS.md && grep -q "D-65: Fraunces SOFT/WONK variation" DECISIONS.md && grep -q "D-66: D-67 (modeForPathname route-to-mode map) is amended" DECISIONS.md
     </automated>
   </verify>
   <acceptance_criteria>
-    - DECISIONS.md contains exactly one line with `D-26:` (the IBM Plex Mono weight swap entry)
-    - DECISIONS.md contains exactly one line with `D-27:` (the Fraunces SOFT/WONK strategy entry)
-    - Both lines start with `2026-04-26 · typography · ` (date + area)
-    - Both lines end with `— agreed: kit + evan, 2026-04-26`
-    - Total D-NN entries in DECISIONS.md: at least 27 (D-01 through D-27 — confirmed by `grep -c "^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} · " DECISIONS.md` ≥ 27)
+    - DECISIONS.md contains exactly one line with `D-64:` (the IBM Plex Mono weight swap entry)
+    - DECISIONS.md contains exactly one line with `D-65:` (the Fraunces SOFT/WONK strategy entry)
+    - DECISIONS.md contains exactly one line with `D-66:` (the modeForPathname 3-arm union extension entry)
+    - D-64 and D-65 lines start with `2026-04-26 · typography · ` (date + area)
+    - D-66 line starts with `2026-04-26 · architecture · `
+    - All three lines end with `— agreed: kit + evan, 2026-04-26`
+    - D-66's body contains the substring `modeForPathname route-to-mode map` AND `3-arm union` — these are the audit-trail anchors that downstream plans grep for
     - No existing D-NN entry text is modified (verifiable via `git diff DECISIONS.md` showing only +adds, never -dels)
     - File ends with a single trailing newline (standard POSIX convention)
   </acceptance_criteria>
-  <done>DECISIONS.md has D-26 + D-27 appended at end-of-file; D-01..D-25 untouched; format matches existing entries verbatim.</done>
+  <done>DECISIONS.md has D-64 + D-65 + D-66 appended at end-of-file; existing entries untouched; format matches existing D-22..D-25 entries verbatim.</done>
 </task>
 
 </tasks>
@@ -230,7 +249,7 @@ No active code-runtime threats. No user input flow affected. No persistence laye
 After all 3 tasks land:
 1. `npm run typecheck && npm run lint && npm run test && npm run build` exits 0
 2. `git diff app/layout.tsx` shows exactly one changed line (line 31)
-3. `git diff DECISIONS.md` shows exactly two added lines (D-26, D-27) at EOF
+3. `git diff DECISIONS.md` shows exactly three added lines (D-64, D-65, D-66) at EOF
 4. `grep -rn "font-bold" app/ components/ lib/` still returns 0 matches (post-condition holds)
 5. `cat app/layout.tsx | grep -A 1 "IBM_Plex_Mono"` confirms `weight: ['400', '500'],`
 </verification>
@@ -239,7 +258,7 @@ After all 3 tasks land:
 - [ ] `app/layout.tsx:31` reads `weight: ['400', '500'],`
 - [ ] `app/layout.tsx` Fraunces config (lines 5–12) byte-identical to pre-edit state
 - [ ] `app/layout.tsx` body line still `<body>{children}</body>` (TopStrip insert is Plan 04-10)
-- [ ] `DECISIONS.md` has D-26 + D-27 appended in the exact format specified
+- [ ] `DECISIONS.md` has D-64 + D-65 + D-66 appended in the exact format specified
 - [ ] `grep -rn "font-bold" app/ components/ lib/` returns 0 matches (PD-1 safety pre-check holds before AND after)
 - [ ] `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build` all exit 0
 </success_criteria>
@@ -247,3 +266,5 @@ After all 3 tasks land:
 <output>
 After completion, create `.planning/phases/04-app-shell-primitives/04-02-SUMMARY.md`
 </output>
+</content>
+</invoke>
