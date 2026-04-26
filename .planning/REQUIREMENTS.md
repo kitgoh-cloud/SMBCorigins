@@ -26,9 +26,11 @@ Requirements for the demo-ready prototype. Each maps to exactly one roadmap phas
 ### Shared Boundary (BOUND)
 
 - [ ] **BOUND-01**: `types/origin.ts` exports `Application`, `Entity`, `UBO`, `Document`, `ScreeningHit`, `CreditMemo`, `Stage`, `User` — co-authored with Evan, reviewed before merge
-- [ ] **BOUND-02**: `lib/api.ts` exports a typed API client that switches between mock and real backends via `NEXT_PUBLIC_USE_MOCK` — default is `true`
+- [x] **BOUND-02
+**: `lib/api.ts` exports a typed API client that switches between mock and real backends via `NEXT_PUBLIC_USE_MOCK` — default is `true`
 - [ ] **BOUND-03**: `data/seed.ts` provides a full mock dataset — Kaisei Manufacturing KK entity tree, 5 UBOs with holding %, 6 background portfolio clients (for RM views), 22 documents across types
-- [ ] **BOUND-04**: With mock mode on, `lib/api.ts` reads from `data/seed.ts` and returns typed `Application` objects matching the persona
+- [x] **BOUND-04
+**: With mock mode on, `lib/api.ts` reads from `data/seed.ts` and returns typed `Application` objects matching the persona
 
 ### App Shell & Primitives (SHELL)
 
