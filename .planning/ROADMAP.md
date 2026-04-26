@@ -75,11 +75,11 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
   3. `data/seed.ts` contains a complete mock dataset: Kaisei Manufacturing KK entity tree, 5 UBOs with holding percentages, 6 background portfolio clients for RM views, and 22 documents spread across document types
   4. Setting `NEXT_PUBLIC_USE_MOCK=false` causes `lib/api.ts` to route to the real backend stub (even if unimplemented, the switch itself works and is type-safe)
 **Plans**: 5 plans
-  - [ ] 03-01-PLAN.md — Vitest infrastructure (config, scripts, third CI job, CLAUDE.md update)
-  - [ ] 03-02-PLAN.md — data/seed.ts (Kaisei + 6 portfolio + Act 3 org + 22 docs) + invariant tests
-  - [ ] 03-03-PLAN.md — lib/types-pending.ts shim + .github/CODEOWNERS edit (lib/stages.ts grouped with contract surfaces)
-  - [ ] 03-04-PLAN.md — lib/api.mock.ts full implementation (replace stub) + behavior tests
-  - [ ] 03-05-PLAN.md — lib/stages.test.ts (STAGE_NAMES + deriveStages purity contract)
+  - [x] 03-01-PLAN.md — Vitest infrastructure (config, scripts, third CI job, CLAUDE.md update)
+  - [x] 03-02-PLAN.md — data/seed.ts (Kaisei + 6 portfolio + Act 3 org + 22 docs) + invariant tests
+  - [x] 03-03-PLAN.md — lib/types-pending.ts shim + .github/CODEOWNERS edit (lib/stages.ts grouped with contract surfaces)
+  - [x] 03-04-PLAN.md — lib/api.mock.ts full implementation (replace stub) + behavior tests
+  - [x] 03-05-PLAN.md — lib/stages.test.ts (STAGE_NAMES + deriveStages purity contract)
 
 ### Phase 4: App Shell & Primitives
 **Goal**: The shell chrome and five shared primitives that every downstream screen consumes are built, typed, and locked — so the heartbeat screens can be assembled from existing parts without shell work getting entangled in screen work.
