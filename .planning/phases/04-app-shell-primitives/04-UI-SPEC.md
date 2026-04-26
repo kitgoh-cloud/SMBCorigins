@@ -5,6 +5,7 @@ status: draft
 shadcn_initialized: false
 preset: none
 created: 2026-04-26
+revised: 2026-04-26
 ---
 
 # Phase 4 — UI Design Contract
@@ -14,6 +15,8 @@ created: 2026-04-26
 > **Pre-population sources:** CONTEXT.md (D-64..D-89), CLAUDE.md "Design system" (locked), `app/globals.css` (Phase 2 `@theme` tokens), `app/layout.tsx` (Phase 2 `next/font` wirings), `docs/ORIGIN_DESIGN.md` §8.
 >
 > **Visual source of truth:** `docs/Origin Prototype.html` (Claude artifact bundle; relevant assets `4c54d558*` shell + `77ddc8bb*` primitives, captured during discuss-phase into CONTEXT.md as the proxy — do NOT re-extract from the bundle in plan/execute phases unless an explicit shape question arises).
+>
+> **Revision 1 (2026-04-26):** Typography consolidated to 4 sizes (checker Option C). Weight override formally declared (Resolution B) — 3-weight matrix is a project-level brand decision predating Phase 4, not a Phase 4 design choice. Icon primitive gains `ariaLabel?` prop with values declared for TopStrip mail/help. TopStrip height locked at 56px. Chrome metric exceptions subsection added to Spacing.
 
 ---
 
@@ -28,7 +31,7 @@ created: 2026-04-26
 | Display font | Fraunces (variable, wght-only per D-31; SOFT/WONK revisit flagged for "Origin" wordmark — see Open Decisions) |
 | UI body font | Inter Tight (variable) |
 | Japanese font | Noto Sans JP (latin subset; JP via unicode-range per D-32) |
-| Mono font | IBM Plex Mono (weights 400 / 700) |
+| Mono font | IBM Plex Mono (weights 400 / 500 — see Typography Weight Override) |
 
 Rationale for "no shadcn / no third-party UI library":
 1. The locked stack contract (D-01..D-08) does not include a UI component library. Adding one in Phase 4 would mutate the stack contract.
@@ -53,16 +56,23 @@ Declared values (multiples of 4) — already ported into `@theme` block of `app/
 | 16 | 64px | `p-16` | Reserved — not consumed in Phase 4 chrome but available |
 | 24 | 96px | `p-24` | Reserved — not consumed in Phase 4 |
 
-Exceptions:
-- **TopStrip height: ~52–56px fixed** (not on the spacing scale; visual chrome height matches the prototype's top-strip metric — plan-phase locks the exact px after reading `proto_4c54d558.js`).
-- **RMShell sidebar width: 220px fixed** (per CONTEXT canonical_refs; plan-phase confirms by reading the prototype).
-- **StagePill diameter: 34px or 36px** (recommendation: **34px** — matches the prototype; plan-phase locks per CONTEXT "Claude's Discretion").
-- **AIPulseDot diameter: 6–8px** (recommendation: **8px** for 1440px desktop legibility; plan-phase locks).
-- **RisingMark height: 24px in TopStrip / 26px in BrandLockup** (recommendation per CONTEXT; plan-phase locks).
-- **Avatar default size: 30px in TopStrip** (recommendation per CONTEXT; plan-phase locks).
-- **Vertical dividers in TopStrip: 1px width × ~24px height with `--color-mist`** (visual rule, not on the spacing scale).
+### Chrome metric exceptions (NOT spacing scale values)
 
-These exceptions are deliberate — they're **chrome metric constants**, not content spacing.
+The values below are **component-dimension constants** ported verbatim from the prototype. They are NOT spacing-scale tokens and are NOT subject to the multiple-of-4 spacing rule because circular component diameters and chrome heights are dimensions (intrinsic to a component's visual shape), not gutters (the stuff between components).
+
+The spacing rule governs gutters, padding, and margins — the negative space between components. Component-intrinsic dimensions (avatar diameter, pill diameter, sidebar width, top-strip height, divider thickness) are locked separately by the prototype and the brand system.
+
+| Metric | Locked value | Source | Why exempt from spacing rule |
+|--------|--------------|--------|------------------------------|
+| TopStrip height | **56px** | This UI-SPEC (locks the prototype's "~52–56px" range to 56 as the 8×7 multiple, keeping chrome generous on a 1440px canvas) | Component-intrinsic chrome height. 56 happens to align with 8-point scale (8×7) but the rule that governs it is "match prototype," not "fit spacing scale." |
+| RMShell sidebar width | **220px** | CONTEXT canonical_refs / prototype | Component-intrinsic dimension. Not a multiple of 4 by coincidence — locked by prototype. |
+| StagePill diameter | **34px** (locked from OD-2 recommendation) | Prototype | Circular component diameter. Not a gutter. |
+| Avatar default diameter | **30px** in TopStrip (locked from OD-4 recommendation) | Prototype | Circular component diameter. Not a gutter. |
+| AIPulseDot diameter | **8px** (locked from OD-5 recommendation) | Prototype + 1440px legibility | Circular component diameter. Happens to be on the 8-point scale but the rule is "prototype + legibility." |
+| RisingMark height | **24px** in TopStrip / **26px** in BrandLockup (locked from OD-3 recommendation) | Prototype | Component-intrinsic SVG dimension. |
+| Vertical divider | 1px width × 24px height, `--color-mist` | Prototype | Visual rule. 1px is sub-scale by definition (anything finer than 4 is a hairline). |
+
+These exceptions are deliberate and finite — the planner does NOT add to this list without revising this UI-SPEC.
 
 ---
 
@@ -70,25 +80,46 @@ These exceptions are deliberate — they're **chrome metric constants**, not con
 
 The four-font system is locked at the project level (CLAUDE.md "Design system"). Phase 4 declares the **size + weight + line-height** matrix the chrome and primitives consume. Each row maps to a `font-*` Tailwind utility (`font-display`, `font-body`, `font-jp`, `font-mono`) generated by `@theme inline` in `app/globals.css`.
 
+### Size scale — 4 distinct sizes
+
+Consolidated from the prior 7-size scale per checker Option C. The 13px label tier merges into 14px (weight differentiates: 500 vs 400). The 22px display-md tier is removed from the Phase 4 contract entirely — no Phase 4 surface consumes it, and Phase 5+ can declare it when a real surface lands.
+
 | Role | Font | Size | Weight | Line Height | Tracking | Used by |
 |------|------|------|--------|-------------|----------|---------|
-| Body | Inter Tight | 14px | 400 | 1.5 | normal | TopStrip name, ActionCard title fallback, generic UI text |
-| Label | Inter Tight | 13px | 500 | 1.4 | normal | LanguageToggle EN / 日本語 (Japanese segment uses `font-jp`), ActionCard meta lines, mode-switcher pill labels |
-| Eyebrow | IBM Plex Mono | 10px | 500 | 1.2 | 0.18em | `<Eyebrow>` primitive — used for "BY SMBC" tagline, "DEMO" mode-switcher label, role uppercase ("TREASURER", "RELATIONSHIP MGR"), ActionCard timestamps |
-| Display sm | Fraunces | 16px | 600 | 1.2 | normal | "Origin" wordmark in TopStrip BrandLockup (with optional `fontVariationSettings: '"SOFT" 80, "WONK" 1'` — see Open Decisions D-89-bis) |
-| Display md | Fraunces | 22px | 600 | 1.2 | normal | Reserved for primitives demo page section headings; **no Phase 4 chrome surface uses display md** but it is declared so consuming phases (5/6) inherit a defined ramp |
-| Numeral | Fraunces | 14px | 600 | 1 | normal | StagePill numeral character (1..6 or ✓) — single-character, centered |
-| Mono | IBM Plex Mono | 12px | 400 | 1.4 | normal | Avatar initials when initials are alphabetic-uppercase (e.g., "YT", "JL"), StatusChip body when chip wraps mono content (rare), demo-page Tailwind class hints |
-| Japanese | Noto Sans JP | 14px | 500 | 1.5 | normal | LanguageToggle "日本語" segment, TopStrip context badge "開成製造" client-mode subtitle |
+| Eyebrow | IBM Plex Mono | **10px** | 500 | 1.2 | 0.18em | `<Eyebrow>` primitive — "BY SMBC" tagline, "DEMO" mode-switcher label, role uppercase ("TREASURER", "RELATIONSHIP MGR"), ActionCard timestamps |
+| Micro / mono | IBM Plex Mono | **12px** | 400 | 1.4 | normal | Avatar initials (alphabetic uppercase, e.g. "YT", "JL"), demo-page Tailwind class hints, StatusChip body when chip wraps mono content (rare) |
+| Body / label / numeral / Japanese | Inter Tight (latin) / Fraunces (numeral) / Noto Sans JP (JP) | **14px** | 400 (body) / 500 (label, eyebrow alt) / 600 (numeral, JP context) | 1.5 (body, JP) / 1 (numeral, single-char centering) | normal | TopStrip persona name, ActionCard title fallback, generic UI text (Inter Tight 400); LanguageToggle EN / 日本語, ActionCard meta lines, mode-switcher pill labels (Inter Tight / Noto Sans JP 500); StagePill numeral character 1..6 / ✓ (Fraunces 600); JP context badge "開成製造" (Noto Sans JP 500) |
+| Display sm | Fraunces | **16px** | 600 | 1.2 | normal | "Origin" wordmark in TopStrip BrandLockup (with optional `fontVariationSettings: '"SOFT" 80, "WONK" 1'` — see Open Decisions OD-12) |
 
-**Size count: 7 distinct sizes (10, 12, 13, 14, 16, 22).** This exceeds the template's "3-4 sizes" guideline by design — Phase 4 chrome is dense and the prototype's visual hierarchy uses fine-grained typographic scale to compress information density at 1440px desktop. Each size has a single load-bearing role (eyebrow vs label vs body vs numeral vs wordmark) and is not interchangeable.
+**Size count: 4 distinct sizes (10, 12, 14, 16).** Rule-compliant.
 
-**Weight count: 3 distinct weights (400, 500, 600).** Slightly exceeds the "2 weights" guideline; the eyebrow/label/numeral split needs 500 distinct from body 400 and display 600. Documented exceptions only — no phase-5+ surfaces should add a 4th weight without revising this contract.
+The 14px row carries multiple roles distinguished by font family and weight — this is the brand system at work, not a typography overflow. Inter Tight 400 for body text, Inter Tight 500 for labels (and Noto Sans JP 500 for JP labels), Fraunces 600 for numerals, Noto Sans JP 500 for Japanese context. The role is encoded in the family + weight combination on a single shared size, not in a separate size tier.
 
 **Line-height ratios:**
-- Body / Japanese / mono: **1.5** (template recommendation honored)
-- Display / numeral / eyebrow: **1.2** (template recommendation honored)
+- Body / Japanese / mono / micro: **1.5** (body, JP), **1.4** (micro / mono)
+- Display / eyebrow: **1.2**
 - Numeral disc: **1** (single-character centering inside a circular disc; line-height collapses to font-size)
+
+### Typography Weight Override — formal project-level declaration
+
+The "2 font weights maximum" rule is a heuristic for **single-family** typescales — it prevents a designer from inflating one font's weight axis to substitute for missing hierarchy. SMBC Origin's typography is **multi-family**: four distinct families (Fraunces, Inter Tight, Noto Sans JP, IBM Plex Mono) carry the bulk of hierarchical differentiation. Weight is the secondary axis that establishes sub-role within a family.
+
+The 4-family + 3-weight matrix is locked **above Phase 4**:
+- CLAUDE.md "Design system" section names all four families and their roles.
+- ORIGIN_DESIGN.md §8.1 details the typography system.
+- Phase 2 D-31 (Fraunces wght-only variable axis) and D-32 (Noto Sans JP unicode-range subsetting) cement the four families as the project-level brand decision.
+
+**Locked weight set (project-level brand decision, NOT a Phase 4 design choice):**
+
+| Weight | Role | Where used |
+|--------|------|------------|
+| **400 (regular)** | Default body text in Inter Tight; default mono in IBM Plex Mono | TopStrip persona name (Inter Tight 14/400), Avatar initials (IBM Plex Mono 12/400), generic body text |
+| **500 (medium)** | Label, eyebrow, persona context badge — across Inter Tight, IBM Plex Mono, and Noto Sans JP — establishing "this is metadata, not body" | LanguageToggle labels, ActionCard meta lines, mode-switcher pill labels (Inter Tight 14/500); Eyebrow primitive (IBM Plex Mono 10/500); JP context badge (Noto Sans JP 14/500) |
+| **600 (semibold)** | Display + numeral in Fraunces — establishing brand voice | "Origin" wordmark (Fraunces 16/600); StagePill numeral 1..6 / ✓ (Fraunces 14/600) |
+
+**Override approved by:** project-level brand system (CLAUDE.md "Design system" + ORIGIN_DESIGN.md §8.1 + Phase 2 D-31). Reaffirmed in this UI-SPEC. Phase 4 enforces the brand system; it does not redesign it. No Phase 4 decision narrows or extends this weight matrix.
+
+**Forbidden additions:** Phase 5+ surfaces MUST NOT introduce a 4th weight (e.g., 300 light, 700 bold, 800 extrabold) without revising this UI-SPEC and amending the project-level brand declaration above.
 
 ---
 
@@ -109,7 +140,7 @@ Phase 4 inherits the locked SMBC palette already ported in Phase 2 (`@theme` tok
 
 | Surface | Where | Why allowed |
 |---------|-------|-------------|
-| `AIPulseDot` (the bare ~8px dot) | `components/primitives/AIPulseDot.tsx` | The dot **is** the AI presence indicator. SHELL-05's spirit centerpiece. |
+| `AIPulseDot` (the bare 8px dot) | `components/primitives/AIPulseDot.tsx` | The dot **is** the AI presence indicator. SHELL-05's spirit centerpiece. |
 | `AIBadge` dot + label | `components/primitives/AIBadge.tsx` | Composes `AIPulseDot` + "Origin" wordmark inside a `--color-trad-green-deep` pill — marks AI-authored card headers. |
 | `StatusChip` `kind='ai'` branch only | `components/primitives/StatusChip.tsx` | One of six chip kinds. Other 5 kinds (`'ok'`, `'amber'`, `'ghost'`, `'red'`, `'info'`) MUST NOT use fresh-green. Per-kind unit tests (D-87) verify. |
 | `RisingMark` clock-hand stroke | `components/shell/RisingMark.tsx` | **Brand-iconographic exception.** The SMBC Origin brand mark predates the AI rule; the green clock-hand is the brand signal. Recommended (CONTEXT "Specifics") and confirmed in this UI-SPEC. Documented in `.freshgreen-allowlist` comment header per D-86. |
@@ -120,7 +151,7 @@ Phase 4 inherits the locked SMBC palette already ported in Phase 2 (`@theme` tok
 | # | Prototype site | Original (forbidden) | Replacement (recommended; plan-phase locks) | Rationale |
 |---|----------------|----------------------|---------------------------------------------|-----------|
 | 1 | TopStrip user Avatar bg | `var(--fresh-green)` | **`'trad-green-soft'`** (`#1A5F48`) — closed-enum `Avatar.color` token | Avatar bg signals identity, not AI. Use a brand-coherent green that isn't the AI green. |
-| 2 | Mail-icon notification dot | `var(--fresh-green)` | **`var(--signal-amber)`** (`#E8A317`) | "Unread messages" is attention semantics, not AI authorship. |
+| 2 | Mail-icon notification dot | `var(--fresh-green)` | **`var(--signal-amber)`** (`#E8A317`) | "Unread messages" is attention semantics, not AI authorship. The dot indicates unread mail per D-88 retrofit; amber is the canonical attention color. |
 | 3 | Mode-switcher dashed border tint | `rgba(191,215,48,0.3)` | **`rgba(122,130,125,0.3)`** (derived from `--ink-muted`) | "DEMO" affordance is a development hint, not AI. Paper-toned dashed border is unobtrusive. |
 | 4 | Mode-switcher "DEMO" eyebrow text color | `var(--fresh-green)` | **`var(--signal-amber)`** (`#E8A317`) | Pairs with #3; consistent "dev affordance" amber palette. |
 | 5 | Sidebar active-route indicator dot | `var(--fresh-green)` | **`var(--trad-green)`** (`#004832`) | Active state = brand color; the existing `--paper-deep` row background already signals "selected." |
@@ -160,11 +191,13 @@ export type AvatarColor =
 | `Eyebrow` | `{ children: ReactNode, className?: string }` | Mono uppercase tracked text — the "10px tag" | none (compositional) |
 | `StatusChip` | `{ kind: 'ok' \| 'ai' \| 'amber' \| 'ghost' \| 'red' \| 'info', children: ReactNode, dot?: boolean }` | Horizontal pill with optional leading dot | `kind` is closed; `kind='ai'` is the only fresh-green branch |
 | `StagePill` | `{ n: 1 \| 2 \| 3 \| 4 \| 5 \| 6, state: 'done' \| 'current' \| 'upcoming', size?: number }` | Circular numeral disc — ✓ for done, number otherwise | `n` and `state` closed; consumer renders stage names |
-| `AIPulseDot` | `{ ariaLabel?: string }` (default `"AI active"`) | Bare ~8px fresh-green dot with CSS-animated pulse | none |
+| `AIPulseDot` | `{ ariaLabel?: string }` (default `"AI active"`) | Bare 8px fresh-green dot with CSS-animated pulse | none |
 | `AIBadge` | `{ label?: string }` (default `"Origin"`) | `--trad-green-deep` rounded-full pill containing `<AIPulseDot/>` + label | none |
 | `ActionCard` | `{ title: string, meta?: string, indicator?: ReactNode, cta?: ReactNode, onClick?: () => void, faint?: boolean }` | Row primitive (not container card) — title + meta with slot-shaped indicator/cta | `indicator` and `cta` are slot-shaped `ReactNode` |
-| `Icon` | `{ name: IconName, size?: number, stroke?: number, color?: string, style?: CSSProperties }` | Inline SVG paths from prototype's `Icon` component | `name` is closed string union of ~40 names (locked at plan-phase by reading prototype) |
+| `Icon` | `{ name: IconName, size?: number, stroke?: number, color?: string, ariaLabel?: string, style?: CSSProperties }` | Inline SVG paths from prototype's `Icon` component | `name` is closed string union of ~40 names (locked at plan-phase by reading prototype) |
 | `Avatar` | `{ initials: string, size?: number, color: AvatarColor, textColor?: AvatarColor }` | Round disc with monospace initials | `color` and `textColor` are closed `AvatarColor` enum (no fresh-green family) |
+
+**`Icon.ariaLabel` semantics (FLAG 1 fix):** When `ariaLabel` is provided, the SVG receives `role="img"` + `aria-label={ariaLabel}`. When omitted (icon is purely decorative — adjacent to a text label or inside a labeled button), the SVG receives `aria-hidden="true"`. This mirrors `AIPulseDot.ariaLabel` (default `"AI active"`, overridable). The `IconName` closed union from D-79 is unchanged — `ariaLabel` is purely additive.
 
 Plus a barrel export: `components/primitives/index.ts`.
 
@@ -172,7 +205,7 @@ Plus a barrel export: `components/primitives/index.ts`.
 
 | Component | Type | Render location | Composes |
 |-----------|------|-----------------|----------|
-| `TopStrip` | `'use client'` (uses `usePathname`) | `app/layout.tsx` above `{children}` (D-64) | `RisingMark`, `LanguageToggle`, `ModeSwitcher`, `Icon` (mail/help), `Avatar`, `Eyebrow` |
+| `TopStrip` | `'use client'` (uses `usePathname`) | `app/layout.tsx` above `{children}` (D-64) | `RisingMark`, `LanguageToggle`, `ModeSwitcher`, `Icon` (mail/help with `ariaLabel`), `Avatar`, `Eyebrow` |
 | `RisingMark` | server | TopStrip + (future BrandLockup, Phase 5+) | inline SVG (no children) — fresh-green allowlisted clock-hand |
 | `LanguageToggle` | server (visual-only) | TopStrip | inline `<span>` segments — `EN` (Inter Tight) and `日本語` (Noto Sans JP) |
 | `ModeSwitcher` | server, gated by `NEXT_PUBLIC_SHOW_MODE_SWITCHER` (D-68) | TopStrip — renders `null` when not `'true'` | two `<Link>`s (D-69), `Eyebrow`, dashed border container |
@@ -197,12 +230,12 @@ export function modeForPathname(p: string): 'client' | 'rm' { /* per D-67 */ }
 
 ## TopStrip Composition (D-65 — locked)
 
-Left-to-right reading order at 1440px. Plan-phase locks exact pixel measurements; this UI-SPEC locks the order and visual shape.
+Left-to-right reading order at 1440px. TopStrip height **locked at 56px** (chrome metric exception — see Spacing). Plan-phase locks remaining exact pixel measurements.
 
 ```
 [ RisingMark | "Origin" wordmark + "BY SMBC" eyebrow ]
    │
-   │ vertical divider (1px × ~24px, --color-mist)
+   │ vertical divider (1px × 24px, --color-mist)
    │
 [ context badge — mode-conditional:
     client: "Kaisei Manufacturing KK · 開成製造"
@@ -214,9 +247,9 @@ Left-to-right reading order at 1440px. Plan-phase locks exact pixel measurements
    │
 [ LanguageToggle — EN / 日本語 (visual only) ]
    │
-[ Icon name="mail" + signal-amber notification dot (retrofit #2) ]
+[ <Icon name="mail" ariaLabel="Mail" /> + signal-amber notification dot (retrofit #2 — dot indicates unread messages) ]
    │
-[ Icon name="help" ]
+[ <Icon name="help" ariaLabel="Help" /> ]
    │
 [ vertical divider ]
    │
@@ -226,7 +259,7 @@ Left-to-right reading order at 1440px. Plan-phase locks exact pixel measurements
 **Interaction states:**
 - `ModeSwitcher` two `<Link>`s navigate to `PERSONA_HOME.client` (`/journey`) / `PERSONA_HOME.rm` (`/cockpit`); active mode is computed from `usePathname()` via `modeForPathname()` and visually highlighted (recommendation: active segment uses `--color-paper` background on dark chrome; inactive uses `--color-trad-green-deep`).
 - `LanguageToggle` is **visual-only in v1** (CLAUDE.md "Language: English only in UI body"). Click does nothing; cursor is `default`, no hover state. Plan-phase confirms exact non-interactive styling.
-- `mail` and `help` icons are static (no notifications popover, no help dialog) — placeholder for Phase 8 wiring.
+- `mail` and `help` icons are static (no notifications popover, no help dialog) — placeholder for Phase 8 wiring. Both icons MUST set `ariaLabel` per FLAG 1 fix because the icons are visually unaccompanied by text. The mail icon's notification dot (signal-amber) communicates "unread messages exist" to sighted users; non-sighted users get the icon's `aria-label="Mail"` and a future Phase 8 enhancement adds an `aria-describedby` for unread count.
 - `Avatar` is non-interactive in Phase 4. Click handler attaches in Phase 6+ when settings/profile lands.
 
 ---
@@ -238,10 +271,12 @@ Left-to-right reading order at 1440px. Plan-phase locks exact pixel measurements
 Single-column workspace. No sidebar, no copilot, no chrome beyond what TopStrip provides.
 
 ```tsx
-<main className="bg-paper min-h-[calc(100vh-{topstrip-height})] px-{?}">
+<main className="bg-paper min-h-[calc(100vh-56px)] px-{?}">
   {children}
 </main>
 ```
+
+(56px = TopStrip height per Chrome metric exceptions table.)
 
 Plan-phase locks: outer max-width (likely 1280–1440px content max-width, centered), horizontal padding, vertical padding above first content block.
 
@@ -250,7 +285,7 @@ Plan-phase locks: outer max-width (likely 1280–1440px content max-width, cente
 Three-zone layout: sidebar (220px fixed) + workspace (flex-1) + **empty copilot-sidecar slot** (no copilot in Phase 4 — Phase 8 owns it).
 
 ```tsx
-<div className="flex bg-paper min-h-[calc(100vh-{topstrip-height})]">
+<div className="flex bg-paper min-h-[calc(100vh-56px)]">
   <aside className="w-[220px] bg-trad-green text-paper">
     {/* Sidebar nav — Phase 4 ships placeholder nav items, NOT live route handlers; Phase 6 wires */}
   </aside>
@@ -277,7 +312,7 @@ Note: User's intent path was `/_dev/primitives`; coerced to `/dev/primitives` be
 
 **Content (locked structure; plan-phase picks rendering style):**
 - One section per primitive (8 sections).
-- Each section renders **every state** of the primitive — `StatusChip` in all 6 kinds with and without dot; `StagePill` in all 18 (n × state) combinations; `Avatar` in each `AvatarColor` enum member; `Icon` in all ~40 names at default size; `ActionCard` in 3 composition recipes (action row, AI lane row, activity row) showing the slot-shaped `indicator` / `cta` flexibility.
+- Each section renders **every state** of the primitive — `StatusChip` in all 6 kinds with and without dot; `StagePill` in all 18 (n × state) combinations; `Avatar` in each `AvatarColor` enum member; `Icon` in all ~40 names at default size (icons rendered with explicit `ariaLabel` per name to demonstrate the prop slot; e.g. `<Icon name="mail" ariaLabel="Mail" />`); `ActionCard` in 3 composition recipes (action row, AI lane row, activity row) showing the slot-shaped `indicator` / `cta` flexibility.
 - Each rendered example accompanied by a Tailwind class hint or props snippet (IBM Plex Mono, 12px, `--color-ink-muted`).
 
 **Plan-phase open decision (CONTEXT "Claude's Discretion"):** static JSX (~150 LOC, copy-paste-friendly) vs. iteration over a primitive-state matrix (more compact, more meta). UI-SPEC has no preference.
@@ -290,25 +325,27 @@ Phase 4 chrome is mostly chrome — the visible copy is small but every string i
 
 | Element | Copy | Source | Notes |
 |---------|------|--------|-------|
-| Brand wordmark | `Origin` | CONTEXT D-65, prototype | Fraunces, optional `fontVariationSettings: '"SOFT" 80, "WONK" 1'` |
-| Brand tagline (Eyebrow) | `BY SMBC` | CONTEXT D-65, prototype | IBM Plex Mono, uppercase, 0.18em tracking |
-| Context badge — client mode | `Kaisei Manufacturing KK · 開成製造` | CONTEXT D-65 + persona D-66 | Latin segment in Inter Tight, JP segment in Noto Sans JP, `·` separator in Inter Tight |
-| Context badge — RM mode | `Japanese Corporates · 25 clients · Singapore desk` | CONTEXT D-65 + persona D-66 | Inter Tight throughout |
-| ModeSwitcher eyebrow | `DEMO` | CONTEXT D-65 + retrofit #4 | IBM Plex Mono, 10px, color `var(--signal-amber)` (retrofitted from fresh-green) |
-| ModeSwitcher segments | `Client · Yuki` / `RM · James` | CONTEXT D-65 | Inter Tight 13px / 500 |
-| LanguageToggle | `EN` / `日本語` | CONTEXT (visual only) | EN in Inter Tight; 日本語 in Noto Sans JP |
-| Persona name (client) | `Yuki Tanaka` | persona D-66 | Inter Tight 14px / 400 |
-| Persona name (RM) | `James Lee` | persona D-66 | Inter Tight 14px / 400 |
-| Persona role (client) | `TREASURER` | persona D-66 | IBM Plex Mono Eyebrow, uppercase |
-| Persona role (RM) | `RELATIONSHIP MGR` | persona D-66 | IBM Plex Mono Eyebrow, uppercase |
-| Avatar initials (client) | `YT` | derived from "Yuki Tanaka" | IBM Plex Mono 12px / 700; default `color='trad-green-soft'` per retrofit #1 |
-| Avatar initials (RM) | `JL` | derived from "James Lee" | Same as above |
+| Brand wordmark | `Origin` | CONTEXT D-65, prototype | Fraunces 16/600, optional `fontVariationSettings: '"SOFT" 80, "WONK" 1'` |
+| Brand tagline (Eyebrow) | `BY SMBC` | CONTEXT D-65, prototype | IBM Plex Mono 10/500, uppercase, 0.18em tracking |
+| Context badge — client mode | `Kaisei Manufacturing KK · 開成製造` | CONTEXT D-65 + persona D-66 | Latin segment in Inter Tight 14/500, JP segment in Noto Sans JP 14/500, `·` separator in Inter Tight |
+| Context badge — RM mode | `Japanese Corporates · 25 clients · Singapore desk` | CONTEXT D-65 + persona D-66 | Inter Tight 14/500 throughout |
+| ModeSwitcher eyebrow | `DEMO` | CONTEXT D-65 + retrofit #4 | IBM Plex Mono 10/500, color `var(--signal-amber)` (retrofitted from fresh-green) |
+| ModeSwitcher segments | `Client · Yuki` / `RM · James` | CONTEXT D-65 | Inter Tight 14/500 |
+| LanguageToggle | `EN` / `日本語` | CONTEXT (visual only) | EN in Inter Tight 14/500; 日本語 in Noto Sans JP 14/500 |
+| Persona name (client) | `Yuki Tanaka` | persona D-66 | Inter Tight 14/400 |
+| Persona name (RM) | `James Lee` | persona D-66 | Inter Tight 14/400 |
+| Persona role (client) | `TREASURER` | persona D-66 | IBM Plex Mono Eyebrow 10/500, uppercase |
+| Persona role (RM) | `RELATIONSHIP MGR` | persona D-66 | IBM Plex Mono Eyebrow 10/500, uppercase |
+| Avatar initials (client) | `YT` | derived from "Yuki Tanaka" | IBM Plex Mono 12/400; default `color='trad-green-soft'` per retrofit #1 |
+| Avatar initials (RM) | `JL` | derived from "James Lee" | IBM Plex Mono 12/400; default `color='trad-green-soft'` per retrofit #1 |
 | AIBadge default label | `Origin` | CONTEXT D-75 | Used to mark AI-authored card headers; consumed by Phase 5+ |
-| AIPulseDot default `aria-label` | `AI active` | CONTEXT D-75 | Overridable by caller |
-| StagePill done state visual | `✓` (U+2713) | CONTEXT D-74, prototype | Single character, Fraunces 600 |
-| StagePill upcoming/current state visual | `1`..`6` | CONTEXT D-74 | Numeric, Fraunces 600 |
-| Demo page title | `Primitives — SHELL-04` (recommendation; plan-phase locks) | UI-SPEC | Fraunces 22px / 600 |
-| Demo page subtitle | `Phase 4 design contract — every primitive in every state. Allowlisted for SHELL-05.` (recommendation) | UI-SPEC | Inter Tight 14px |
+| AIPulseDot default `ariaLabel` | `AI active` | CONTEXT D-75 | Overridable by caller |
+| Icon `ariaLabel` — TopStrip mail | `Mail` | UI-SPEC FLAG 1 fix | Required because icon is visually unaccompanied by text; notification dot semantics ("unread messages exist") communicated visually via amber dot (retrofit #2); non-sighted enhancement deferred to Phase 8 wiring |
+| Icon `ariaLabel` — TopStrip help | `Help` | UI-SPEC FLAG 1 fix | Required because icon is visually unaccompanied by text |
+| StagePill done state visual | `✓` (U+2713) | CONTEXT D-74, prototype | Single character, Fraunces 14/600 |
+| StagePill upcoming/current state visual | `1`..`6` | CONTEXT D-74 | Numeric, Fraunces 14/600 |
+| Demo page title | `Primitives — SHELL-04` (recommendation; plan-phase locks) | UI-SPEC | Fraunces 16/600 (display sm — Phase 4 has no display md tier, so the demo page heading reuses display sm; plan-phase MAY upgrade to a larger size if it formally adds the tier back when display md gains a real consumer) |
+| Demo page subtitle | `Phase 4 design contract — every primitive in every state. Allowlisted for SHELL-05.` (recommendation) | UI-SPEC | Inter Tight 14/400 |
 
 **Empty states / error states / destructive actions:** None in Phase 4 chrome.
 - No "no data" surfaces (chrome has no data layer dependency per D-66).
@@ -381,10 +418,10 @@ These are open per CONTEXT.md "Claude's Discretion" + the additional_context blo
 | # | Decision | UI-SPEC recommendation | Rationale |
 |---|----------|------------------------|-----------|
 | OD-1 | Port strategy for prototype's non-Tailwind class names (D-89) | **(c) component-prop-driven styling** | Smallest grep surface; cleanest closed-enum API; lowest drift; consistent with primitives owning their style. (a) creates duplication; (b) adds an abstraction layer |
-| OD-2 | StagePill diameter | **34px** | Matches prototype |
-| OD-3 | RisingMark height in TopStrip | **24px** | Matches prototype |
-| OD-4 | Avatar default size in TopStrip | **30px** | Matches prototype |
-| OD-5 | AIPulseDot diameter | **8px** | Better legibility at 1440px than 6px |
+| OD-2 | StagePill diameter | **34px** (locked in Chrome metric exceptions table) | Matches prototype |
+| OD-3 | RisingMark height in TopStrip | **24px** (locked in Chrome metric exceptions table) | Matches prototype |
+| OD-4 | Avatar default size in TopStrip | **30px** (locked in Chrome metric exceptions table) | Matches prototype |
+| OD-5 | AIPulseDot diameter | **8px** (locked in Chrome metric exceptions table) | Better legibility at 1440px than 6px |
 | OD-6 | AIPulseDot animation duration / easing | **1200ms cubic-bezier(0.4, 0, 0.2, 1) infinite alternate** | Slow enough to feel alive, not flashing; matches the 400-600ms AI moment language from `docs/ORIGIN_DESIGN.md` §8.5 doubled to "presence" register |
 | OD-7 | Avatar.color enum exact members | See "Avatar.color closed enum" table above | 12 members locked; no fresh-green family |
 | OD-8 | Icon.name exact list (~40) | Locked at plan-phase by reading `proto_77ddc8bb.js` Icon component | UI-SPEC seeds with the candidate list from D-79 |
@@ -396,6 +433,7 @@ These are open per CONTEXT.md "Claude's Discretion" + the additional_context blo
 | OD-14 | SHELL-05 grep script language | **bash** | Zero new tooling deps; the patterns are simple regex; CI runs grep at near-zero cost |
 | OD-15 | Copilot trigger placeholder on demo page | **NOT ship a placeholder trigger** | Phase 4 ships only what Phase 4 owns. Phase 8 wires the trigger + copilot together. Avoids visual-debt clutter on demo |
 | OD-16 | Add `--color-fresh-green-soft` to `@theme` | **defer** | Not consumed by any Phase 4 surface. The `OvernightRow` icon-tile reference in CONTEXT "Specifics" is a Phase 6 concern; Phase 6 PR adds the token additively if it's still needed |
+| OD-17 | TopStrip height final lock | **56px** (locked in Chrome metric exceptions table) | 8×7 multiple, generous on 1440px canvas; supersedes prior "~52–56px" range |
 
 ---
 
@@ -415,16 +453,16 @@ If a future phase introduces a third-party UI registry, the gate runs at that ph
 
 | Source | Items pre-populated from this source |
 |--------|--------------------------------------|
-| CONTEXT.md (D-64..D-89) | TopStrip composition, 8-primitive set + drift rationale, fresh-green enforcement mechanism (allowlist + grep script + test fixtures), 5 retrofit sites, persona stubs in `lib/persona.ts`, mode-switcher gate, URL-driven mode, ClientShell/RMShell shapes, demo page path coercion, port strategy options, all 16 open decisions |
-| CLAUDE.md "Design system" | Locked palette (Trad Green / Fresh Green / warm paper), locked typography (Fraunces / Inter Tight / Noto Sans JP / IBM Plex Mono), Fresh Green AI-only rule (the SHELL-05 spirit) |
+| CONTEXT.md (D-64..D-89) | TopStrip composition, 8-primitive set + drift rationale, fresh-green enforcement mechanism (allowlist + grep script + test fixtures), 5 retrofit sites, persona stubs in `lib/persona.ts`, mode-switcher gate, URL-driven mode, ClientShell/RMShell shapes, demo page path coercion, port strategy options, all 17 open decisions |
+| CLAUDE.md "Design system" | Locked palette (Trad Green / Fresh Green / warm paper), locked typography (Fraunces / Inter Tight / Noto Sans JP / IBM Plex Mono), Fresh Green AI-only rule (the SHELL-05 spirit), 4-family + 3-weight matrix (Typography Weight Override authority) |
 | `app/globals.css` (Phase 2) | Token names verified — `--color-fresh-green`, `--color-fresh-green-mute`, `--color-fresh-green-glow` confirmed; `--spacing-1..24` scale confirmed; `@theme inline` font-variable remap confirmed |
-| `app/layout.tsx` (Phase 2) | Four `next/font` CSS variables confirmed (`--font-fraunces`, `--font-inter-tight`, `--font-noto-sans-jp`, `--font-ibm-plex-mono`); D-31 Fraunces wght-only confirmed (informs OD-12) |
-| `docs/ORIGIN_DESIGN.md` §8 | Spacing 8px scale (4, 8, 12, 16, 24, 32, 48, 64, 96), radius 6/12/16, motion 200ms default + 400-600ms AI moments (informs OD-6 derivation) |
+| `app/layout.tsx` (Phase 2) | Four `next/font` CSS variables confirmed (`--font-fraunces`, `--font-inter-tight`, `--font-noto-sans-jp`, `--font-ibm-plex-mono`); D-31 Fraunces wght-only confirmed (informs OD-12 + Typography Weight Override) |
+| `docs/ORIGIN_DESIGN.md` §8 | Spacing 8px scale (4, 8, 12, 16, 24, 32, 48, 64, 96), radius 6/12/16, motion 200ms default + 400-600ms AI moments (informs OD-6 derivation), §8.1 typography (informs Typography Weight Override) |
 | `.planning/REQUIREMENTS.md` | SHELL-01..05 surface-level acceptance, drift to be amended in Phase 4 PR per D-72 |
 | `.planning/ROADMAP.md` "Phase 4" | Goal + 4 success criteria; SC #4 is SHELL-05's mechanical check |
 
 **Items NOT pre-populated (deferred to plan-phase):**
-- Exact px values for OD-2..OD-5 (recommendations stated; plan-phase reads `proto_4c54d558.js` to confirm)
+- Exact px values for OD-2..OD-5 (locked in Chrome metric exceptions table; plan-phase confirms by reading `proto_4c54d558.js`)
 - Exact ~40-name `IconName` list (OD-8)
 - Exact 5 retrofit replacement tokens (OD-9 — recommendations stated)
 - Port strategy lock (OD-1)
@@ -441,6 +479,13 @@ If a future phase introduces a third-party UI registry, the gate runs at that ph
 - Mode-switcher gate (CONTEXT D-68)
 - TopStrip layout order (CONTEXT D-65)
 
+**Revision 1 changes (2026-04-26 — checker round 1):**
+- Typography size scale consolidated from 7 sizes (10, 12, 13, 14, 16, 22 + 14 numeral overlap) to **4 sizes** (10, 12, 14, 16) per checker Option C. 13px label merged into 14px (weight differentiates: Inter Tight 500 vs 400). 22px display-md removed from Phase 4 contract — no Phase 4 consumer; Phase 5+ may declare it when a real surface lands.
+- Typography Weight Override section added (Resolution B) declaring the 3-weight matrix (400 / 500 / 600) as a project-level brand decision per CLAUDE.md "Design system" + ORIGIN_DESIGN.md §8.1 + Phase 2 D-31. The 2-weight rule is a heuristic for single-family typescales; SMBC Origin is multi-family. Phase 4 enforces the brand system, does not redesign it.
+- Icon primitive props gained `ariaLabel?: string` (FLAG 1 fix). TopStrip mail and help icons declared with `ariaLabel="Mail"` / `ariaLabel="Help"`. Mail notification dot semantics ("unread messages") explicitly documented (amber per D-88 retrofit, not fresh-green).
+- TopStrip height locked at **56px** (FLAG 2 fix), replacing the prior "~52–56px" range. New Chrome metric exceptions subsection added to Spacing, codifying that StagePill 34px / Avatar 30px / RisingMark 24px / TopStrip 56px / sidebar 220px are component-dimension constants ported from the prototype, NOT spacing-scale values, and NOT subject to the multiple-of-4 spacing rule because circular component diameters are dimensions, not gutters.
+- Downstream cross-references updated: Copywriting Contract typography annotations now reference 14/500 (was 13/500), demo page title note now reflects 16/600 with explanation that display-md tier was removed, mono Avatar initials now 12/400 (was 12/700) consistent with the 400/500/600 weight matrix, OD-17 added for TopStrip height lock.
+
 ---
 
 ## Checker Sign-Off
@@ -452,4 +497,4 @@ If a future phase introduces a third-party UI registry, the gate runs at that ph
 - [ ] Dimension 5 Spacing: PASS
 - [ ] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** pending (revision 1 of max 2)
