@@ -291,3 +291,32 @@ export interface PortfolioItem {
   hasScreeningHits: boolean
   eta: string | null               // ISO date — target_close_date
 }
+
+// ---------------------------------------------------------------------------
+// Mutation input types — used by createApplication, submitIntake, getIntakeByToken
+// ---------------------------------------------------------------------------
+
+/** Input for RM creating a new onboarding application */
+export interface CreateApplicationInput {
+  organizationId: string
+  rmUserId: string
+  targetJurisdictions: string[]
+  productsRequested: ProductType[]
+  targetCloseDate?: string | null
+}
+
+/** Client-supplied fields when submitting Stage 1 intake */
+export interface IntakePayload {
+  targetJurisdictions: string[]
+  productsRequested: ProductType[]
+  targetCloseDate?: string | null
+}
+
+/** Resolved magic-link token — includes org context for the invite screen */
+export interface IntakeToken {
+  token: string
+  applicationId: string
+  organization: Organization
+  expiresAt: string
+  isUsed: boolean
+}

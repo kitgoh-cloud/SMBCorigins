@@ -386,6 +386,11 @@ const realAPI: OriginAPI = {
     if (error) throw new Error(`[api.real] getCreditMemo: ${String(error)}`)
     return data ? toCreditMemo(data as Record<string, unknown>) : null
   },
+
+  // TODO: implement in BOUND-04
+  createApplication:  () => Promise.reject(new Error('createApplication not implemented')),
+  submitIntake:       () => Promise.reject(new Error('submitIntake not implemented')),
+  getIntakeByToken:   () => Promise.reject(new Error('getIntakeByToken not implemented')),
 }
 
 export default realAPI

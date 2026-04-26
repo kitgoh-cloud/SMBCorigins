@@ -21,6 +21,9 @@ const mockAPI: OriginAPI = {
   getScreeningHits:     () => Promise.reject(new Error('mock not implemented yet')),
   getProducts:          () => Promise.reject(new Error('mock not implemented yet')),
   getCreditMemo:        () => Promise.reject(new Error('mock not implemented yet')),
+  createApplication:    () => Promise.reject(new Error('mock not implemented yet')),
+  submitIntake:         () => Promise.reject(new Error('mock not implemented yet')),
+  getIntakeByToken:     () => Promise.reject(new Error('mock not implemented yet')),
 }
 
 export default mockAPI

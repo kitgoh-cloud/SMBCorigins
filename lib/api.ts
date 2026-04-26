@@ -13,8 +13,11 @@ import type {
   Application,
   ApplicationDetail,
   CreditMemo,
+  CreateApplicationInput,
   Document,
   Entity,
+  IntakePayload,
+  IntakeToken,
   PortfolioItem,
   Product,
   ScreeningHit,
@@ -58,6 +61,16 @@ export interface OriginAPI {
 
   // --- Credit memo ---
   getCreditMemo(applicationId: string): Promise<CreditMemo | null>
+
+  // --- Mutations (Act 3 demo flow) ---
+  /** RM: create a new onboarding application */
+  createApplication(input: CreateApplicationInput): Promise<Application>
+
+  /** Client: submit Stage 1 intake, advancing status to in_progress */
+  submitIntake(applicationId: string, payload: IntakePayload): Promise<Application>
+
+  /** Client portal: resolve a magic-link token to its application context */
+  getIntakeByToken(token: string): Promise<IntakeToken>
 }
 
 // ---------------------------------------------------------------------------
