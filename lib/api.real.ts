@@ -25,6 +25,7 @@ const realAPI: OriginAPI = {
   createApplication:    todo,
   submitIntake:         todo,
   getIntakeByToken:     todo,
+  subscribeToPortfolio: todo,
 }
 
 export default realAPI
