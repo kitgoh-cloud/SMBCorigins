@@ -320,3 +320,9 @@ export interface IntakeToken {
   expiresAt: string
   isUsed: boolean
 }
+
+/** Return value of createApplication — token is a creation-time artifact so it ships atomically */
+export interface ApplicationCreated {
+  application: Application
+  intakeToken: IntakeToken
+}
