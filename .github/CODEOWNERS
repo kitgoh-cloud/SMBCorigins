@@ -15,6 +15,7 @@
 # Co-owned: typed boundary surface — both must review every change
 types/origin.ts          @kitgoh-cloud @evangohAIO
 lib/api.ts               @kitgoh-cloud @evangohAIO
+lib/stages.ts            @kitgoh-cloud @evangohAIO
 
 # Kit-owned: mock implementation — Evan reviews
 lib/api.mock.ts          @kitgoh-cloud @evangohAIO
