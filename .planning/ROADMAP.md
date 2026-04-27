@@ -100,7 +100,7 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
   - [x] 04-07-PLAN.md — Complete primitive set: StagePill (numbered disc), ActionCard ('use client' interactive), barrel index.ts
   - [x] 04-08-PLAN.md — Chrome trio: RisingMark (allowlisted brand SVG), LanguageToggle (visual-only), ModeSwitcher (env-gated; retrofits #3 + #4 at authorship)
   - [x] 04-09-PLAN.md — Inner shells: ClientShell (single-column) + RMShell (sidebar 220 + workspace + empty copilot slot; retrofit #5 sidebar dot)
-  - [ ] 04-10-PLAN.md — TopStrip composition + route-group layouts + /dev/primitives demo page (retrofits #1 + #2; OD-12 strategy b SOFT/WONK)
+  - [x] 04-10-PLAN.md — TopStrip composition + route-group layouts + /dev/primitives demo page (retrofits #1 + #2; OD-12 strategy b SOFT/WONK)
   - [ ] 04-11-PLAN.md — SHELL-05 enforcement: bash grep script + .freshgreen-allowlist + Vitest fixtures + 4th CI job + REQUIREMENTS.md/CLAUDE.md amendments
 **UI hint**: yes
 
