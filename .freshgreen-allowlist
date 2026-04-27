@@ -1,0 +1,20 @@
+# SHELL-05 reserves Fresh Green (#BFD730) for AI-authored output and
+# AI presence indicators only. CSS var: --color-fresh-green (and -mute, -glow).
+# Adding a path here requires architectural review, not just code review.
+# Per-file allowlist is coarse — for files where only some branches use
+# fresh-green (e.g., StatusChip's kind='ai'), unit tests verify each branch
+# renders the expected token as a second line of defense.
+# See .planning/phases/04-app-shell-primitives/04-CONTEXT.md D-82..D-88.
+
+components/primitives/AIPulseDot.tsx
+components/primitives/AIBadge.tsx
+components/primitives/StatusChip.tsx
+components/shell/RisingMark.tsx
+app/dev/primitives/page.tsx
+# Phase 2 token showcase (D-41) — renders all design tokens including fresh-green
+# swatches for scaffold verification. Same class of exception as app/dev/primitives/page.tsx.
+app/page.tsx
+# Token definition file — defines --color-fresh-green and all suffix variants.
+# The grep patterns correctly flag token USAGE; the definition itself is the
+# canonical source and must be exempt.
+app/globals.css

@@ -37,7 +37,7 @@ Requirements for the demo-ready prototype. Each maps to exactly one roadmap phas
 - [ ] **SHELL-01**: Top strip component renders across all screens with an (visual-only) language toggle EN / 日本語
 - [ ] **SHELL-02**: Dev-only mode switcher component flips between `/(client)` and `/(rm)` contexts; hidden in production builds
 - [ ] **SHELL-03**: Rising Mark logo component exists, sized correctly, used in top strip
-- [ ] **SHELL-04**: Shared primitives exist and are exported from `components/primitives/`: `Eyebrow`, `StatusChip`, `StagePill`, `AIPulseDot`, `ActionCard`
+- [ ] **SHELL-04**: Shared primitives exist and are exported from `components/primitives/`. Phase 4 ships **5 brand primitives + 3 infrastructure primitives = 8** (drift from the original 5 recorded per Phase 4 D-72): brand = `Eyebrow`, `StatusChip`, `StagePill`, `AIPulseDot`, `AIBadge`, `ActionCard`; infrastructure = `Icon`, `Avatar`. (`AIBadge` was derived during prototype port; `Icon` and `Avatar` are infrastructure primitives the brand set composes.)
 - [ ] **SHELL-05**: Fresh Green `#BFD730` is applied exclusively to AI-output surfaces and `AIPulseDot`; a lint or visual check confirms it is NOT used on primary buttons, generic accents, or non-AI elements
 
 ### Client Journey Dashboard — Yuki's heartbeat (CJD)

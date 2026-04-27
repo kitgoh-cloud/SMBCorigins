@@ -4,8 +4,8 @@
 // (Phase 8 owns the actual copilot per D-77; Phase 4 ships the empty slot only).
 //
 // SHELL-05 retrofit #5 applied at authorship per D-88: the active sidebar item's
-// indicator dot uses bg-trad-green, NOT bg-fresh-green. The fresh-green dot was
-// semantically wrong (active state = brand color, not AI signal); the existing
+// indicator dot uses bg-trad-green (brand color, not AI signal). The prototype's
+// original dot was incorrectly using the AI-only color token; the existing
 // bg-paper-deep row background already signals "selected".
 //
 // Sidebar nav items are <span> placeholders (NOT live <Link>s). Phase 6 wires

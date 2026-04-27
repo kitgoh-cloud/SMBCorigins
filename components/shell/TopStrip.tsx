@@ -3,8 +3,8 @@
 // components/shell/TopStrip.tsx — Phase 4 SHELL-01 chrome top strip.
 //
 // Renders the full prototype shape with Phase 4 retrofits applied at authorship:
-//   #1 Avatar bg = 'trad-green-soft' (NOT 'fresh-green')
-//   #2 Mail-icon notification dot bg = 'bg-signal-amber' (NOT 'bg-fresh-green')
+//   #1 Avatar bg = 'trad-green-soft' (SHELL-05 retrofit: AI-only color avoided)
+//   #2 Mail-icon notification dot bg = 'bg-signal-amber' (SHELL-05 retrofit: AI-only color avoided)
 //
 // 'use client' because usePathname() is a client-only hook (RESEARCH §Pattern 1).
 // Mode is computed from pathname per modeForPathname (D-67 + RESEARCH §8.2 'demo'
@@ -30,7 +30,7 @@ export function TopStrip(): ReactElement {
     <header className="sticky top-0 z-[100] h-14 bg-trad-green-deep text-paper border-b border-paper/[0.06] flex items-center px-6 gap-6">
       {/* Brand cluster */}
       <div className="flex items-center gap-2.5">
-        <RisingMark size={24} color="var(--color-paper)" hand="var(--color-fresh-green)" />
+        <RisingMark size={24} color="var(--color-paper)" />
         <span className="flex items-baseline gap-2">
           <span
             className="font-display text-[19px] font-semibold leading-tight tracking-[-0.02em]"

@@ -75,6 +75,7 @@ Plus the **RM Copilot** sidecar (4th hero moment) — cross-cuts every RM screen
 - **Typography**: Fraunces (display, numerals) · Inter Tight (UI body) · Noto Sans JP (Japanese) · IBM Plex Mono (data, timestamps, IDs, eyebrows)
 - **Colors**: Trad Green `#004832` · Fresh Green `#BFD730` · warm paper `#FAFBF7`
 - **Critical rule**: Fresh Green is reserved **exclusively** for AI outputs and AI presence. Do not use it for generic accents or primary buttons.
+- **Enforcement**: Fresh Green usage is mechanically policed by `scripts/check-fresh-green.sh` (run by the `fresh-green` CI job). Allowlisted exceptions live in `.freshgreen-allowlist` at the repo root. Adding an entry there requires architectural review.
 
 ## Reference docs
 
