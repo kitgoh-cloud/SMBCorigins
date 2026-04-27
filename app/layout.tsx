@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Fraunces, Inter_Tight, Noto_Sans_JP, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
+import { TopStrip } from '@/components/shell/TopStrip'
 
 // D-31: Fraunces — wght-only is the default (no opsz/SOFT/WONK in v1; deferred per CONTEXT §"Deferred Ideas").
 // next/font@16's Fraunces type only accepts opsz/SOFT/WONK as `axes` (wght is implicit/always-on),
@@ -44,7 +45,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${fraunces.variable} ${interTight.variable} ${notoSansJP.variable} ${ibmPlexMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <TopStrip />
+        {children}
+      </body>
     </html>
   )
 }
