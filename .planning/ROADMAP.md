@@ -91,10 +91,10 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
   3. `components/primitives/` exports `Eyebrow`, `StatusChip`, `StagePill`, `AIPulseDot`, and `ActionCard`, each visible on a primitives demo page
   4. Fresh Green `#BFD730` appears only on `AIPulseDot` and AI-output surfaces; a lint rule, grep check, or visual audit confirms it is absent from primary buttons and non-AI surfaces
 **Plans**: 11 plans
-  - [ ] 04-01-PLAN.md — Land Vitest jsdom + Testing Library + jest-dom test infrastructure (Wave 0 unblocking every primitive/shell test)
-  - [ ] 04-02-PLAN.md — Apply UI-SPEC PD-1: IBM Plex Mono weight ['400','500'] + DECISIONS.md D-64 + D-65 + D-66 entries (font weight fix; SOFT/WONK inlined per OD-12 strategy b; modeForPathname 3-arm union authorization)
-  - [ ] 04-03-PLAN.md — Create lib/persona.ts (PERSONAS, PERSONA_HOME, modeForPathname) — plain TS constants per D-66 (3-arm union 'client' | 'rm' | 'demo'), no api.mock coupling
-  - [ ] 04-04-PLAN.md — Add @keyframes ai-pulse + --animate-ai-pulse @theme token to app/globals.css (consumed by AIPulseDot)
+  - [x] 04-01-PLAN.md — Land Vitest jsdom + Testing Library + jest-dom test infrastructure (Wave 0 unblocking every primitive/shell test)
+  - [x] 04-02-PLAN.md — Apply UI-SPEC PD-1: IBM Plex Mono weight ['400','500'] + DECISIONS.md D-64 + D-65 + D-66 entries (font weight fix; SOFT/WONK inlined per OD-12 strategy b; modeForPathname 3-arm union authorization)
+  - [x] 04-03-PLAN.md — Create lib/persona.ts (PERSONAS, PERSONA_HOME, modeForPathname) — plain TS constants per D-66 (3-arm union 'client' | 'rm' | 'demo'), no api.mock coupling
+  - [x] 04-04-PLAN.md — Add @keyframes ai-pulse + --animate-ai-pulse @theme token to app/globals.css (consumed by AIPulseDot)
   - [ ] 04-05-PLAN.md — Build atomic primitives: Eyebrow (mono text), Icon (35-name SVG dictionary), Avatar (closed-enum color)
   - [ ] 04-06-PLAN.md — Build AI presence primitives: AIPulseDot, AIBadge, StatusChip (per-kind D-87 tests as 2nd line of defense for whole-file allowlist)
   - [ ] 04-07-PLAN.md — Complete primitive set: StagePill (numbered disc), ActionCard ('use client' interactive), barrel index.ts
