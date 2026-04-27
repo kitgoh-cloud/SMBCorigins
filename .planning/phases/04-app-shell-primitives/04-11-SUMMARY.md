@@ -190,6 +190,16 @@ completed: 2026-04-27
 
 This step cannot be automated — GitHub requires a check to run at least once before it appears in the branch protection dropdown. Until this step is done, `fresh-green` runs on every PR as an advisory check but is not a hard gate. The existing 3 required checks (typecheck, lint, Vercel) remain enforced throughout.
 
+## Post-Mortem: Build Gate Gap
+
+**Issue discovered after phase completion:** `npm run build` exited 0 during Phase 4 execution, but `npm run dev` failed immediately with a PostCSS CSS parse error. Root cause: Tailwind v4's automatic content scanner picked up `.planning/phases/04-app-shell-primitives/04-CONTEXT.md` (a prose markdown file) containing the literal string `bg-[var(...)]`, generated an invalid CSS rule `.bg-\[var\(\.\.\.\)\]`, and PostCSS rejected it during dev-server startup. The Turbopack production build path happened to not surface the error during the executor's gate run.
+
+**Fix applied (post-phase):** Two-layer fix — (1) rewrote the prose example in 04-CONTEXT.md to use `bg-[var(--token)]` instead of `bg-[var(...)]`, and (2) added `@source not "../.planning/**"` to `app/globals.css` to permanently exclude all planning artifacts from Tailwind scanning.
+
+**Gate gap:** The automated phase-gate command (`npm run typecheck && npm run lint && npm run test && npm run build`) does not smoke-test `next dev` startup. A PostCSS/Tailwind error that Turbopack's production codepath silently skips will pass the build gate but break the dev server.
+
+**Recommended future improvement:** Either (a) add a `next dev` startup smoke test (e.g. `curl -f http://localhost:3000 &` with a short timeout, or `next build --turbo` if that surfaces the same errors) to the pre-PR gate, or (b) add a Tailwind class lint step that flags `var(...)` (literal three dots) anywhere in scanned files. Do not implement now — record for Phase 8 or a future CI hardening phase.
+
 ## Known Stubs
 
 None — all files render/execute their intended behavior. The enforcement script is wired end-to-end: `.freshgreen-allowlist` → `scripts/check-fresh-green.sh` → `package.json check:fresh-green` → `.github/workflows/ci.yml fresh-green job`.
