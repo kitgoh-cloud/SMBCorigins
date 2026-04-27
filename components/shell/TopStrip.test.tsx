@@ -201,7 +201,8 @@ describe('components/shell/TopStrip — SHELL-05 negative invariant (only Rising
     process.env.NEXT_PUBLIC_SHOW_MODE_SWITCHER = 'true'
     const { container } = render(<TopStrip />)
     // Strip out the RisingMark <line> stroke (which legitimately uses fresh-green)
-    const html = container.innerHTML.replace(/<line[^>]*stroke="var\(--color-fresh-green\)"[^>]*\/>/g, '')
+    // Note: JSDOM serializes SVG elements as <line ...></line> (not self-closing)
+    const html = container.innerHTML.replace(/<line[^>]*stroke="var\(--color-fresh-green\)"[^>]*><\/line>/g, '')
     // Now the remaining HTML must contain NO fresh-green substring
     expect(html).not.toMatch(/fresh-green/)
     expect(html).not.toMatch(/#[Bb][Ff][Dd]7[3]0/)
