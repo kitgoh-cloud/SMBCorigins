@@ -16,20 +16,16 @@ A stakeholder watching Yuki's and James's paired screens believes an AI-native o
 
 <!-- Shipped and confirmed valuable. -->
 
-(None yet — ship to validate)
+- [x] **Repo setup & stack alignment with Evan** — decisions captured in CLAUDE.md (Phase 1)
+- [x] **Next.js 16.2 App Router scaffold with TypeScript strict, Tailwind v4, design tokens, fonts** — live Vercel URL on day 1 (Phase 2)
+- [x] **Shared boundary types and mock/real API switch** — `types/origin.ts`, `lib/api.ts`, `lib/api.mock.ts`, `lib/api.real.ts` locked; `data/seed.ts` with Kaisei + 6 portfolio clients (Phase 3)
+- [x] **App shell and shared primitives** — TopStrip, route-group layouts, 8 primitives (Eyebrow/Icon/Avatar/AIPulseDot/AIBadge/StatusChip/StagePill/ActionCard), SHELL-05 Fresh Green enforcement gate; 201 tests (Phase 4)
 
 ### Active
 
 <!-- Current scope. Building toward these. Detailed breakdown lives in REQUIREMENTS.md. -->
 
-- [ ] Repo setup & stack alignment with Evan — decisions captured in CLAUDE.md
-- [ ] Next.js 14 App Router scaffold with TypeScript strict, Tailwind, design tokens, fonts
-- [ ] Vercel project with auto-deploy from `main` and previews per PR
-- [ ] Shared boundary types (`types/origin.ts`) and mock/real API switch (`lib/api.ts`)
-- [ ] Seed data (`data/seed.ts`): Kaisei entity tree + 5 UBOs + 6 background portfolio clients + 22 docs
 - [ ] Client Journey Dashboard (Yuki's heartbeat screen) running on mocks
-- [ ] App shell: top strip, language toggle (visual), mode switcher (dev-only), Rising Mark logo
-- [ ] Shared primitives: eyebrow, status chip, stage pill, AI pulse dot, action card
 - [ ] RM Cockpit home (James's heartbeat screen)
 - [ ] Six onboarding stages, client + RM sides in parallel
 - [ ] Four hero moments: UBO Intelligence (Stage 2), Doc Extraction (Stage 3), Credit Memo Drafter (Stage 5), RM Copilot (cross-cutting)
@@ -106,4 +102,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-24 after initialization*
+*Last updated: 2026-04-27 — Phase 4 complete (app shell + primitives)*
