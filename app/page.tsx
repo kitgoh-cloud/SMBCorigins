@@ -146,14 +146,14 @@ export default function TokenShowcase() {
 
       <footer className="mt-16 pt-8 border-t border-mist">
         <p className="font-mono text-xs text-ink-muted">
-          Phase 2 placeholder — Phase 4 (app shell) will supersede this root route.
+          Phase 2 token showcase. Persona routes: /journey (client) · /cockpit (RM).
         </p>
         <nav className="mt-4 flex gap-4">
           <Link href="/journey" className="font-mono text-signal-info underline">
-            → /journey (client placeholder)
+            → /journey (client)
           </Link>
           <Link href="/cockpit" className="font-mono text-signal-info underline">
-            → /cockpit (RM placeholder)
+            → /cockpit (RM)
           </Link>
         </nav>
       </footer>
