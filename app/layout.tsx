@@ -28,7 +28,7 @@ const notoSansJP = Noto_Sans_JP({
 // IBM Plex Mono — NOT a variable font on Google Fonts; weights must be explicit.
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400', '500'],
   variable: '--font-ibm-plex-mono',
   display: 'swap',
 })
