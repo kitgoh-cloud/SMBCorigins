@@ -50,6 +50,9 @@
   --radius-card: 12px; /* Cards */
   --radius-modal: 16px; /* Modals */
   /* Avatars use `rounded-full` (built-in) */
+
+  /* ====== Animation tokens — Phase 4 (D-89 strategy (c) carve-out per RESEARCH §1) ====== */
+  --animate-ai-pulse: ai-pulse 1200ms cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
 @theme inline {
@@ -62,6 +65,18 @@
   --font-body: var(--font-inter-tight); /* UI body */
   --font-jp: var(--font-noto-sans-jp); /* Japanese characters */
   --font-mono: var(--font-ibm-plex-mono); /* Data, IDs, timestamps */
+}
+
+/* @keyframes — Phase 4 (D-89 carve-out per RESEARCH §1, timing per UI-SPEC OD-6) */
+@keyframes ai-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
 }
 
 /* Base resets — minimal. App shell (Phase 4) will add more. */
