@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMBC Connect : Onboard — Customer Onboarding Process Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --smbc-green: #004832;
+    --smbc-green-light: #006B47;
+    --smbc-lime: #BFD730;
+    --smbc-lime-dark: #5A6E10;
+    --smbc-magenta: #B0254A;
+    --smbc-blue: #1F4E79;
+    --bg: #FAF8F2;
+    --bg-elev: #FFFFFF;
+    --text: #1A1A1A;
+    --text-muted: #5A5A5A;
+    --text-dim: #8A8A8A;
+    --border: #E8E2D2;
+    --border-strong: #D6CFB8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: var(--bg); }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .container {
+    max-width: 2040px;
+    margin: 0 auto;
+    padding: 56px 32px 80px;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: end;
+  }
+
+  .header-text { max-width: 900px; }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--smbc-green);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--smbc-green);
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 350;
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 350;
+    color: var(--smbc-green);
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    max-width: 720px;
+  }
+
+  .subtitle .ja {
+    font-family: 'Manrope', system-ui, sans-serif;
+    color: var(--text-dim);
+    font-size: 13px;
+    display: block;
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== Meta strip ===== */
+  .meta {
+    display: flex;
+    gap: 32px;
+    flex-shrink: 0;
+  }
+
+  .meta-item { display: flex; flex-direction: column; }
+
+  .meta-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .meta-value {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--text);
+    font-feature-settings: 'tnum';
+    letter-spacing: -0.01em;
+  }
+
+  .meta-value small {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== Diagram container ===== */
+  .diagram-wrap {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 72, 50, 0.04), 0 8px 24px rgba(0, 72, 50, 0.04);
+    position: relative;
+  }
+
+  .diagram-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .diagram-scroll::-webkit-scrollbar { height: 8px; }
+  .diagram-scroll::-webkit-scrollbar-track { background: var(--bg); }
+  .diagram-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 4px;
+  }
+  .diagram-scroll::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  .diagram-scroll svg {
+    display: block;
+    min-width: 1750px;
+    width: 100%;
+    height: auto;
+  }
+
+  .scroll-hint {
+    display: none;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: var(--bg-elev);
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1800px) {
+    .scroll-hint { display: block; }
+  }
+
+  /* ===== Legend ===== */
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0;
+    margin-top: 32px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .legend-section {
+    padding: 24px 28px;
+    border-right: 1px solid var(--border);
+  }
+
+  .legend-section:last-child { border-right: none; }
+
+  .legend-section h3 {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--smbc-green);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .legend-item:last-child { margin-bottom: 0; }
+
+  .legend-symbol {
+    font-weight: 700;
+    color: var(--text);
+    font-feature-settings: 'tnum';
+  }
+
+  .legend-symbol.dash {
+    align-self: center;
+    height: 2px;
+    border-radius: 1px;
+    margin-top: 8px;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-divider::before {
+    content: '·';
+    margin: 0 12px;
+    color: var(--border-strong);
+  }
+
+  /* ===== Print ===== */
+  @media print {
+    .container { padding: 16px; max-width: 100%; }
+    .header { page-break-inside: avoid; }
+    .diagram-wrap { box-shadow: none; }
+    .scroll-hint { display: none; }
+    .diagram-scroll { overflow: visible; }
+  }
+
+  @media (max-width: 720px) {
+    .header { grid-template-columns: 1fr; }
+    .meta { flex-wrap: wrap; gap: 20px 28px; }
+    .legend-section { border-right: none; border-bottom: 1px solid var(--border); }
+    .legend-section:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="header-text">
+      <div class="eyebrow">SMBC Connect : Onboard · Process Document</div>
+      <h1>Customer onboarding<br><em>process flow</em></h1>
+      <p class="subtitle">
+        End-to-end MNC onboarding. External connections, operational workflow, and the risk &amp; controls framework — mapped against the original 6 customer journey stages.
+        <span class="ja">業務オペレーション ・ 対外接続 ・ リスク統制</span>
+      </p>
+    </div>
+
+    <div class="meta">
+      <div class="meta-item">
+        <span class="meta-label">Stages</span>
+        <span class="meta-value">6 <small>journey</small></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Phases</span>
+        <span class="meta-value">5 <small>process</small></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Activities</span>
+        <span class="meta-value">16 <small>steps</small></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Target</span>
+        <span class="meta-value">&lt;5d <small>end-to-end</small></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="diagram-wrap">
+    <div class="scroll-hint">Scroll → for full diagram</div>
+    <div class="diagram-scroll">
+<svg viewBox="0 0 1950 650" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#004832"/>
+      <stop offset="100%" stop-color="#006B47"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000000" flood-opacity="0.06"/>
+    </filter>
+    <marker id="seqArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A1A"/>
+    </marker>
+    <marker id="phaseArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#004832"/>
+    </marker>
+  </defs>
+
+  <rect width="1950" height="650" fill="#FFFFFF"/>
+
+  <!-- ========== TITLE BAR ========== -->
+  <rect x="0" y="0" width="1950" height="50" fill="url(#headerGrad)"/>
+  <text x="32" y="22" fill="#FFFFFF" font-size="14" font-weight="700" letter-spacing="2">SMBC CONNECT : ONBOARD</text>
+  <text x="32" y="40" fill="#BFD730" font-size="12" font-weight="500">Customer onboarding — process flow · オンボーディング・オペレーション</text>
+  <text x="1918" y="32" fill="#FFFFFF" font-size="11" text-anchor="end" opacity="0.85">6 stages · 5 phases · 16 steps · &lt; 5 days</text>
+
+  <!-- ========== STAGE BAND (original 6-stage journey view) ========== -->
+  <g transform="translate(0, 50)">
+    <rect x="0" y="0" width="180" height="50" fill="#FAFAFA"/>
+    <text x="90" y="22" fill="#888888" font-size="9" font-weight="600" text-anchor="middle" letter-spacing="1.5">JOURNEY STAGE →</text>
+    <text x="90" y="36" fill="#AAAAAA" font-size="8" font-style="italic" text-anchor="middle">customer-facing view</text>
+
+    <!-- Stage 1 -->
+    <rect x="180" y="0" width="332" height="50" fill="#FCF9F2" stroke="#EFE4C9"/>
+    <text x="196" y="18" fill="#A8843D" font-size="8" font-weight="700" letter-spacing="1.2">STAGE 1</text>
+    <text x="196" y="34" fill="#3A3A3A" font-size="11" font-weight="600">Initial contact</text>
+    <text x="196" y="46" fill="#A8843D" font-size="9" font-style="italic">Day 0</text>
+
+    <!-- Stage 2 (half of Phase 2) -->
+    <rect x="512" y="0" width="220" height="50" fill="#FCF9F2" stroke="#EFE4C9"/>
+    <text x="528" y="18" fill="#A8843D" font-size="8" font-weight="700" letter-spacing="1.2">STAGE 2</text>
+    <text x="528" y="34" fill="#3A3A3A" font-size="11" font-weight="600">KYC &amp; due diligence</text>
+    <text x="528" y="46" fill="#A8843D" font-size="9" font-style="italic">Day 1</text>
+
+    <!-- Stage 3 (other half of Phase 2) -->
+    <rect x="732" y="0" width="220" height="50" fill="#FCF9F2" stroke="#EFE4C9" stroke-dasharray="2 2"/>
+    <text x="748" y="18" fill="#A8843D" font-size="8" font-weight="700" letter-spacing="1.2">STAGE 3</text>
+    <text x="748" y="34" fill="#3A3A3A" font-size="11" font-weight="600">Documentation</text>
+    <text x="748" y="46" fill="#A8843D" font-size="9" font-style="italic">Day 2  · merged ↓</text>
+
+    <!-- Stage 4 -->
+    <rect x="952" y="0" width="332" height="50" fill="#FCF9F2" stroke="#EFE4C9"/>
+    <text x="968" y="18" fill="#A8843D" font-size="8" font-weight="700" letter-spacing="1.2">STAGE 4</text>
+    <text x="968" y="34" fill="#3A3A3A" font-size="11" font-weight="600">Decision &amp; sign-off</text>
+    <text x="968" y="46" fill="#A8843D" font-size="9" font-style="italic">Day 2–3</text>
+
+    <!-- Stage 5 -->
+    <rect x="1284" y="0" width="332" height="50" fill="#FCF9F2" stroke="#EFE4C9"/>
+    <text x="1300" y="18" fill="#A8843D" font-size="8" font-weight="700" letter-spacing="1.2">STAGE 5</text>
+    <text x="1300" y="34" fill="#3A3A3A" font-size="11" font-weight="600">Negotiate &amp; price</text>
+    <text x="1300" y="46" fill="#A8843D" font-size="9" font-style="italic">Day 3–4</text>
+
+    <!-- Stage 6 -->
+    <rect x="1616" y="0" width="332" height="50" fill="#FCF9F2" stroke="#EFE4C9"/>
+    <text x="1632" y="18" fill="#A8843D" font-size="8" font-weight="700" letter-spacing="1.2">STAGE 6</text>
+    <text x="1632" y="34" fill="#3A3A3A" font-size="11" font-weight="600">Execution &amp; live</text>
+    <text x="1632" y="46" fill="#A8843D" font-size="9" font-style="italic">Day 4–5</text>
+  </g>
+
+  <!-- ========== PHASE / DAY HEADER ========== -->
+  <g transform="translate(0, 100)">
+    <rect x="0" y="0" width="180" height="64" fill="#F5F5F5"/>
+    <text x="90" y="30" fill="#888888" font-size="9" font-weight="600" text-anchor="middle" letter-spacing="1.5">PROCESS PHASE →</text>
+    <text x="90" y="46" fill="#AAAAAA" font-size="8" font-style="italic" text-anchor="middle">internal process view</text>
+
+    <rect x="180" y="0" width="332" height="64" fill="#F9F4E8" stroke="#E5DCC2"/>
+    <text x="196" y="18" fill="#8B7332" font-size="9" font-weight="700" letter-spacing="1.5">PHASE 1</text>
+    <text x="196" y="36" fill="#1A1A1A" font-size="13" font-weight="700">Initial contact</text>
+    <text x="196" y="52" fill="#8B7332" font-size="10" font-style="italic">Day 0</text>
+
+    <rect x="512" y="0" width="440" height="64" fill="#F9F4E8" stroke="#E5DCC2"/>
+    <text x="528" y="18" fill="#8B7332" font-size="9" font-weight="700" letter-spacing="1.5">PHASE 2</text>
+    <text x="528" y="36" fill="#1A1A1A" font-size="13" font-weight="700">KYC &amp; due diligence</text>
+    <text x="528" y="52" fill="#8B7332" font-size="10" font-style="italic">Day 1–2  ·  covers Stages 2 &amp; 3</text>
+
+    <rect x="952" y="0" width="332" height="64" fill="#F9F4E8" stroke="#E5DCC2"/>
+    <text x="968" y="18" fill="#8B7332" font-size="9" font-weight="700" letter-spacing="1.5">PHASE 3</text>
+    <text x="968" y="36" fill="#1A1A1A" font-size="13" font-weight="700">Decision &amp; sign-off</text>
+    <text x="968" y="52" fill="#8B7332" font-size="10" font-style="italic">Day 2–3</text>
+
+    <rect x="1284" y="0" width="332" height="64" fill="#F9F4E8" stroke="#E5DCC2"/>
+    <text x="1300" y="18" fill="#8B7332" font-size="9" font-weight="700" letter-spacing="1.5">PHASE 4</text>
+    <text x="1300" y="36" fill="#1A1A1A" font-size="13" font-weight="700">Documentation &amp; negotiation</text>
+    <text x="1300" y="52" fill="#8B7332" font-size="10" font-style="italic">Day 3–4</text>
+
+    <rect x="1616" y="0" width="332" height="64" fill="#F9F4E8" stroke="#E5DCC2"/>
+    <text x="1632" y="18" fill="#8B7332" font-size="9" font-weight="700" letter-spacing="1.5">PHASE 5</text>
+    <text x="1632" y="36" fill="#1A1A1A" font-size="13" font-weight="700">Execution &amp; live</text>
+    <text x="1632" y="52" fill="#8B7332" font-size="10" font-style="italic">Day 4–5</text>
+  </g>
+
+  <!-- ========== LANE 1: EXTERNAL CONNECTIONS ========== -->
+  <g transform="translate(0, 164)">
+    <rect x="0" y="0" width="1950" height="130" fill="#EAF1F8"/>
+    <rect x="0" y="0" width="180" height="130" fill="#D5E1ED"/>
+    <rect x="0" y="0" width="4" height="130" fill="#1F4E79"/>
+    <text x="22" y="32" font-size="11" font-weight="700" fill="#1F4E79" letter-spacing="1.5">EXTERNAL</text>
+    <text x="22" y="48" font-size="11" font-weight="700" fill="#1F4E79" letter-spacing="1.5">CONNECTIONS</text>
+    <text x="22" y="68" font-size="10" fill="#446480">対外接続</text>
+    <text x="22" y="92" font-size="9" fill="#666666">Systems &amp; data sources</text>
+    <text x="22" y="106" font-size="9" fill="#666666">consumed by the process</text>
+
+    <!-- Phase 1 -->
+    <g transform="translate(196, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="104" rx="6" fill="#FFFFFF" stroke="#C9D6E2"/>
+      <rect width="316" height="3" rx="1.5" fill="#1F4E79"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#1F4E79">Public registries · pre-screen</text>
+      <text x="14" y="42" font-size="10" fill="#444444">Hōjin Bangō (国税庁) · EDINET</text>
+      <text x="14" y="58" font-size="10" fill="#444444">ACRA Bizfile · Companies House</text>
+      <text x="14" y="74" font-size="10" fill="#444444">HK Companies Registry · GLEIF (LEI)</text>
+      <text x="14" y="93" font-size="9" fill="#888888" font-style="italic">→ steps 1.1, 1.2</text>
+    </g>
+
+    <!-- Phase 2 -->
+    <g transform="translate(528, 14)" filter="url(#cardShadow)">
+      <rect width="424" height="104" rx="6" fill="#FFFFFF" stroke="#C9D6E2"/>
+      <rect width="424" height="3" rx="1.5" fill="#1F4E79"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#1F4E79">UBO sources · eKYC · tax · screening</text>
+      <text x="14" y="42" font-size="10" fill="#444444">BvD Orbis · OpenCorporates · 法務局 · KYC.com</text>
+      <text x="14" y="58" font-size="10" fill="#444444">TRUSTDOCK · Polarify · JPKI/マイナンバー · W3C VC</text>
+      <text x="14" y="74" font-size="10" fill="#444444">IRS W-8 · OECD CRS · Refinitiv WC · Dow Jones</text>
+      <text x="14" y="93" font-size="9" fill="#888888" font-style="italic">→ steps 2.1, 2.2, 2.3, 2.4</text>
+    </g>
+
+    <!-- Phase 3 -->
+    <g transform="translate(968, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="104" rx="6" fill="#FFFFFF" stroke="#C9D6E2"/>
+      <rect width="316" height="3" rx="1.5" fill="#1F4E79"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#1F4E79">Risk &amp; rating engines</text>
+      <text x="14" y="42" font-size="10" fill="#444444">Internal KYC rating engine v4.2</text>
+      <text x="14" y="58" font-size="10" fill="#444444">OFAC · EU · UN · METI sanctions re-screen</text>
+      <text x="14" y="74" font-size="10" fill="#444444">ComplyAdvantage adverse media</text>
+      <text x="14" y="93" font-size="9" fill="#888888" font-style="italic">→ steps 3.1, 3.2</text>
+    </g>
+
+    <!-- Phase 4 -->
+    <g transform="translate(1300, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="104" rx="6" fill="#FFFFFF" stroke="#C9D6E2"/>
+      <rect width="316" height="3" rx="1.5" fill="#1F4E79"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#1F4E79">Templates · pricing · clause library</text>
+      <text x="14" y="42" font-size="10" fill="#444444">ISDA · LMA · BAFT master templates</text>
+      <text x="14" y="58" font-size="10" fill="#444444">214 SMBC product templates</text>
+      <text x="14" y="74" font-size="10" fill="#444444">Treasury pricing engine · clause AI</text>
+      <text x="14" y="93" font-size="9" fill="#888888" font-style="italic">→ steps 4.1, 4.2</text>
+    </g>
+
+    <!-- Phase 5 -->
+    <g transform="translate(1632, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="104" rx="6" fill="#FFFFFF" stroke="#C9D6E2"/>
+      <rect width="316" height="3" rx="1.5" fill="#1F4E79"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#1F4E79">E-signature · TSA · downstream</text>
+      <text x="14" y="42" font-size="10" fill="#444444">DocuSign · GlobalSign · GMO · D-TRUST</text>
+      <text x="14" y="58" font-size="10" fill="#444444">RFC 3161 TSA · regulatory archive</text>
+      <text x="14" y="74" font-size="10" fill="#444444">Core bank · Loan IQ · Murex · SWIFT · CRM</text>
+      <text x="14" y="93" font-size="9" fill="#888888" font-style="italic">→ steps 5.1, 5.2, 5.3</text>
+    </g>
+  </g>
+
+  <!-- ========== LANE 2: BUSINESS PROCESS ========== -->
+  <g transform="translate(0, 294)">
+    <rect x="0" y="0" width="1950" height="160" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="180" height="160" fill="#F0F0F0"/>
+    <rect x="0" y="0" width="4" height="160" fill="#1A1A1A"/>
+    <text x="22" y="32" font-size="11" font-weight="700" fill="#1A1A1A" letter-spacing="1.5">OPERATIONAL</text>
+    <text x="22" y="48" font-size="11" font-weight="700" fill="#1A1A1A" letter-spacing="1.5">WORKFLOW</text>
+    <text x="22" y="68" font-size="10" fill="#444444">業務オペレーション</text>
+    <text x="22" y="92" font-size="9" fill="#666666">Sequential activities</text>
+    <text x="22" y="106" font-size="9" fill="#666666">step n.m  ·  ⑂ branch  ·  ★ control</text>
+
+    <!-- ========== PHASE 1 STEPS (1.1 → 1.2 → 1.3) ========== -->
+    <g transform="translate(196, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">1.1</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Pre-screen &amp;</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">create app</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Sanctions/PEP</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">Picks jurisdictions,</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">products, scope</text>
+    </g>
+    <line x1="296" y1="80" x2="312" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(304, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">1.2</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Invite &amp; open</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">portal</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Magic link sent</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">Branded landing,</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">checklist surfaced</text>
+    </g>
+    <line x1="404" y1="80" x2="420" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(412, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">1.3</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Verify identity</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">&amp; capture intent</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">2FA, light KYC,</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">mandate logged,</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">est. relationship</text>
+    </g>
+
+    <!-- Cross-phase arrow Phase 1 → Phase 2 -->
+    <line x1="512" y1="80" x2="540" y2="80" stroke="#004832" stroke-width="1.5" marker-end="url(#phaseArrow)"/>
+
+    <!-- ========== PHASE 2 STEPS (2.1 → 2.2 → 2.3 → 2.4) ========== -->
+    <g transform="translate(528, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">2.1</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Profile entity</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">&amp; structure</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Auto-retrieve</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">from registries,</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">seed entity tree</text>
+    </g>
+    <line x1="628" y1="80" x2="644" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(636, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">2.2</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Build UBO tree</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">to natural persons</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Recursive registry</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">queries; unwrap</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">shells; confidence</text>
+    </g>
+    <line x1="736" y1="80" x2="752" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(744, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">2.3</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Verify persons,</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">tax, signatories</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">eKYC + W-8/CRS</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">+ board res +</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">capacity check</text>
+    </g>
+    <line x1="844" y1="80" x2="860" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(852, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#B0254A" stroke-width="1.5"/>
+      <rect width="100" height="3" fill="#B0254A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#B0254A">2.4 ⑂</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Screen, score</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">&amp; classify risk</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Sanctions/PEP/AM,</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">composite score,</text>
+      <text x="8" y="92" font-size="8.5" fill="#B0254A" font-weight="700">Std / EDD / High</text>
+    </g>
+
+    <!-- Cross-phase Phase 2 → Phase 3 -->
+    <line x1="952" y1="80" x2="980" y2="80" stroke="#004832" stroke-width="1.5" marker-end="url(#phaseArrow)"/>
+
+    <!-- ========== PHASE 3 STEPS (3.1 → 3.2 → 3.3) ========== -->
+    <g transform="translate(968, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">3.1</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Gap &amp; risk</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">analysis</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Reviews KYC pack</text>
+      <text x="8" y="80" font-size="8.5" fill="#B0254A" font-weight="700">⑂ +SoW if EDD</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">Identifies gaps</text>
+    </g>
+    <line x1="1068" y1="80" x2="1084" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(1076, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">3.2</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Compose KYC</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">memo &amp; submit</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">AI draft, RM edit,</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">submit to KYC</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">rating engine</text>
+    </g>
+    <line x1="1176" y1="80" x2="1192" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(1184, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#B0254A" stroke-width="1.5"/>
+      <rect width="100" height="3" fill="#B0254A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#B0254A">3.3 ★</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Compliance</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">sign-off</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">FCC + Dep MLRO</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">four-eyes review;</text>
+      <text x="8" y="92" font-size="8.5" fill="#B0254A" font-weight="700">⑂ +sr mgmt EDD</text>
+    </g>
+
+    <!-- Cross-phase Phase 3 → Phase 4 -->
+    <line x1="1284" y1="80" x2="1312" y2="80" stroke="#004832" stroke-width="1.5" marker-end="url(#phaseArrow)"/>
+
+    <!-- ========== PHASE 4 STEPS (4.1 → 4.2 → 4.3) ========== -->
+    <g transform="translate(1300, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">4.1</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Designate doc</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">package</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Master templates</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">per product set</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">(ISDA/LMA/BAFT)</text>
+    </g>
+    <line x1="1400" y1="80" x2="1416" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(1408, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">4.2</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Negotiate,</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">price, configure</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Clause redlines,</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">pricing vs bench-</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">mark, FX, limits</text>
+    </g>
+    <line x1="1508" y1="80" x2="1524" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(1516, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#B0254A" stroke-width="1.5"/>
+      <rect width="100" height="3" fill="#B0254A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#B0254A">4.3 ★</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Legal &amp; product</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">approvals</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Legal review of</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">doc package; CR,</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">FX, CMS heads</text>
+    </g>
+
+    <!-- Cross-phase Phase 4 → Phase 5 -->
+    <line x1="1616" y1="80" x2="1644" y2="80" stroke="#004832" stroke-width="1.5" marker-end="url(#phaseArrow)"/>
+
+    <!-- ========== PHASE 5 STEPS (5.1 → 5.2 → 5.3) ========== -->
+    <g transform="translate(1632, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">5.1</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Execute via</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">e-signature</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Client signs;</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">bank counter-sign;</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">RFC 3161 TSA</text>
+    </g>
+    <line x1="1732" y1="80" x2="1748" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(1740, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+      <rect width="100" height="3" fill="#1A1A1A"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#1A1A1A">5.2</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Vault, replicate,</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">provision</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Audit seal,</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">downstream cascade</text>
+      <text x="8" y="92" font-size="8.5" fill="#666666">(Core/Murex/SWIFT)</text>
+    </g>
+    <line x1="1840" y1="80" x2="1856" y2="80" stroke="#1A1A1A" stroke-width="1.2" marker-end="url(#seqArrow)"/>
+
+    <g transform="translate(1848, 30)">
+      <rect width="100" height="100" rx="6" fill="#FFFFFF" stroke="#BFD730" stroke-width="1.5"/>
+      <rect width="100" height="3" fill="#BFD730"/>
+      <text x="8" y="20" font-size="11" font-weight="700" fill="#5A6E10">5.3 ★</text>
+      <text x="8" y="38" font-size="10" font-weight="700" fill="#1A1A1A">Activate &amp;</text>
+      <text x="8" y="50" font-size="10" font-weight="700" fill="#1A1A1A">handover</text>
+      <text x="8" y="68" font-size="8.5" fill="#666666">Welcome pack,</text>
+      <text x="8" y="80" font-size="8.5" fill="#666666">SSO into Connect,</text>
+      <text x="8" y="92" font-size="8.5" fill="#5A6E10" font-weight="700">→ lifecycle (PKYC)</text>
+    </g>
+  </g>
+
+  <!-- ========== LANE 3: INTERNAL GOVERNANCE ========== -->
+  <g transform="translate(0, 454)">
+    <rect x="0" y="0" width="1950" height="140" fill="#FBEEF1"/>
+    <rect x="0" y="0" width="180" height="140" fill="#F2D8DF"/>
+    <rect x="0" y="0" width="4" height="140" fill="#B0254A"/>
+    <text x="22" y="32" font-size="11" font-weight="700" fill="#B0254A" letter-spacing="1.5">RISK &amp;</text>
+    <text x="22" y="48" font-size="11" font-weight="700" fill="#B0254A" letter-spacing="1.5">CONTROLS</text>
+    <text x="22" y="68" font-size="10" fill="#8B3556">リスク・統制</text>
+    <text x="22" y="92" font-size="9" fill="#666666">Sign-off gates &amp; approvals</text>
+    <text x="22" y="106" font-size="9" fill="#666666">★ = material control point</text>
+
+    <!-- Phase 1 -->
+    <g transform="translate(196, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="112" rx="6" fill="#FFFFFF" stroke="#E5C8D2"/>
+      <rect width="316" height="3" rx="1.5" fill="#B0254A"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#B0254A">G-01 · Pre-screen pass</text>
+      <text x="14" y="42" font-size="10" fill="#444444">Sanctions / PEP gate cleared</text>
+      <text x="14" y="58" font-size="10" fill="#444444">RM authorisation logged</text>
+      <text x="14" y="74" font-size="10" fill="#444444">Mandate accepted &amp; recorded</text>
+      <text x="14" y="100" font-size="9" fill="#888888" font-style="italic">Day 0</text>
+    </g>
+
+    <!-- Phase 2 -->
+    <g transform="translate(528, 14)" filter="url(#cardShadow)">
+      <rect width="424" height="112" rx="6" fill="#FFFFFF" stroke="#E5C8D2"/>
+      <rect width="424" height="3" rx="1.5" fill="#B0254A"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#B0254A">G-02 · KYC pack verified</text>
+      <text x="14" y="42" font-size="10" fill="#444444">UBO tree certified · structure approved by RM Head</text>
+      <text x="14" y="58" font-size="10" fill="#444444">Tax classification confirmed (FATCA / CRS)</text>
+      <text x="14" y="74" font-size="10" fill="#444444">Signatory authority verified · all jurisdictional reqs met</text>
+      <text x="14" y="100" font-size="9" fill="#888888" font-style="italic">Day 2</text>
+    </g>
+
+    <!-- Phase 3 — STARRED -->
+    <g transform="translate(968, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="112" rx="6" fill="#FFFFFF" stroke="#B0254A" stroke-width="1.5"/>
+      <rect width="316" height="3" rx="1.5" fill="#B0254A"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#B0254A">★ G-03 · Risk classification</text>
+      <text x="14" y="42" font-size="10" fill="#444444">Standard / EDD / High Risk assigned</text>
+      <text x="14" y="58" font-size="10" fill="#444444">FCC + Dep MLRO four-eyes review</text>
+      <text x="14" y="74" font-size="10" fill="#B0254A" font-weight="700">⑂ High: + senior management sign-off</text>
+      <text x="14" y="100" font-size="9" fill="#888888" font-style="italic">Day 3 · EDD adds +2-3 days</text>
+    </g>
+
+    <!-- Phase 4 — STARRED -->
+    <g transform="translate(1300, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="112" rx="6" fill="#FFFFFF" stroke="#B0254A" stroke-width="1.5"/>
+      <rect width="316" height="3" rx="1.5" fill="#B0254A"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#B0254A">★ G-04 · Legal &amp; product approvals</text>
+      <text x="14" y="42" font-size="10" fill="#444444">Master agreements reviewed &amp; approved (Legal)</text>
+      <text x="14" y="58" font-size="10" fill="#444444">Pricing approved (Treasury / FX desk)</text>
+      <text x="14" y="74" font-size="10" fill="#444444">Product approvals: Credit · FX · CMS heads</text>
+      <text x="14" y="100" font-size="9" fill="#888888" font-style="italic">Day 4</text>
+    </g>
+
+    <!-- Phase 5 — STARRED -->
+    <g transform="translate(1632, 14)" filter="url(#cardShadow)">
+      <rect width="316" height="112" rx="6" fill="#FFFFFF" stroke="#B0254A" stroke-width="1.5"/>
+      <rect width="316" height="3" rx="1.5" fill="#B0254A"/>
+      <text x="14" y="22" font-size="11" font-weight="700" fill="#B0254A">★ G-05 · Final execution</text>
+      <text x="14" y="42" font-size="10" fill="#444444">Bank counter-signature complete</text>
+      <text x="14" y="58" font-size="10" fill="#444444">Audit seal applied (tamper-evident)</text>
+      <text x="14" y="74" font-size="10" fill="#444444">Regulatory archive · 7-year retention</text>
+      <text x="14" y="100" font-size="9" fill="#888888" font-style="italic">Day 5</text>
+    </g>
+  </g>
+
+  <!-- ========== FOOTER ========== -->
+  <g transform="translate(0, 602)">
+    <text x="190" y="18" font-size="10" font-weight="600" fill="#004832" letter-spacing="0.5">DAY 0 → DAY 5 standard path</text>
+    <text x="975" y="18" text-anchor="middle" font-size="10" fill="#666666">⑂ EDD branch adds +2–3 days  ·  ★ control gate / material sign-off  ·  Industry benchmark: 3–6 months</text>
+    <text x="1918" y="18" text-anchor="end" font-size="10" font-weight="600" fill="#5A6E10">SMBC future-state: &lt; 5 days</text>
+  </g>
+
+  <!-- Subtle vertical phase dividers -->
+  <g stroke="#E5DCC2" stroke-width="1" opacity="0.4">
+    <line x1="512" y1="50" x2="512" y2="594"/>
+    <line x1="952" y1="50" x2="952" y2="594"/>
+    <line x1="1284" y1="50" x2="1284" y2="594"/>
+    <line x1="1616" y1="50" x2="1616" y2="594"/>
+  </g>
+</svg>
+
+    </div>
+  </main>
+
+  <section class="legend">
+    <div class="legend-section">
+      <h3>Step notation</h3>
+      <div class="legend-item">
+        <span class="legend-symbol">n.m</span>
+        <span>Phase number . step number — e.g. <strong>2.4</strong> = Phase&nbsp;2, Step&nbsp;4</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol">G-XX</span>
+        <span>Governance gate — sequential control checkpoint</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol">→</span>
+        <span>Sequence flow between activities</span>
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <h3>Symbols</h3>
+      <div class="legend-item">
+        <span class="legend-symbol" style="color: var(--smbc-magenta);">★</span>
+        <span>Material control gate · sign-off requirement</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol" style="color: var(--smbc-magenta);">⑂</span>
+        <span>Branch — Enhanced Due Diligence (EDD) path, +2–3 days</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol" style="color: var(--smbc-lime-dark);">●</span>
+        <span>Live · activation milestone</span>
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <h3>Lanes</h3>
+      <div class="legend-item">
+        <span class="legend-symbol dash" style="background: #1F4E79;"></span>
+        <span><strong>External connections</strong> — registries, screening, eKYC, downstream systems</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol dash" style="background: #1A1A1A;"></span>
+        <span><strong>Operational workflow</strong> — sequential business activities</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol dash" style="background: #B0254A;"></span>
+        <span><strong>Risk &amp; controls</strong> — sign-off gates and approvals</span>
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <h3>Performance</h3>
+      <div class="legend-item">
+        <span class="legend-symbol" style="color: var(--smbc-lime-dark);">◆</span>
+        <span>SMBC future-state target: <strong>&lt; 5 days</strong></span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol" style="color: var(--text-dim);">◇</span>
+        <span>Industry benchmark: 3–6 months</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-symbol" style="color: var(--smbc-magenta);">⑂</span>
+        <span>EDD branch impact: +2–3 days on standard path</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>SMBC Connect : Onboard · Process flow document<span class="footer-divider"></span>v7</span>
+    <span>2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
