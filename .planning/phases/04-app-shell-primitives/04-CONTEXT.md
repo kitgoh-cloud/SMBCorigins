@@ -193,7 +193,7 @@ Decision numbering continues from Phase 3 (D-63 → Phase 4 starts at D-64).
 
 ### External docs (verify current best practices at planning time)
 - **Next.js 16 App Router docs** — root `layout.tsx` vs route-group `layout.tsx`, private folders (`_`-prefix means non-routable — confirms D-80 path correction), `usePathname()` from `next/navigation`, `Link` semantics for the mode switcher (D-69).
-- **Tailwind v4 docs** — `@apply` composition rules with `@theme`-defined utilities (relevant if D-89 picks strategy (b)), arbitrary-value class syntax (relevant for D-83's grep coverage of `bg-[var(...)]`).
+- **Tailwind v4 docs** — `@apply` composition rules with `@theme`-defined utilities (relevant if D-89 picks strategy (b)), arbitrary-value class syntax (relevant for D-83's grep coverage of `bg-[var(--token)]` patterns).
 - **React 19 client/server component boundary** — TopStrip is `'use client'` per D-67; root `layout.tsx` stays a server component and renders `<TopStrip />` (a client child); pattern is standard.
 - **Fraunces variable-font axes** (Google Fonts) — `opsz`, `SOFT`, `WONK` axes if plan-phase revisits D-31 deferred for the "Origin" wordmark variation settings.
 

@@ -4,6 +4,9 @@
 
 @import 'tailwindcss';
 
+/* Exclude planning artifacts from Tailwind class scanning — prose examples contain class-like strings */
+@source not "../.planning/**";
+
 @theme {
   /* ====== Brand greens — primary SMBC palette ====== */
   --color-trad-green: #004832; /* Primary dark, nav, headers */
