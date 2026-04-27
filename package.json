@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "check:fresh-green": "bash scripts/check-fresh-green.sh"
   },
   "dependencies": {
     "next": "16.2.4",
