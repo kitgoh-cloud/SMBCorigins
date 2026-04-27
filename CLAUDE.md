@@ -96,6 +96,26 @@ At session start, read this file plus the relevant doc for what you're working o
 - Mobile responsiveness (desktop-only)
 - Production hardening
 
+## Cross-phase watch items
+
+Carryforward constraints from completed phases. Every executor building Phase 5+ must read this section and check each item against the surfaces they build.
+
+**W-01 — Interaction-state timing (Phase 4 origin)**
+All interactive surfaces must use `transition-colors duration-200 ease-out` for color transitions and `focus-visible:outline-2 focus-visible:outline-offset-2` for focus rings. These are the agreed values from Phase 4 primitives (ActionCard, ModeSwitcher segment links). Flag any Phase 5+ surface that uses a different timing, easing, or ring thickness as a regression — it won't fail any automated test but will produce visual inconsistency at the demo.
+
+**W-02 — Styling-pathway routing: D-89 hybrid (Phase 4 origin)**
+Phase 4 settled on a hybrid approach (D-89 strategy c): component-level Tailwind utilities for structure/typography, `app/globals.css @theme` tokens for design-system values, and a `@keyframes` carve-out only for animations that Tailwind's utility system can't express. Do NOT mix pathways on the same surface (e.g., half `@apply`, half utilities), and do NOT route a new animation through a one-off `style=` prop when a `@keyframes` token is the right tool. If a Phase 5 surface needs a new animation, add the token to `globals.css` and wire it via `@theme`, consistent with how `--animate-ai-pulse` was added in Plan 04-04.
+
+**W-03 — Fraunces axis declarations: OD-12 strategy b (Phase 4 origin)**
+Fraunces consumers must declare SOFT and WONK axes **inline at the usage site** — not via `next/font` config and not via a Tailwind token. The pattern established in TopStrip's wordmark is the reference. Missing axis declarations on a heading that the design spec called for are a visual regression that no automated test catches. When building Phase 5+ headings/display text using Fraunces: check the UI-SPEC for whether SOFT/WONK were specified for that surface; if yes, add `fontVariationSettings` inline.
+
+## Execution gate notes
+
+Known gaps in the automated pre-PR gate (`npm run typecheck && npm run lint && npm run test && npm run build`).
+
+**EG-01 — `npm run build` does not catch all PostCSS/Tailwind parse errors (Phase 4 origin)**
+During Phase 4, a Tailwind v4 class-scan error (`bg-[var(...)]` in a `.planning/` markdown file) caused `npm run dev` to fail immediately, but `npm run build` exited 0. The Turbopack production build path silently skipped the CSS error that the dev server surfaces. Mitigation: `.planning/**` is now excluded via `@source not "../.planning/**"` in `app/globals.css`. If the dev server fails on startup with a PostCSS error after a phase completes, suspect Tailwind scanning a non-source file — check for literal `var(...)`, `bg-[`, or other class-like strings in newly added markdown or config files. A smoke-test of `next dev` startup is not yet in the automated gate.
+
 ## How to run
 
 ```bash
