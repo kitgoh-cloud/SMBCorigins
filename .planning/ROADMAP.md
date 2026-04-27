@@ -97,9 +97,9 @@ Eight phases take the frontend from zero to a full stakeholder-demo prototype. P
   - [x] 04-04-PLAN.md — Add @keyframes ai-pulse + --animate-ai-pulse @theme token to app/globals.css (consumed by AIPulseDot)
   - [x] 04-05-PLAN.md — Build atomic primitives: Eyebrow (mono text), Icon (35-name SVG dictionary), Avatar (closed-enum color)
   - [x] 04-06-PLAN.md — Build AI presence primitives: AIPulseDot, AIBadge, StatusChip (per-kind D-87 tests as 2nd line of defense for whole-file allowlist)
-  - [ ] 04-07-PLAN.md — Complete primitive set: StagePill (numbered disc), ActionCard ('use client' interactive), barrel index.ts
-  - [ ] 04-08-PLAN.md — Chrome trio: RisingMark (allowlisted brand SVG), LanguageToggle (visual-only), ModeSwitcher (env-gated; retrofits #3 + #4 at authorship)
-  - [ ] 04-09-PLAN.md — Inner shells: ClientShell (single-column) + RMShell (sidebar 220 + workspace + empty copilot slot; retrofit #5 sidebar dot)
+  - [x] 04-07-PLAN.md — Complete primitive set: StagePill (numbered disc), ActionCard ('use client' interactive), barrel index.ts
+  - [x] 04-08-PLAN.md — Chrome trio: RisingMark (allowlisted brand SVG), LanguageToggle (visual-only), ModeSwitcher (env-gated; retrofits #3 + #4 at authorship)
+  - [x] 04-09-PLAN.md — Inner shells: ClientShell (single-column) + RMShell (sidebar 220 + workspace + empty copilot slot; retrofit #5 sidebar dot)
   - [ ] 04-10-PLAN.md — TopStrip composition + route-group layouts + /dev/primitives demo page (retrofits #1 + #2; OD-12 strategy b SOFT/WONK)
   - [ ] 04-11-PLAN.md — SHELL-05 enforcement: bash grep script + .freshgreen-allowlist + Vitest fixtures + 4th CI job + REQUIREMENTS.md/CLAUDE.md amendments
 **UI hint**: yes
