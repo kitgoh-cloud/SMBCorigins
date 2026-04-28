@@ -20,8 +20,12 @@ const interTight = Inter_Tight({
 })
 
 // D-32: Noto Sans JP — subsets: ['latin'] only. JP characters auto-load via unicode-range.
+// Phase 5 watermark exception (P-2'): weight 300 for the 縁 glyph at 0.035 opacity.
+// NOT a typography weight — single off-canvas decorative use only.
+// See .planning/phases/05-client-journey-dashboard/05-CONTEXT.md P-2'.
 const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
+  weight: ['300', '400'],
   variable: '--font-noto-sans-jp',
   display: 'swap',
 })

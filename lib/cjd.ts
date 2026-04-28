@@ -21,11 +21,10 @@
 //   OD5R-03 (47 fields static via constants — no derivation in v1)
 //   OD5R-06 (TEAM_MEMBERS as constant for v1; Phase 6 migration tracked in CONTEXT)
 //
-// Note (transient typecheck): `TEAM_MEMBERS` references AvatarColor values
-// `'signal-info'`, `'warm-amber'`, and `'fresh-green'` that Plan 05-02 adds to
-// the AvatarColor closed enum in components/primitives/Avatar.tsx. Until Plan
-// 05-02 lands, those literals are coerced via `as AvatarColor` casts. Plan
-// 05-02's verification step removes the casts after extending the enum.
+// `TEAM_MEMBERS` references AvatarColor values `'signal-info'`, `'warm-amber'`,
+// and `'fresh-green'` that Plan 05-02 added to the AvatarColor closed enum in
+// components/primitives/Avatar.tsx (D-24, OD5R-05). Literals satisfy the union
+// directly; the transient `as AvatarColor` casts from Plan 05-01 are removed.
 
 import type { Activity, ProductType, StageStatus } from '@/types/origin'
 import type { AvatarColor, StagePillState } from '@/components/primitives'
@@ -360,9 +359,8 @@ export type TeamMember = {
  * UserRole — tracked in CONTEXT.md §Deferred Ideas.
  *
  * The `'signal-info'`, `'warm-amber'`, and `'fresh-green'` AvatarColor
- * literals are added by Plan 05-02 to the AvatarColor closed enum in
- * components/primitives/Avatar.tsx. The casts below let Plan 05-01 land
- * before the enum is extended; Plan 05-02's verification step removes them.
+ * literals are members of the closed enum in components/primitives/Avatar.tsx
+ * (extended by Plan 05-02 per D-24 / OD5R-05). No casts required.
  */
 export const TEAM_MEMBERS: readonly TeamMember[] = Object.freeze([
   {
@@ -378,7 +376,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = Object.freeze([
     role: 'Credit Analyst',
     location: 'SMBC Tokyo',
     initials: 'AS',
-    color: 'signal-info' as AvatarColor,
+    color: 'signal-info',
     textColor: 'paper',
   },
   {
@@ -386,7 +384,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = Object.freeze([
     role: 'KYC Operations Lead',
     location: 'SMBC Singapore',
     initials: 'PN',
-    color: 'warm-amber' as AvatarColor,
+    color: 'warm-amber',
     textColor: 'paper',
   },
   {
@@ -394,7 +392,7 @@ export const TEAM_MEMBERS: readonly TeamMember[] = Object.freeze([
     role: 'AI orchestrator',
     location: '—',
     initials: '◉',
-    color: 'fresh-green' as AvatarColor,
+    color: 'fresh-green',
     textColor: 'trad-green-deep',
   },
 ] as const)

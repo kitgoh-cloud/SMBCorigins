@@ -14,6 +14,9 @@ const ALL_COLORS: ReadonlyArray<AvatarColor> = [
   'ink-muted',
   'paper',
   'mist',
+  'signal-info',
+  'warm-amber',
+  'fresh-green',
 ]
 
 describe('components/primitives/Avatar (SHELL-04, D-78)', () => {
@@ -43,7 +46,7 @@ describe('components/primitives/Avatar (SHELL-04, D-78)', () => {
     expect(span.className).toContain('font-mono')
   })
 
-  it('all 7 AvatarColor members map to bg-{color} utility', () => {
+  it('all AvatarColor members map to bg-{color} utility', () => {
     for (const color of ALL_COLORS) {
       const { container } = render(<Avatar initials="XX" color={color} />)
       const span = container.firstElementChild as HTMLElement
@@ -65,14 +68,43 @@ describe('components/primitives/Avatar (SHELL-04, D-78)', () => {
     expect(span.className).toContain('text-trad-green-deep')
   })
 
-  it('AvatarColor enum has exactly 7 members (Plan 04-05 lock)', () => {
-    expect(ALL_COLORS.length).toBe(7)
+  it('AvatarColor enum has exactly 10 members (Phase 5 D-24 extension; Plan 04-05 lock + Phase 5 +3)', () => {
+    expect(ALL_COLORS.length).toBe(10)
   })
 
-  it('AvatarColor enum excludes fresh-green family (D-78)', () => {
+  it('AvatarColor enum includes fresh-green for the AI Origin avatar (D-24, OD5R-05); excludes the -mute/-glow variants', () => {
     const colors: string[] = ALL_COLORS as unknown as string[]
-    expect(colors).not.toContain('fresh-green')
+    expect(colors).toContain('fresh-green') // AI Origin avatar — allowlisted via Plan 05-02
     expect(colors).not.toContain('fresh-green-mute')
     expect(colors).not.toContain('fresh-green-glow')
+  })
+})
+
+describe('Avatar — Phase 5 D-24 enum extension', () => {
+  it('renders bg-fresh-green when color="fresh-green" (Origin AI avatar)', () => {
+    const { container } = render(<Avatar initials="◉" color="fresh-green" size={34} />)
+    const span = container.firstElementChild as HTMLElement
+    expect(span.className).toContain('bg-fresh-green')
+  })
+
+  it('renders bg-signal-info when color="signal-info" (Akiko avatar)', () => {
+    const { container } = render(<Avatar initials="AS" color="signal-info" size={34} />)
+    const span = container.firstElementChild as HTMLElement
+    expect(span.className).toContain('bg-signal-info')
+  })
+
+  it('renders bg-warm-amber when color="warm-amber" (Priya avatar)', () => {
+    const { container } = render(<Avatar initials="PN" color="warm-amber" size={34} />)
+    const span = container.firstElementChild as HTMLElement
+    expect(span.className).toContain('bg-warm-amber')
+  })
+
+  it('Origin avatar pattern (color=fresh-green + textColor=trad-green-deep) produces both classes', () => {
+    const { container } = render(
+      <Avatar initials="◉" color="fresh-green" textColor="trad-green-deep" size={34} />
+    )
+    const span = container.firstElementChild as HTMLElement
+    expect(span.className).toContain('bg-fresh-green')
+    expect(span.className).toContain('text-trad-green-deep')
   })
 })

@@ -1,8 +1,9 @@
-// components/primitives/Avatar.tsx — Phase 4 SHELL-04 avatar primitive (D-78).
-// 7-member closed AvatarColor enum (Plan 04-05 lock; Phase 5/6 add additively).
-// Explicitly EXCLUDES fresh-green family per D-78 — the closed union blocks
-// callers from passing fresh-green at compile time, which is the second line
-// of defense for SHELL-05 (the first being scripts/check-fresh-green.sh).
+// components/primitives/Avatar.tsx — Phase 4 SHELL-04 + Phase 5 D-24 enum extension.
+// Phase 4 D-78 closed enum (7 members) extended in Phase 5 to 10 members
+// (+signal-info, +warm-amber, +fresh-green). The fresh-green variant is
+// reserved for the AI Origin team member; allowlisted via .freshgreen-allowlist.
+// SHELL-05 still applies: callers cannot pass arbitrary fresh-green family
+// values — the closed union limits to `'fresh-green'` only (NOT mute, NOT glow).
 
 import type { CSSProperties, ReactElement } from 'react'
 
@@ -14,6 +15,9 @@ export type AvatarColor =
   | 'ink-muted'
   | 'paper'
   | 'mist'
+  | 'signal-info' // Phase 5 — D-24 (Akiko Sato avatar)
+  | 'warm-amber' // Phase 5 — D-24 (Priya Nair avatar)
+  | 'fresh-green' // Phase 5 — D-24, OD5R-05 (Origin AI avatar; allowlisted)
 
 const BG_BY_COLOR: Record<AvatarColor, string> = {
   'trad-green': 'bg-trad-green',
@@ -23,6 +27,9 @@ const BG_BY_COLOR: Record<AvatarColor, string> = {
   'ink-muted': 'bg-ink-muted',
   paper: 'bg-paper',
   mist: 'bg-mist',
+  'signal-info': 'bg-signal-info',
+  'warm-amber': 'bg-warm-amber',
+  'fresh-green': 'bg-fresh-green',
 }
 
 const TEXT_BY_COLOR: Record<AvatarColor, string> = {
@@ -33,6 +40,9 @@ const TEXT_BY_COLOR: Record<AvatarColor, string> = {
   'ink-muted': 'text-ink-muted',
   paper: 'text-paper',
   mist: 'text-mist',
+  'signal-info': 'text-signal-info',
+  'warm-amber': 'text-warm-amber',
+  'fresh-green': 'text-fresh-green',
 }
 
 export type AvatarProps = {

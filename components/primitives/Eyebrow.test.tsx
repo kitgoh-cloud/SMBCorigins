@@ -49,3 +49,20 @@ describe('components/primitives/Eyebrow (SHELL-04)', () => {
     expect(span.querySelector('strong')).not.toBeNull()
   })
 })
+
+describe('Eyebrow — Phase 5 style forwarding', () => {
+  it('forwards inline style to the rendered span', () => {
+    const { container } = render(
+      <Eyebrow style={{ marginBottom: 10, fontWeight: 500 }}>Test</Eyebrow>
+    )
+    const span = container.firstElementChild as HTMLElement
+    expect(span.style.marginBottom).toBe('10px')
+    expect(String(span.style.fontWeight)).toBe('500')
+  })
+
+  it('omits the style attribute when style prop is not provided (Phase 4 baseline)', () => {
+    const { container } = render(<Eyebrow>Test</Eyebrow>)
+    const span = container.firstElementChild as HTMLElement
+    expect(span.getAttribute('style')).toBeNull()
+  })
+})

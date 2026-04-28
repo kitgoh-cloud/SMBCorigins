@@ -18,3 +18,14 @@ app/page.tsx
 # The grep patterns correctly flag token USAGE; the definition itself is the
 # canonical source and must be exempt.
 app/globals.css
+
+# Phase 5 redo — fresh-green allowlist additions (per UI-SPEC §Color > Fresh-Green Allowlist)
+# Note: components/journey/GreetingBlock.tsx is intentionally NOT added — the 縁
+# watermark is var(--color-trad-green) at 0.035 opacity (D-04), not fresh-green.
+# Note: components/journey/ApplicationCard.tsx is intentionally NOT added — the
+# hero card bottom-edge gradient is SKIPPED per OD5R-01 resolution.
+components/journey/ActivityFeed.tsx
+components/journey/TeamCard.tsx
+components/journey/WorkingOnYourBehalfCard.tsx
+components/primitives/Avatar.tsx
+lib/cjd.ts
