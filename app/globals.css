@@ -4,8 +4,13 @@
 
 @import 'tailwindcss';
 
-/* Exclude planning artifacts from Tailwind class scanning — prose examples contain class-like strings */
+/* Exclude planning artifacts and root prose docs from Tailwind class scanning — both
+   contain bracket-arbitrary-value class-like strings inside documentation examples
+   (EG-01 mitigation, twice over).
+   .planning/** excluded since Phase 4 (incident #1: prose example in 04-CONTEXT.md).
+   CLAUDE.md excluded since Phase 5 (incident #2: EG-01 watch-item paragraph itself). */
 @source not "../.planning/**";
+@source not "../CLAUDE.md";
 
 @theme {
   /* ====== Brand greens — primary SMBC palette ====== */
