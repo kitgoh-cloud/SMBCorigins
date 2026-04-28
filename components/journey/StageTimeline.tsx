@@ -15,7 +15,7 @@
 import type { CSSProperties, ReactElement } from 'react'
 import { Fragment } from 'react'
 import type { Stage } from '@/types/origin'
-import { AIPulseDot, Eyebrow, StagePill } from '@/components/primitives'
+import { AIPulseDot, StagePill } from '@/components/primitives'
 import { stageStatusToPillState } from '@/lib/cjd'
 import { STAGE_NAMES } from '@/lib/stages'
 
@@ -51,17 +51,20 @@ export function StageTimeline({ stages }: StageTimelineProps): ReactElement {
                   </span>
                 )}
               </div>
-              <Eyebrow
+              <div
+                data-stage-label
                 className="mt-2 text-center"
                 style={{
                   fontSize: 11,
                   fontWeight: isCurrent ? 500 : 400,
+                  color: isCurrent ? 'var(--color-ink)' : 'var(--color-ink-muted)',
                   maxWidth: 80,
+                  minHeight: '2.4em',
                   lineHeight: 1.2,
                 }}
               >
                 {STAGE_NAMES[stage.number]}
-              </Eyebrow>
+              </div>
             </li>
             {!isLast && (
               <li className="flex items-center" style={{ marginTop: -18 }}>

@@ -127,15 +127,16 @@ describe('StageTimeline — strict P-1 inert (OD5R-04)', () => {
 describe('StageTimeline — current-pill stage-name weight (D-17)', () => {
   it('current pill stage name has fontWeight 500; non-current has 400', () => {
     const { container } = render(<StageTimeline stages={makeStages(3)} />)
-    // Eyebrow primitive emits Tailwind classes (font-mono uppercase tracking-...).
-    // Each rendered eyebrow is a <span> with those classes; filter by textContent.
-    const eyebrows = Array.from(
-      container.querySelectorAll('span.font-mono.uppercase'),
+    // Stage labels are <div data-stage-label> with Inter Tight body typography
+    // (NOT Eyebrow primitive — that was the plan-05-03 typography defect that
+    // caused the DOCUMENTATION/SCREENING horizontal collision in UAT).
+    const labels = Array.from(
+      container.querySelectorAll('div[data-stage-label]'),
     ) as HTMLElement[]
-    const docs = eyebrows.find((el) => el.textContent === 'Documentation')
+    const docs = labels.find((el) => el.textContent === 'Documentation')
     expect(docs).toBeDefined()
     expect(String(docs?.style.fontWeight)).toBe('500')
-    const screening = eyebrows.find((el) => el.textContent === 'Screening')
+    const screening = labels.find((el) => el.textContent === 'Screening')
     expect(screening).toBeDefined()
     expect(String(screening?.style.fontWeight)).toBe('400')
   })
