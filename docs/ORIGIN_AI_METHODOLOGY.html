@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMBC Origin · AI Methodology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--trad-green:#004832;--trad-green-deep:#00301F;--fresh-green:#BFD730;--fresh-green-soft:#E5EFBE;--ink:#0A1410;--ink-soft:#3C4540;--ink-muted:#7A827D;--paper:#FAFBF7;--paper-deep:#F3F5EE;--mist:#E8EDE4;--mist-deep:#D9E0D4;--signal-amber:#E8A317;--signal-red:#C73E1D;--signal-info:#2A6F97}
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Inter Tight',system-ui,sans-serif;background:var(--paper);color:var(--ink);letter-spacing:-0.005em;line-height:1.6}
+.serif{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto;font-variation-settings:"SOFT" 50,"WONK" 0;letter-spacing:-0.025em}
+.jp{font-family:'Noto Sans JP',sans-serif;font-weight:500}
+.mono{font-family:'IBM Plex Mono',monospace}
+.wrap{max-width:740px;margin:0 auto;padding:0 20px}
+.cover{background:var(--trad-green);color:#E8EDE4;padding:44px 0 52px;position:relative;overflow:hidden}
+.cover-kanji{position:absolute;top:-40px;right:-20px;font-family:'Noto Sans JP',sans-serif;font-size:300px;font-weight:200;color:rgba(191,215,48,.05);line-height:1;pointer-events:none}
+.cover-brand{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fresh-green);margin-bottom:28px;display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+.cover-type{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,237,228,.5);margin-bottom:8px;position:relative;z-index:1}
+.cover h1{font-family:'Fraunces',serif;font-size:clamp(34px,7vw,52px);line-height:1.03;margin:0 0 16px;font-weight:400;letter-spacing:-0.028em;max-width:600px;position:relative;z-index:1}
+.cover-sub{font-size:15px;color:rgba(232,237,228,.75);max-width:560px;line-height:1.55;position:relative;z-index:1}
+.cover-meta{margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.15);display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;font-family:'IBM Plex Mono',monospace;position:relative;z-index:1}
+@media(min-width:560px){.cover-meta{grid-template-columns:repeat(4,1fr)}}
+.cover-meta strong{color:var(--fresh-green);font-weight:500;display:block;margin-bottom:3px;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+.cover-meta span{font-family:'Inter Tight',sans-serif;font-size:13px;color:#E8EDE4;line-height:1.3}
+.tldr{background:white;margin:-28px auto 0;max-width:700px;border:1px solid var(--mist);border-radius:14px;padding:24px 26px;box-shadow:0 6px 28px rgba(0,48,31,.1);position:relative;z-index:2}
+.tldr-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fresh-green);margin-bottom:10px;font-weight:600}
+.tldr h2{font-family:'Fraunces',serif;font-size:22px;line-height:1.3;margin:0 0 12px;font-weight:500;letter-spacing:-0.02em}
+.tldr p{margin:0 0 10px;color:var(--ink-soft);font-size:14px;line-height:1.65}
+.tldr p:last-child{margin-bottom:0}
+.doc-guide{background:var(--paper-deep);border-top:1px solid var(--mist);padding:28px 0 12px}
+.doc-guide ol{list-style:none;padding:0;margin:8px 0 0;display:grid;grid-template-columns:1fr;gap:1px}
+@media(min-width:620px){.doc-guide ol{grid-template-columns:1fr 1fr;column-gap:20px}}
+.doc-guide li{border-bottom:1px dashed var(--mist-deep);padding:6px 0;font-size:13px}
+.doc-guide a{display:flex;justify-content:space-between;align-items:baseline;gap:10px;color:var(--ink);text-decoration:none}
+.doc-guide a:hover{color:var(--trad-green)}
+.doc-guide .n{font-family:'IBM Plex Mono',monospace;color:var(--ink-muted);font-size:10px;flex-shrink:0}
+section{padding:44px 0 12px}
+section+section{border-top:1px solid var(--mist)}
+.subsection{margin-top:28px}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--trad-green);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:18px;height:1.5px;background:var(--fresh-green)}
+h2.section-title{font-family:'Fraunces',serif;font-size:clamp(26px,5vw,36px);line-height:1.08;margin:0 0 14px;font-weight:500;letter-spacing:-0.025em;color:var(--ink)}
+.section-intro{font-size:15px;color:var(--ink-soft);line-height:1.65;margin-bottom:24px;max-width:640px}
+h3{font-family:'Fraunces',serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.02em;margin:32px 0 8px;color:var(--ink)}
+h4{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-muted);margin:24px 0 8px;font-family:'IBM Plex Mono',monospace}
+p{margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--ink)}
+p strong{font-weight:600;color:var(--ink)}
+p em{color:var(--ink-soft)}
+ul,ol{margin:0 0 14px;padding-left:20px}
+li{margin-bottom:6px;line-height:1.6;font-size:15px}
+.callout{background:white;border:1px solid var(--mist);border-left:3px solid var(--fresh-green);border-radius:8px;padding:16px 18px;margin:18px 0}
+.callout-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px}
+.callout p{margin:0;font-size:14px}
+.callout.insight{border-left-color:var(--signal-info);background:#F5F9FB}
+.callout.warn{border-left-color:var(--signal-amber);background:#FFFBF2}
+.card{background:white;border:1px solid var(--mist);border-radius:12px;padding:20px;margin:14px 0}
+.card-head{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--fresh-green);margin-bottom:8px;font-weight:600}
+.card-title{font-family:'Fraunces',serif;font-size:21px;font-weight:500;color:var(--ink);letter-spacing:-0.02em;margin:0 0 8px}
+.card.neutral .card-head{color:var(--trad-green)}
+.quote{font-family:'Fraunces',serif;font-size:19px;line-height:1.4;letter-spacing:-0.02em;color:var(--ink);padding:16px 22px;border-left:2px solid var(--trad-green);margin:20px 0;background:var(--paper-deep);border-radius:0 8px 8px 0}
+.quote-attr{font-family:'Inter Tight',sans-serif;font-size:11px;color:var(--ink-muted);margin-top:8px}
+.ai-spec{background:linear-gradient(135deg,#FDFEF9 0%,#F5F9ED 100%);border:1px solid #DCE5C8;border-radius:14px;padding:22px;margin:18px 0;position:relative;overflow:hidden}
+.ai-spec::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(191,215,48,.15) 0%,transparent 70%);pointer-events:none}
+.ai-spec-tag{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#6B7D1C;background:white;padding:4px 10px;border-radius:20px;border:1px solid #DCE5C8;margin-bottom:10px}
+.ai-spec h4{font-family:'Fraunces',serif;font-size:21px;font-weight:500;color:var(--ink);margin:0 0 10px;text-transform:none;letter-spacing:-0.02em}
+.ai-spec p{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:8px}
+.ai-spec p:last-child{margin-bottom:0}
+.principle-list{list-style:none;padding:0;margin:14px 0}
+.principle-list li{padding:12px 0;border-bottom:1px dashed var(--mist-deep);font-size:14px;display:grid;grid-template-columns:1fr;gap:4px;color:var(--ink-soft)}
+@media(min-width:520px){.principle-list li{grid-template-columns:170px 1fr;gap:18px}}
+.principle-list li:last-child{border-bottom:none}
+.principle-name{font-family:'Fraunces',serif;font-weight:500;color:var(--ink);font-size:15px}
+footer{background:var(--trad-green-deep);color:rgba(232,237,228,.7);padding:36px 0 40px;margin-top:36px;font-size:12px;text-align:center}
+footer strong{color:white;font-weight:500}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-kanji">縁</div>
+  <div class="wrap">
+    <div class="cover-brand"><svg width="18" height="13" viewBox="0 0 40 28" fill="none"><path d="M3 26 L17 4 L22 4 L8 26 Z" fill="#BFD730"/><path d="M19 26 L33 4 L38 4 L24 26 Z" fill="#BFD730"/></svg> SMBC Origin</div>
+    <div class="cover-type">AI Methodology · Reference · v0.1</div>
+    <h1 class="serif">How we used AI to design and build SMBC Origin.</h1>
+    <p class="cover-sub">A meta document. Its subject is not the prototype, but the process by which two people produced it — an account of AI as a collaborator across brainstorming, process flow, design system, and the constraints of SMBC's stated direction.</p>
+    <div class="cover-meta">
+      <div><strong>Owner</strong><span>Kit</span></div>
+      <div><strong>Authors</strong><span>Kit · Evan</span></div>
+      <div><strong>Build effort</strong><span>~7 working days · 2 people</span></div>
+      <div><strong>Updated</strong><span>29 April 2026</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="tldr">
+  <div class="tldr-label">◆ In one paragraph</div>
+  <h2 class="serif">Two senses of AI.</h2>
+  <p>This document is about how we worked, not about what we built. There are two senses of "AI" in SMBC Origin. The first is AI as a <strong>feature</strong> in the product — the four hero moments (UBO Intelligence, Doc Extraction, RM Copilot, Credit Memo Drafter). The second, the subject of this document, is AI as a <strong>collaborator</strong> in the process — Claude in chat for thinking, Claude Code in the repository for shipping. The two are linked: we used the tools to design the tools. What follows describes the four-stage method we converged on — <em>brainstorm → flow → design → constrain</em> — and the artefacts each stage produced.</p>
+</div>
+
+<div class="doc-guide">
+  <div class="wrap">
+    <div class="section-label" style="margin-bottom:14px">Document guide</div>
+    <ol>
+      <li><a href="#s1"><span>How we brainstormed the journey</span><span class="n">01</span></a></li>
+      <li><a href="#s2"><span>How we developed the process flow</span><span class="n">02</span></a></li>
+      <li><a href="#s3"><span>How we set the design guidelines</span><span class="n">03</span></a></li>
+      <li><a href="#s4"><span>How we worked within SMBC's environment</span><span class="n">04</span></a></li>
+    </ol>
+  </div>
+</div>
+
+<section id="s1"><div class="wrap">
+<div class="section-label">01 · How we brainstormed the journey</div>
+<h2 class="section-title">How we brainstormed the journey.</h2>
+<p class="section-intro">The opening conversation was deliberately broad. We did not begin with a feature list. We began with a segment, a journey, and two people who lived inside it.</p>
+
+<p>The scoping work happened in long-form conversation with Claude before any code was written. The brief we wanted to answer was narrow on purpose: corporate banking onboarding for Japanese MNCs expanding across multiple jurisdictions. The choice was not arbitrary. Japanese MNCs expanding into APAC and EMEA are SMBC's defining client segment globally — every major regional office is structured around a Japanese corporates desk — and MNC onboarding is the most complex case in the book, multi-entity, multi-jurisdiction, multi-product. Solving for the hardest end of the segment makes the simpler cases fall out naturally.</p>
+
+<p>From there the conversation worked outward. We asked Claude to research SMBC's actual brand colour palette from public sources rather than invent one; to summarise the January 2026 Fenergo announcement in SMBC Americas and the April 2026 SMBC Connect launch in the US; and to characterise how peers — DBS IDEAL, HSBCnet, Standard Chartered Straight2Bank, CitiDirect, J.P. Morgan Access, BNP Paribas Connexis, MUFG COMSUITE, Mizuho Global eBanking — currently handle corporate onboarding. The pattern that emerged shaped the brief: every peer has a transaction-banking portal; none has yet put an AI-forward, client-facing onboarding portal into the market. The window was real, and SMBC's two anchor announcements gave the work a place to sit.</p>
+
+<p>Personas were not asserted up front. They emerged from journey analysis. We worked through what a multi-jurisdiction onboarding actually feels like from each side — the same M&amp;A document uploaded five times to five teams, the 40% of an RM's week lost to administrative copying, the credit memo that takes three days of manual spreading — and the two people doing the work named themselves. <strong>Yuki Tanaka</strong>, Group Treasurer at Kaisei Manufacturing KK, expecting Bloomberg-Terminal-plus-consumer-grade polish. <strong>James Lee</strong>, Senior RM on the Japanese Corporates Desk at SMBC Singapore, carrying twenty-five Japanese MNC clients in mixed lifecycle stages. Two people, one application — the unit of analysis the rest of the work is built on.</p>
+
+<p>Kaisei itself — Tokyo-HQ'd, ¥380B revenue, expanding into Singapore, Hong Kong, and the UK with five products including a USD 50M revolving credit facility — was chosen because it forces every dimension of the problem into a single scenario. Multi-jurisdiction enables the UBO intelligence story. Multi-entity enables the structure work. The credit facility unlocks the credit memo. The expansion timeline gives the journey a shape.</p>
+
+<p>The output of this stage was the <em>Product Brief</em> and the 30-second pitch. The pitch is how we know the brainstorm landed:</p>
+
+<div class="quote">The RM sends one invite. AI unwraps the corporate structure, extracts data from every document, screens every entity, configures products across every jurisdiction, and drafts the credit memo. The client is live in days, not months — and their RM spent their time on the relationship, not paperwork.<div class="quote-attr">— SMBC Origin · 30-second pitch</div></div>
+
+<p>One sentence covers the segment, the four hero moments, the time compression, and what changes for the RM. We did not write that sentence on the first try. We arrived at it by iterating with the model — testing what could be cut without losing meaning, watching which words competing peers' marketing reaches for, and converging on a register that is concrete rather than promotional.</p>
+</div></section>
+
+<section id="s2"><div class="wrap">
+<div class="section-label">02 · How we developed the process flow</div>
+<h2 class="section-title">How we developed the process flow.</h2>
+<p class="section-intro">From a journey description to a structured operational view took two artefacts and one design decision: that the RM and the client move in parallel, joined by AI, rather than serially through a queue.</p>
+
+<p>The first artefact was the journey table in the design master, where every one of the six stages is laid out in three columns: Customer, RM, AI. The structure is itself an argument — it says the parallel-lane model is the unit, not a linear handoff. Stage 1 (Invite &amp; Intent) starts with the RM creating an application and the AI pre-filling an org header from the Japanese corporate registry. Stage 2 (Entity &amp; Structure) is where the UBO Intelligence Agent recursively queries ACRA, Companies House, the Hong Kong Companies Registry, and the Japanese hōjin registry. Stage 3 (Documentation) is where the Doc Extraction Agent reads uploads and populates fields. Stage 4 is screening. Stage 5 is product configuration and the Credit Memo Drafter. Stage 6 is activation and a teaser for perpetual KYC. Six stages, four hero moments — chosen by asking, deliberately, where AI most visibly compresses the 90&ndash;180 day timeline. Every other AI capability we sketched (smart doc requests, screening narration, jurisdictional checklists) is supporting cast.</p>
+
+<p>The second artefact is the process flow diagram itself — <em>ORIGIN_PROCESS_FLOW.html</em>, the operational view that sits underneath the customer journey. The diagram still carries the older "SMBC Connect : Onboard" working name in its header; the product was renamed to SMBC Origin while the diagram was being finalised.</p>
+
+<p>Three lanes run left to right across the diagram. <strong>External connections</strong> (blue rail) lists the data sources each phase consumes — Hōjin Bangō and EDINET for Japan, ACRA Bizfile for Singapore, Companies House for the UK, the Hong Kong Companies Registry, GLEIF for LEIs; then BvD Orbis, OpenCorporates, TRUSTDOCK, Polarify and JPKI for KYC; OFAC, EU, UN and METI for sanctions; ISDA, LMA, BAFT for templates; DocuSign, GlobalSign, RFC 3161 timestamping for execution; Loan IQ, Murex, SWIFT for downstream provisioning. <strong>Operational workflow</strong> (centre, black rail) is the sequence — sixteen activities labelled <span class="mono">n.m</span>, with <span class="mono">⑂</span> marking the EDD branch (which adds two to three days when triggered) and <span class="mono">★</span> marking material control gates. <strong>Risk &amp; controls</strong> (magenta rail, bottom) is the governance layer — five gates, <span class="mono">G-01</span> through <span class="mono">G-05</span>, capturing pre-screen pass, KYC pack verified, risk classification, legal &amp; product approvals, and final execution.</p>
+
+<p>The diagram does one piece of consolidation work that matters. Above the three lanes, the original six customer journey stages are shown as a band — and Stage 3 (Documentation) is drawn dashed, with the badge "merged ↓", because in the operational view it consolidates with Stage 2 into Phase 2 (KYC &amp; due diligence). Six stages on the customer-facing surface compress to five process phases internally, completing in under five days against the industry benchmark of three to six months.</p>
+
+<p>This is where the AI collaboration is most visible in the artefact itself. Producing this diagram by hand from a blank page would be a week's work for a banking process designer. We arrived at it iteratively — describing the lanes, asking Claude to surface gaps (we were missing the timestamping authority before the model flagged RFC 3161; we under-specified the EDD branch before the model pushed back), and rendering the SVG directly. The lane structure, the symbol legend, the governance gates and the hero-moment placement are now mutually coherent because each was checked against the others in conversation.</p>
+</div></section>
+
+<section id="s3"><div class="wrap">
+<div class="section-label">03 · How we set the design guidelines</div>
+<h2 class="section-title">How we set the design guidelines.</h2>
+<p class="section-intro">A design system is most useful when its rules can be enforced. Origin's design system was set early, written into <span class="mono">CLAUDE.md</span>, and made mechanical wherever a rule could be reduced to a check.</p>
+
+<p>The colour palette is not invented. We asked Claude to surface SMBC's actual brand pairing from public sources — <strong>Trad Green <span class="mono">#004832</span></strong> as the institutional dark, and <strong>Fresh Green <span class="mono">#BFD730</span></strong> as the secondary accent — and built the token system around them. Trad Green is the chrome: navigation, headers, depth. The neutral surface is a warm paper <span class="mono">#FAFBF7</span> rather than pure white, with mist greens <span class="mono">#E8EDE4</span> for borders and <span class="mono">#F3F5EE</span> for elevation. Signal colours (amber, red, info blue) are reserved for status. Nothing in the palette is decorative.</p>
+
+<p>The typography stack is four families, each with a job. <strong>Fraunces</strong>, the variable serif with <span class="mono">opsz</span>, <span class="mono">SOFT</span>, and <span class="mono">WONK</span> axes, carries display, headlines, and stat numerals — sculptural, editorial, distinctive. <strong>Inter Tight</strong> is the UI body — a tightened modern grotesque with slightly more character than Inter, still institutional. <strong>Noto Sans JP</strong> handles Japanese, weight 500 by default, pairs cleanly with Inter Tight. <strong>IBM Plex Mono</strong> is for data, IDs, timestamps, and eyebrows. All four are open-source on Google Fonts. The stack was chosen the same way as the palette — by interrogating the brief through conversation rather than picking from a preset.</p>
+
+<p>The single rule that does the most work is the one we put in <span class="mono">CLAUDE.md</span> as <em>critical</em>:</p>
+
+<div class="ai-spec">
+  <div class="ai-spec-tag">◆ The Fresh Green rule</div>
+  <h4>Fresh Green is reserved exclusively for AI outputs and AI presence.</h4>
+  <p>Not for generic accents. Not for primary buttons. Not for hover states on neutral chrome. Wherever Fresh Green appears in the product, intelligence happened — an extraction, a recommendation, a generated narrative. Where it doesn't, the system is doing ordinary work and should look ordinary.</p>
+  <p>The rule is policed mechanically. <span class="mono">scripts/check-fresh-green.sh</span> runs as a CI job called <span class="mono">fresh-green</span>. Allowlisted exceptions live in <span class="mono">.freshgreen-allowlist</span> at the repo root, and adding an entry there requires architectural review. A guideline in a design document is a hope; a check in CI is a contract.</p>
+</div>
+
+<p>The five design principles in the brief sit underneath the colour rule and explain why it works:</p>
+
+<ul class="principle-list">
+  <li><span class="principle-name">AI is quiet, not loud.</span><span>Fresh Green is rationed. The cockpit is calm; the AI is a well-dressed colleague, not a chatbot that shouts.</span></li>
+  <li><span class="principle-name">Parallel, not sequential.</span><span>The RM and client operate in parallel lanes. AI bridges them. Nothing blocks waiting for a human button-push unless judgment is genuinely required.</span></li>
+  <li><span class="principle-name">Explain the magic.</span><span>Every AI decision is auditable — confidence scores, source registries, extraction logs, citations. The RM is in command, not overruled.</span></li>
+  <li><span class="principle-name">Heritage through restraint.</span><span>Japanese design sensibility — whitespace, precision, considered typography. Kanji as watermark, not decoration.</span></li>
+  <li><span class="principle-name">Demo every moment.</span><span>This is a showpiece. If an AI moment isn't visually memorable, it fails the mission.</span></li>
+</ul>
+
+<p>Encoding these in <span class="mono">CLAUDE.md</span> is the methodology, not the principles themselves. Every Claude Code session at the start of every working day reads that file before touching the codebase. The principles do not need to be re-explained to a fresh context; they are inherited. When a Phase 5 component drifted from the design system, the watch items section of <span class="mono">CLAUDE.md</span> grew an entry (<span class="mono">W-04</span>) recording what went wrong and what the fix was — so the same drift cannot happen silently in Phase 6.</p>
+</div></section>
+
+<section id="s4"><div class="wrap">
+<div class="section-label">04 · How we worked within SMBC's environment</div>
+<h2 class="section-title">How we worked within SMBC's environment.</h2>
+<p class="section-intro">A prototype that ignores its host institution is a brochure. The hardest part of this stage was deciding what <em>not</em> to build — and using the AI tools to keep that line.</p>
+
+<p>Two SMBC announcements anchor everything Origin does. In <strong>January 2026</strong>, SMBC Americas announced deployment of <strong>Fenergo</strong> as its client lifecycle management platform — described publicly as part of a "multi-year transformation of uplifting our core capabilities, simplifying the technology infrastructure and removing manual processes from our workflow." In <strong>April 2026</strong>, <strong>SMBC Connect</strong> went live in the US as the new global transaction banking portal, with the design philosophy that "cash management systems should be as intuitive and frictionless as the apps on our smartphones." Both are post-onboarding artefacts. Neither yet addresses the pre-onboarding journey — the three-to-six-month wait that remains the most visible point of friction for an MNC. Origin sits in the gap between them, as the missing front door.</p>
+
+<div class="callout insight">
+  <div class="callout-label">Build vs. buy posture</div>
+  <p>Origin is positioned as the <strong>AI-native UX layer on top of Fenergo</strong>, not a replacement for it. Fenergo handles structured CLM data and ongoing periodic review. Origin handles the AI-native client and RM experience — the front door Fenergo alone does not deliver. The existing investment is preserved; the missing layer is added.</p>
+</div>
+
+<p>The dual-persona context is part of the constraint. James is an RM on the <strong>Japanese Corporates Desk in SMBC Singapore</strong>, not a generic relationship manager at a generic global bank. The bilingual EN/JP interface, the kanji watermark on the cover surfaces, the Hōjin Bangō registry call as the very first AI action in Stage 1 — these come from the segment, not from a stylistic choice. <span class="mono">CLAUDE.md</span> codifies this. Every session inherits the segment context before suggesting a screen, a copy edit, or a data shape, so neither builder's Claude Code drifts toward something SMBC could not deploy.</p>
+
+<p>The most consequential AI-assisted decisions in this stage were about scope. We held a long conversation about each item below before writing it into the brief's "Out of Scope" section:</p>
+
+<div class="card neutral">
+  <div class="card-head">Scoped out of v0.1 — and why</div>
+  <ul style="margin:8px 0 0">
+    <li><strong>Real KYC / AML / screening provider integrations.</strong> Mocked. The hero moments demonstrate behaviour; production wiring is a separate engagement.</li>
+    <li><strong>Authentication flows.</strong> Assume logged in. Magic-link / SSO is a deployment concern, not a demo concern.</li>
+    <li><strong>Compliance officer and Ops persona views.</strong> RM and Client only for v0.1. Adding compliance and ops would double the surface area without adding to the demonstration.</li>
+    <li><strong>Mobile responsiveness.</strong> Desktop-first at 1440px. Treasurers and RMs work on monitors; phone is not the demo medium.</li>
+    <li><strong>Production hardening — RLS, security, real email delivery.</strong> Prototype velocity over deployment readiness.</li>
+    <li><strong>Deep SMBC Connect integration.</strong> Stage 6 is a teaser. The handover screen exists; the wired-up SSO does not.</li>
+  </ul>
+</div>
+
+<p>Each of those line items was a conversation. "Should we mock authentication or wire it properly?" Claude pushed for the answer — magic-link plus role-based routing is not what the demo is about; cutting it preserves the days the prototype actually has. "Should the compliance view exist?" The model surfaced the trade-off (texture vs. surface area), we made the call (cut it), and it went into the brief. AI as a collaborator does not mean AI making the decision; it means the decision is examined faster, and the reasoning is captured next to the decision.</p>
+
+<p>The same posture applies to the legacy and integration constraints we acknowledged but held off. Origin presumes Fenergo exists. It presumes SMBC Connect is the destination. It presumes the registries, the screening providers, the e-signature platforms in the operational diagram are real systems with real APIs. None of that is built. All of it is acknowledged. A v1.0 production version would close those — six to nine months of work for a real engineering team — but a v0.1 demo that pretends those problems are solved would lie to its audience. Holding the line was an AI-assisted decision, repeated.</p>
+</div></section>
+
+<section><div class="wrap">
+<div class="section-label">Closing</div>
+<h2 class="section-title">A transferable methodology.</h2>
+
+<p>What this method produced: a polished, internally consistent prototype in roughly seven working days, built by two people, that extends rather than contradicts SMBC's stated direction. A clickable client portal and RM cockpit. Four AI hero moments spaced across six customer-facing stages and five operational phases. A locked design system enforced in CI rather than by goodwill. A scope that held its shape because every cut was deliberated and recorded. The artefacts in this <span class="mono">/docs</span> directory — the product brief, the design master, the journey walkthrough, the process flow, the prototype itself, and this methodology document — are the receipts.</p>
+
+<p>The point worth carrying out of this room is not the prototype. The prototype is a demonstration. The transferable thing is the four-stage method behind it: <strong>brainstorm → flow → design → constrain</strong>, with AI as a collaborator at each stage and the decisions captured in a place the next conversation can read. Inside SMBC, the same shape would work for credit underwriting, for trade documentation, for any corporate process where the bottleneck is not the work itself but the time spent agreeing on what the work is.</p>
+
+</div></section>
+
+<footer>
+<div class="wrap">
+<svg width="28" height="20" viewBox="0 0 40 28" fill="none" style="display:inline-block;opacity:.7"><path d="M3 26 L17 4 L22 4 L8 26 Z" fill="#BFD730"/><path d="M19 26 L33 4 L38 4 L24 26 Z" fill="#BFD730"/></svg>
+<div style="margin-top:12px"><strong>SMBC Origin</strong> · AI Methodology · v0.1</div>
+<div style="margin-top:4px;opacity:.6;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em">Owner: Kit · 2026.04.29 · Meta document · Process reference</div>
+<div style="margin-top:20px;opacity:.5;font-size:11px;line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto">Fictional prototype methodology document. Kaisei Manufacturing KK and client scenarios are invented for illustrative purposes. SMBC brand elements used for design context; no SMBC affiliation or endorsement is implied.</div>
+</div>
+</footer>
+
+</body>
+</html>
